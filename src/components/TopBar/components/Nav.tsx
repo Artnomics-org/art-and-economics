@@ -1,0 +1,77 @@
+import React from 'react'
+import { NavLink } from 'react-router-dom'
+import styled from 'styled-components'
+
+const Nav: React.FC = () => {
+  return (
+    <StyledNav>
+      <StyledLink exact activeClassName="active" to="/home">
+        Harvest
+      </StyledLink>
+      <StyledLink exact activeClassName="active" to="/farms">
+        Menu
+      </StyledLink>
+      <StyledLink exact activeClassName="active" to="/vestnft">
+        Vest NFT
+      </StyledLink>
+      <StyledLink exact activeClassName="active" to="/mynft">
+        My NFT
+      </StyledLink>
+      <StyledLink exact activeClassName="active" to="/referral">
+        Referral
+      </StyledLink>
+      <StyledAbsoluteLink target="_blank" href="https://#TODO">LGE</StyledAbsoluteLink>
+      <StyledAbsoluteLink
+        href="/swap"
+        target="_blank"
+      >
+        Back Home
+      </StyledAbsoluteLink>
+    </StyledNav>
+  )
+}
+
+const StyledNav = styled.nav`
+  align-items: center;
+  display: flex;
+`
+
+const StyledLink = styled(NavLink)`
+  color: #959595;
+  font-weight: normal;
+  padding-left: ${(props) => props.theme.spacing[3]}px;
+  padding-right: ${(props) => props.theme.spacing[3]}px;
+  text-decoration: none;
+  &:hover {
+    color: ${(props) => props.theme.color.black};
+  }
+  &.active {
+    color: ${(props) => props.theme.color.black};
+    font-weight: bold;
+  }
+  @media (max-width: 400px) {
+    padding-left: ${(props) => props.theme.spacing[2]}px;
+    padding-right: ${(props) => props.theme.spacing[2]}px;
+  }
+`
+
+const StyledAbsoluteLink = styled.a`
+  color: #959595;
+  font-weight: normal;
+  padding-left: ${(props) => props.theme.spacing[3]}px;
+  padding-right: ${(props) => props.theme.spacing[3]}px;
+  text-decoration: none;
+  &:hover {
+    color: ${(props) => props.theme.color.black};
+  }
+  &.active {
+    color: ${(props) => props.theme.color.black};
+    font-weight: bold;
+  }
+  @media (max-width: 400px) {
+    padding-left: ${(props) => props.theme.spacing[2]}px;
+    padding-right: ${(props) => props.theme.spacing[2]}px;
+  }
+`
+
+export default Nav
