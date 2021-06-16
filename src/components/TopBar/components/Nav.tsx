@@ -6,67 +6,38 @@ const Nav: React.FC = () => {
   return (
     <StyledNav>
       <StyledLink exact activeClassName="active" to="/home">
-        Harvest
+        Swap
       </StyledLink>
       <StyledLink exact activeClassName="active" to="/farms">
-        Menu
+        Pool
       </StyledLink>
       <StyledLink exact activeClassName="active" to="/vestnft">
-        Vest NFT
+        Farm
       </StyledLink>
       <StyledLink exact activeClassName="active" to="/mynft">
-        My NFT
+        NFT Market
       </StyledLink>
-      <StyledLink exact activeClassName="active" to="/referral">
-        Referral
-      </StyledLink>
-      <StyledAbsoluteLink target="_blank" href="https://#TODO">LGE</StyledAbsoluteLink>
-      <StyledAbsoluteLink
-        href="/swap"
-        target="_blank"
-      >
-        Back Home
-      </StyledAbsoluteLink>
     </StyledNav>
   )
 }
 
 const StyledNav = styled.nav`
+  align-self: flex-end;
   align-items: center;
   display: flex;
+  margin-bottom: 28px;
 `
 
 const StyledLink = styled(NavLink)`
-  color: #959595;
+  color: ${(props) => props.theme.color.nav.def};
   font-weight: normal;
+  font-family: 'Helvetica Neue LT W05_93 Blk E';
   padding-left: ${(props) => props.theme.spacing[3]}px;
   padding-right: ${(props) => props.theme.spacing[3]}px;
   text-decoration: none;
-  &:hover {
-    color: ${(props) => props.theme.color.black};
-  }
-  &.active {
-    color: ${(props) => props.theme.color.black};
-    font-weight: bold;
-  }
-  @media (max-width: 400px) {
-    padding-left: ${(props) => props.theme.spacing[2]}px;
-    padding-right: ${(props) => props.theme.spacing[2]}px;
-  }
-`
-
-const StyledAbsoluteLink = styled.a`
-  color: #959595;
-  font-weight: normal;
-  padding-left: ${(props) => props.theme.spacing[3]}px;
-  padding-right: ${(props) => props.theme.spacing[3]}px;
-  text-decoration: none;
-  &:hover {
-    color: ${(props) => props.theme.color.black};
-  }
-  &.active {
-    color: ${(props) => props.theme.color.black};
-    font-weight: bold;
+  text-transform: uppercase;
+  &:hover, &.active {
+    color: ${(props) => props.theme.color.nav.hov};
   }
   @media (max-width: 400px) {
     padding-left: ${(props) => props.theme.spacing[2]}px;

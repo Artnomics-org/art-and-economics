@@ -1,6 +1,10 @@
 export const white = '#FFF'
 export const black = '#000'
 export const yellow = '#FEC600'
+export const nav = {
+  def: '#c8c9c9',
+  hov: '#505050'
+}
 
 export const green = {
   500: '##00d1810',

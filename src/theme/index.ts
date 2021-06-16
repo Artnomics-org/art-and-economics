@@ -1,4 +1,4 @@
-import { black, green, grey, red, white, yellow } from './colors'
+import { black, green, grey, red, white, yellow, nav } from './colors'
 
 const theme = {
   borderRadius: 12,
@@ -6,6 +6,7 @@ const theme = {
     mobile: 400,
   },
   color: {
+    nav,
     black,
     grey,
     primary: {
@@ -18,7 +19,7 @@ const theme = {
     white,
     yellow,
   },
-  siteWidth: 1200,
+  siteWidth: 1440,
   spacing: {
     1: 4,
     2: 8,
@@ -28,7 +29,7 @@ const theme = {
     6: 48,
     7: 64,
   },
-  topBarSize: 72
+  topBarSize: 100
 }
 
 export default theme

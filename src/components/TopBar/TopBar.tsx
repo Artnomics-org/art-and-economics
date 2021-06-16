@@ -1,11 +1,11 @@
 import React from 'react'
-import styled from 'styled-components'
-
+import styled from 'styled-components/macro'
 import Container from '../Container'
 import Logo from '../Logo'
-
-import AccountButton from './components/AccountButton'
 import Nav from './components/Nav'
+import CoinBalance from './components/CoinBalance'
+import SwapButton from './components/SwapButton'
+import Spacer from '../Spacer'
 
 interface TopBarProps {
   onPresentMobileMenu: () => void
@@ -20,64 +20,39 @@ const TopBar: React.FC<TopBarProps> = ({ onPresentMobileMenu }) => {
             <Logo />
           </StyledLogoWrapper>
           <Nav />
-          <StyledAccountButtonWrapper>
-            <AccountButton />
-          </StyledAccountButtonWrapper>
+          <StyledQuickActionWrapper>
+            <CoinBalance />
+            <Spacer size="lg" style={{ height: '20px' }} />
+            <SwapButton />
+          </StyledQuickActionWrapper>
         </StyledTopBarInner>
       </Container>
     </StyledTopBar>
   )
 }
 
-const StyledLogoWrapper = styled.div``
-
 const StyledTopBar = styled.div`
-  background-color: #fff;
-  box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.67);
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
 `
 
 const StyledTopBarInner = styled.div`
-  align-items: center;
   display: flex;
-  height: ${(props) => props.theme.topBarSize}px;
+  align-items: center;
   justify-content: space-between;
+  padding: 0px 40px;
+  height: ${(props) => props.theme.topBarSize}px;
   max-width: ${(props) => props.theme.siteWidth}px;
-  width: 100%;
 `
-// const StyledNavWrapper = styled.div`
-//   display: flex;
-//   flex: 1;
-//   justify-content: center;
-//   @media (max-width: 400px) {
-//     display: none;
-//   }
-// `
 
-const StyledAccountButtonWrapper = styled.div`
+const StyledLogoWrapper = styled.div``
+
+const StyledQuickActionWrapper = styled.div`
   align-items: center;
   display: flex;
   justify-content: flex-end;
-  width: 156px;
-  @media (max-width: 400px) {
-    justify-content: center;
-    width: auto;
-  }
+  align-self: flex-end;
+  margin-bottom: 28px;
 `
-
-// const StyledMenuButton = styled.button`
-//   background: none;
-//   border: 0;
-//   margin: 0;
-//   outline: 0;
-//   padding: 0;
-//   display: none;
-//   @media (max-width: 400px) {
-//     align-items: center;
-//     display: flex;
-//     height: 44px;
-//     justify-content: center;
-//     width: 44px;
-//   }
-// `
 
 export default TopBar

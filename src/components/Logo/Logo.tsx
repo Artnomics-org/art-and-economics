@@ -1,12 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components/macro'
-import LogoFile from '../../assets/img/bestswap-logo.png'
+import LogoFile from '../../assets/img/logo-full.svg'
 
 const Logo: React.FC = () => {
   return (
     <StyledLogo to="/">
-      <img src={LogoFile} height="40" style={{ marginTop: -12 }} alt="logo" />
+      <img src={LogoFile} alt="logo" />
     </StyledLogo>
   )
 }
@@ -16,26 +16,14 @@ const StyledLogo = styled(Link)`
   display: flex;
   justify-content: center;
   margin: 0;
-  min-height: 44px;
-  min-width: 44px;
+  min-height: 42px;
+  min-width: 42px;
   padding: 0;
   text-decoration: none;
+  img {
+    height: 42px;
+    object-fit: contain;
+  }
 `
-
-// const StyledText = styled.span`
-//   color: ${(props) => props.theme.color.grey[600]};
-//   font-family: 'Reem Kufi', sans-serif;
-//   font-size: 20px;
-//   font-weight: 700;
-//   letter-spacing: 0.03em;
-//   margin-left: ${(props) => props.theme.spacing[2]}px;
-//   @media (max-width: 400px) {
-//     display: none;
-//   }
-// `
-
-// const MasterChefText = styled.span`
-//   font-family: 'Kaushan Script', sans-serif;
-// `
 
 export default Logo
