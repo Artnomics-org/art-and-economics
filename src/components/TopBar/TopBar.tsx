@@ -14,7 +14,7 @@ interface TopBarProps {
 const TopBar: React.FC<TopBarProps> = ({ onPresentMobileMenu }) => {
   return (
     <StyledTopBar>
-      <Container size="lg">
+      <Container size="lg" padding={false}>
         <StyledTopBarInner>
           <StyledLogoWrapper>
             <Logo />
