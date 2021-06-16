@@ -1,144 +1,166 @@
 import React from 'react'
 import styled from 'styled-components/macro'
-import partnersMathwallet from "../../assets/img/partners-mathwallet.png";
-import partnersBitkeep from "../../assets/img/partners-bitkeep.png";
-import partnersSafepal from "../../assets/img/partners-safepal.png";
-import partnersTrustwallet from "../../assets/img/partners-trustwallet.png";
-import partnersTokenpocket from "../../assets/img/partners-tokenpocket.png";
-import partnersBancor from "../../assets/img/partners-bancor.png";
-import partnersAave from "../../assets/img/partners-aave.png";
-import partnersYfii from "../../assets/img/partners-yfii.png";
+import CoinLogo from '../../assets/img/logo-coin.png'
+import CoinLogo2x from '../../assets/img/logo-coin@2x.png'
+import CoinLogo3x from '../../assets/img/logo-coin@3x.png'
+import LogoWhite from '../../assets/img/logo-white.svg'
+import LogoGallery from '../../assets/img/logo-gallery.svg'
+import PartnerLogo, { PartnerLogoItem } from './components/PartnerLogo'
+// Partners logo
+import Binance1x from '../../assets/img/partners/logo-binance.png'
+import Binance2x from '../../assets/img/partners/logo-binance@2x.png'
+import Binance3x from '../../assets/img/partners/logo-binance@3x.png'
+import Hotbit1x from '../../assets/img/partners/logo-hotbit.png'
+import Hotbit2x from '../../assets/img/partners/logo-hotbit@2x.png'
+import Hotbit3x from '../../assets/img/partners/logo-hotbit@3x.png'
+import Cashforce1x from '../../assets/img/partners/logo-cashforce.png'
+import Cashforce2x from '../../assets/img/partners/logo-cashforce@2x.png'
+import Cashforce3x from '../../assets/img/partners/logo-cashforce@3x.png'
+import Bcmc1x from '../../assets/img/partners/logo-bcmc.png'
+import Bcmc2x from '../../assets/img/partners/logo-bcmc@2x.png'
+import Bcmc3x from '../../assets/img/partners/logo-bcmc@3x.png'
+import Bitribe1x from '../../assets/img/partners/logo-bitribe.png'
+import Bitribe2x from '../../assets/img/partners/logo-bitribe@2x.png'
+import Bitribe3x from '../../assets/img/partners/logo-bitribe@3x.png'
 
-import partners499block from "../../assets/img/partners-499block.png";
-import partnersBitribe from "../../assets/img/partners-bitribe.png";
-import partnersRoark from "../../assets/img/partners-roark.png";
-import partnersMarsfinance from "../../assets/img/partners-marsfinance.png";
-import partnersV from "../../assets/img/partners-v.png";
-import partners4chan from "../../assets/img/partners-4chan.png";
-import partnersDeepchain from "../../assets/img/partners-deepchain.png";
-import partnersJfi from "../../assets/img/partners-jfi.png";
-import Nav from './components/Nav'
-
-const partnersList = [
-  partnersMathwallet,
-  partnersBitkeep,
-  partnersSafepal,
-  partnersTrustwallet,
-  partnersTokenpocket,
-  partnersBancor,
-  partnersAave,
-  partnersYfii,
-  partners499block,
-  partnersBitribe,
-  partnersRoark,
-  partnersMarsfinance,
-  partnersV,
-  partners4chan,
-  partnersDeepchain,
-  partnersJfi
+const partnerList: Array<PartnerLogoItem> = [
+  {
+    '1x': Binance1x,
+    '2x': Binance2x,
+    '3x': Binance3x
+  },
+  {
+    '1x': Hotbit1x,
+    '2x': Hotbit2x,
+    '3x': Hotbit3x
+  },
+  {
+    '1x': Cashforce1x,
+    '2x': Cashforce2x,
+    '3x': Cashforce3x
+  },
+  {
+    '1x': Bcmc1x,
+    '2x': Bcmc2x,
+    '3x': Bcmc3x
+  },
+  {
+    '1x': Bitribe1x,
+    '2x': Bitribe2x,
+    '3x': Bitribe3x
+  }
 ]
 
 const Footer: React.FC = () => (
   <StyledFooter>
+    <StyledFooterLine />
+    <StyledFooterLine />
+    <StyledFooterLine />
     <StyledFooterInner>
-      <StyledFooterItem style={{ alignItems: 'flex-start', marginBottom: 20 }}>
-        <StyledFooterItemTitle>Partners:</StyledFooterItemTitle>
-        <StyledFooterItemContennt>
-          <StyledFooterItemContenntGrid>
-            {
-              partnersList.map((i, idx) => (
-                <StyledFooterItemPartner key={idx}>
-                  <img src={i} alt="partners"/>
-                </StyledFooterItemPartner>
-              ))
-            }
-          </StyledFooterItemContenntGrid>
-        </StyledFooterItemContennt>
+      <StyledFooterItem>
+        <StyledLogoLine>
+          <StyledLogo src={LogoWhite} alt="logo" />
+          ART&amp;ECONOMICS
+        </StyledLogoLine>
+        <StyledAddress>3 Fraser Street #05-25,<br />Duo Tower, Singapore, 189352</StyledAddress>
+        <StyledCopyright>info@artnomics.org +821038997991</StyledCopyright>
       </StyledFooterItem>
       <StyledFooterItem>
-        <StyledFooterItemTitle>Medias:</StyledFooterItemTitle>
-        <StyledFooterItemContennt>
-          <Nav />
-        </StyledFooterItemContennt>
+        <StyledCoinLogo src={CoinLogo} srcSet={`${CoinLogo2x} 2x, ${CoinLogo3x} 3x`} alt="coin logo" />
+      </StyledFooterItem>
+      <StyledFooterItem style={{ alignItems: 'flex-end' }}>
+        <StyledGallery src={LogoGallery} alt="logo gallery" />
+        <StyledPartners>
+          {partnerList.map(logo => (
+            <PartnerLogo logo={logo} />
+          ))}
+        </StyledPartners>
+        <StyledCopyright>©2021 Design by studio nongraphic</StyledCopyright>
       </StyledFooterItem>
     </StyledFooterInner>
   </StyledFooter>
 )
 
 const StyledFooter = styled.footer`
+  display: flex;
+  flex-direction: column;
+`
+
+const StyledFooterLine = styled.div`
+  width: 100%;
+  height: 2px;
+  margin: 0 0 4px;
+  background-color: ${(props) => props.theme.color.footer};
+`
+
+const StyledFooterInner = styled.div`
   align-items: center;
   display: flex;
-  justify-content: center;
-  background: #12161c;
-  box-shadow: 0px -3px 11px 0px rgba(0, 0, 0, 0.38);
-`
-const StyledFooterInner = styled.div`
-  /* align-items: center; */
-  /* display: flex; */
-  /* justify-content: center; */
-  /* height: ${props => props.theme.topBarSize}px; */
-  max-width: ${props => props.theme.siteWidth}px;
-  width: 100%;
-  padding: 34px 15px 34px;
-  box-sizing: border-box;
+  justify-content: space-between;
+  background-color: ${(props) => props.theme.color.footer};
+  padding: 48px 165px;
 `
 
 const StyledFooterItem = styled.section`
   display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 10px 0;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 164px;
 `
-const StyledFooterItemTitle = styled.span`
-  font-size: 21px;
-  font-weight: 500;
-  color: #F6C92A;
-  line-height: 24px;
-  min-width: 100px;
+
+const StyledCoinLogo = styled.img`
+  object-fit: contain;
+  height: 164px;
 `
-const StyledFooterItemContennt = styled.section`
-  flex: 1;
-  flex-wrap: wrap;
+
+const StyledLogoLine = styled.div`
   display: flex;
-`
-const StyledFooterItemContenntGrid = styled.section`
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  grid-column-gap: 16px;
-  grid-row-gap: 10px;
-
-  @media(max-width: 1200px) {
-    grid-template-columns: repeat(6, 1fr);
-  }
-  @media(max-width: 940px) {
-    grid-template-columns: repeat(4, 1fr);
-  }
-  @media(max-width: 740px) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  @media(max-width: 540px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-`
-const StyledFooterItemPartner = styled.section`
-  min-width: 120px;
-  height: 32px;
-  @media(max-width: 1200px) {
-    height: 36px;
-  }
-  @media(max-width: 940px) {
-    height: 40px;
-  }
-  @media(max-width: 740px) {
-    height: 36px;
-  }
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+  align-items: center;
+  font-weight: normal;
+  font-family: 'Helvetica Neue LT W05_93 Blk E';
+  font-size: 30px;
+  line-height: 1;
+  color: ${(props) => props.theme.color.white};
 `
 
+const StyledLogo = styled.img`
+  object-fit: contain;
+  height: 22px;
+  margin-right: 14px;
+`
 
+const StyledAddress = styled.p`
+  max-width: 328px;
+  font-weight: normal;
+  font-family: 'Helvetica Neue LT W05_93 Blk E';
+  font-size: 12px;
+  line-height: 1.5;
+  color: ${(props) => props.theme.color.white};
+  text-transform: uppercase;
+  margin: 0;
+`
+
+const StyledCopyright = styled.p`
+  font-weight: normal;
+  font-family: 'Helvetica Neue LT W05_93 Blk E';
+  font-size: 8px;
+  line-height: 1;
+  letter-spacing: 0.6px;
+  color: ${(props) => props.theme.color.white};
+  text-transform: uppercase;
+  margin: 0;
+`
+
+const StyledGallery = styled.img`
+  object-fit: contain;
+  height: 18px;
+`
+
+const StyledPartners = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 340px;
+`
 
 export default Footer

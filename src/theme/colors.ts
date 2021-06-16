@@ -5,6 +5,8 @@ export const nav = {
   def: '#c8c9c9',
   hov: '#505050'
 }
+export const footer = '#808080'
+export const bg = '#f9f6f5'
 
 export const green = {
   500: '##00d1810',

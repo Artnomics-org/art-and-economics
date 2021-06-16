@@ -1,4 +1,4 @@
-import { black, green, grey, red, white, yellow, nav } from './colors'
+import { black, green, grey, red, white, yellow, nav, footer, bg } from './colors'
 
 const theme = {
   borderRadius: 12,
@@ -7,6 +7,8 @@ const theme = {
   },
   color: {
     nav,
+    footer,
+    bg,
     black,
     grey,
     primary: {

@@ -34,14 +34,14 @@ const Page: React.FC<PageProps> = ({ children, showBgColor = true }) => {
 }
 
 const StyledPage = styled.div<StyledPageProps>`
-  /* background-color: ${props => props.showBg ? 'rgba(0,0,0,0.4)' : 'transparent'}; */
+  background-color: ${props => props.showBg ? props.theme.color.bg : 'transparent'};
 `
 
 const StyledMain = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - ${(props) => props.theme.topBarSize * 2}px);
+  min-height: calc(100vh - ${(props) => props.theme.topBarSize * 3.5}px);
 `
 
 export default Page

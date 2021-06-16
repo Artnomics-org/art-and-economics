@@ -20,7 +20,7 @@ const StyledSwapButton = styled.button`
 `
 
 const StyledLogo = styled.img`
-  object-fit: cover;
+  object-fit: contain;
   height: 22px;
 `
 
