@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import web3 from '../../web3/'
 import { useWallet } from 'use-wallet'
 import Page from '../../components/Page'

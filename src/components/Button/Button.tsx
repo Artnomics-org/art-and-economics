@@ -1,5 +1,5 @@
 import React, { useContext, useMemo } from 'react'
-import styled, { ThemeContext } from 'styled-components'
+import styled, { ThemeContext } from 'styled-components/macro'
 import { lighten } from 'polished'
 import { Link } from 'react-router-dom'
 

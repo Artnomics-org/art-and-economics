@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import BestImage from '../../../assets/img/best-icon.png'
 
 const BestIcon: React.FC = () => {

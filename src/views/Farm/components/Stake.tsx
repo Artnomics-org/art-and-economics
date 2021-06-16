@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js'
 import React, { useCallback, useState } from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import { useWallet } from 'use-wallet'
 import { Contract } from 'web3-eth-contract'
 import Button from '../../../components/Button/BlackButton'

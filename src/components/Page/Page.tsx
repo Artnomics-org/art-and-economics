@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import Footer from '../Footer'
 import MobileMenu from '../MobileMenu'
 import TopBar from '../TopBar'

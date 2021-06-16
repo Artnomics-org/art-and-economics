@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { ThemeProvider } from 'styled-components'
+import { ThemeProvider } from 'styled-components/macro'
 import { UseWalletProvider } from 'use-wallet'
 import FarmsProvider from './contexts/Farms'
 import ModalsProvider from './contexts/Modals'

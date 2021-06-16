@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import { useHistory } from 'react-router-dom'
 import { useState } from 'react'
 import { useWallet } from 'use-wallet'

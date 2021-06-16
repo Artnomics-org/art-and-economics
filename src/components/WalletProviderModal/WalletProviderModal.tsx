@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import { useWallet } from 'use-wallet'
 
 import metamaskLogo from '../../assets/img/metamask-fox.svg'

@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import partnersMathwallet from "../../assets/img/partners-mathwallet.png";
 import partnersBitkeep from "../../assets/img/partners-bitkeep.png";
 import partnersSafepal from "../../assets/img/partners-safepal.png";

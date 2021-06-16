@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import LogoFile from '../../assets/img/bestswap-logo.png'
 
 const Logo: React.FC = () => {

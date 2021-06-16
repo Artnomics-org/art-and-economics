@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import { useWallet } from 'use-wallet'
 import usePendingTransactions from '../../../hooks/usePendingTransactions'
 import Button from '../../Button'

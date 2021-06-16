@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import { useWallet } from 'use-wallet'
 import { provider } from 'web3-core'
 import PageHeader from './components/PageHeader'

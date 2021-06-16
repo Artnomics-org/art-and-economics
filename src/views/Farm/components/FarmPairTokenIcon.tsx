@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import FarmPairToken from '../../../assets/img/farm-pair-token.png'
 
 const FarmPairTokenIcon: React.FC = () => {

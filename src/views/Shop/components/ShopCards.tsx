@@ -1,6 +1,6 @@
 // import BigNumber from 'bignumber.js'
 import React from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 
 import Loader from '../../../components/Loader'
 // import { Farm } from '../../../contexts/Farms'

@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import { transparentize } from 'polished'
 
 const Card: React.FC = ({ children }) => <StyledCard>{children}</StyledCard>

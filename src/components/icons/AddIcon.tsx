@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { ThemeContext } from 'styled-components'
+import { ThemeContext } from 'styled-components/macro'
 
 import { IconProps } from '../Icon'
 

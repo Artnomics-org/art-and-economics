@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useMemo } from 'react'
 import { CheckCircle, AlertTriangle } from 'react-feather'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import Modal, { ModalProps } from '../Modal'
 import ModalActions from '../ModalActions'
 import ModalContent from '../ModalContent'

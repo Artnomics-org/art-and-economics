@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js'
 import React, { useEffect, useState } from 'react'
 import Countdown, { CountdownRenderProps } from 'react-countdown'
-import styled, { keyframes } from 'styled-components'
+import styled, { keyframes } from 'styled-components/macro'
 import { useWallet } from 'use-wallet'
 import BlackButton from '../../../components/Button/BlackButton'
 import Card from '../../Home/components/Card'

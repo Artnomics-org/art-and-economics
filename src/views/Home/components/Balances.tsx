@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js'
 import React, { useEffect, useState } from 'react'
 import CountUp from 'react-countup'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import { useWallet } from 'use-wallet'
 import Label from '../../../components/Label'
 import Spacer from '../../../components/Spacer'

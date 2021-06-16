@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import { useWallet } from 'use-wallet'
 import useTokenBalance from '../../../hooks/useTokenBalance'
 // import useSushi from '../../../hooks/useSushi'

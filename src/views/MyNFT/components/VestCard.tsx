@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import { lighten } from 'polished'
 import LevelImage from '../../../assets/img/vestnft/vestnft-card-level.png'
 import { VestMetadata } from './types'

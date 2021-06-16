@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useState } from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import { useInactiveListener } from '../../hooks/useInactiveListener'
 
 interface ModalsContext {

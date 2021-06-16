@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import BlackButton from '../../../components/Button/BlackButton'
 import Card from '../../../components/Card/TransCard'
 import CardContent from '../../../components/CardContent'

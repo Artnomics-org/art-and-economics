@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import Container from '../../components/Container'
 import Page from '../../components/Page'
 import Balances from './components/Balances'

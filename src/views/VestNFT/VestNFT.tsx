@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import Page from '../../components/Page'
 import VESTCards from './components/VESTCards'
 import Switcher from './components/Switcher'
