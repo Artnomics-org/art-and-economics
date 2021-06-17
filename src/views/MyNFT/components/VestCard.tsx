@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components/macro'
 import { lighten } from 'polished'
-import LevelImage from '../../../assets/img/vestnft/vestnft-card-level.png'
 import { VestMetadata } from './types'
 import capitalize from '../../../utils/capitalize'
 import useRefReward from '../../../hooks/useRefReward'
@@ -34,16 +33,7 @@ const VESTCard: React.FC<VESTCardProps> = ({ info, tab }) => {
   }
   const [imagePath, setImagePath] = useState('')
   const loadNFTImage = (name: string): void => {
-    if (name.includes('local::')) {
-      import(`../../../assets/img/vestnft/${name.replace('local::', '')}`).then(path => {
-        setImagePath(path.default)
-      }).catch(error => {
-        console.error('VESTCard::loadNFTImage', error)
-        setImagePath('')
-      })
-    } else {
-      setImagePath(name)
-    }
+    setImagePath(name)
   }
 
   const [txHashLink, setTxHashLink] = useState('')
@@ -141,7 +131,7 @@ const StyledCardWrapper = styled.div<StyledCardWrapperProps>`
 const StyledLevelWrapper = styled.div`
   width: 34px;
   height: 38px;
-  background-image: url(${LevelImage});
+  background-image: url('');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

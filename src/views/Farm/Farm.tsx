@@ -34,9 +34,7 @@ const Farm: React.FC = () => {
 
   const [imagePath, setImagePath ] = useState('')
   const loadTokenImage = (name: string): void => {
-    import(`../../assets/img/token/${name}.png`).then(path => {
-      setImagePath(path.default)
-    })
+    setImagePath(name)
   }
 
   useEffect(() => {

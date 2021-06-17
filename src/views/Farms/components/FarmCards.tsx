@@ -126,10 +126,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm }) => {
   }
 
   const loadTokenImage = (name: string): void => {
-    import(`../../../assets/img/token/${name}.png`).then(path => {
-      console.log('FarmCards::FarmCard:loadTokenImage path:', path)
-      setImagePath(path.default)
-    })
+    setImagePath(name)
   }
 
   // const isPairToken = farm.icon.includes('-')
