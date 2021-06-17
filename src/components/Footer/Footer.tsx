@@ -1,11 +1,12 @@
-import React from 'react'
-import styled from 'styled-components/macro'
+import React, { useContext } from 'react'
+import styled, { ThemeContext } from 'styled-components/macro'
 import CoinLogo from '../../assets/img/logo-coin.png'
 import CoinLogo2x from '../../assets/img/logo-coin@2x.png'
 import CoinLogo3x from '../../assets/img/logo-coin@3x.png'
 import LogoWhite from '../../assets/img/logo-white.svg'
 import LogoGallery from '../../assets/img/logo-gallery.svg'
 import PartnerLogo, { PartnerLogoItem } from './components/PartnerLogo'
+import TripleLine from '../TripleLine'
 // Partners logo
 import Binance1x from '../../assets/img/partners/logo-binance.png'
 import Binance2x from '../../assets/img/partners/logo-binance@2x.png'
@@ -51,46 +52,41 @@ const partnerList: Array<PartnerLogoItem> = [
   }
 ]
 
-const Footer: React.FC = () => (
-  <StyledFooter>
-    <StyledFooterLine />
-    <StyledFooterLine />
-    <StyledFooterLine />
-    <StyledFooterInner>
-      <StyledFooterItem>
-        <StyledLogoLine>
-          <StyledLogo src={LogoWhite} alt="logo" />
-          ART&amp;ECONOMICS
-        </StyledLogoLine>
-        <StyledAddress>3 Fraser Street #05-25,<br />Duo Tower, Singapore, 189352</StyledAddress>
-        <StyledCopyright>info@artnomics.org +821038997991</StyledCopyright>
-      </StyledFooterItem>
-      <StyledFooterItem>
-        <StyledCoinLogo src={CoinLogo} srcSet={`${CoinLogo2x} 2x, ${CoinLogo3x} 3x`} alt="coin logo" />
-      </StyledFooterItem>
-      <StyledFooterItem style={{ alignItems: 'flex-end' }}>
-        <StyledGallery src={LogoGallery} alt="logo gallery" />
-        <StyledPartners>
-          {partnerList.map(logo => (
-            <PartnerLogo logo={logo} />
-          ))}
-        </StyledPartners>
-        <StyledCopyright>©2021 Design by studio nongraphic</StyledCopyright>
-      </StyledFooterItem>
-    </StyledFooterInner>
-  </StyledFooter>
-)
+const Footer: React.FC = () => {
+  const theme = useContext(ThemeContext)
+
+  return (
+    <StyledFooter>
+      <TripleLine color={theme.color.footer} />
+      <StyledFooterInner>
+        <StyledFooterItem>
+          <StyledLogoLine>
+            <StyledLogo src={LogoWhite} alt="logo" />
+            ART&amp;ECONOMICS
+          </StyledLogoLine>
+          <StyledAddress>3 Fraser Street #05-25,<br />Duo Tower, Singapore, 189352</StyledAddress>
+          <StyledCopyright>info@artnomics.org +821038997991</StyledCopyright>
+        </StyledFooterItem>
+        <StyledFooterItem>
+          <StyledCoinLogo src={CoinLogo} srcSet={`${CoinLogo2x} 2x, ${CoinLogo3x} 3x`} alt="coin logo" />
+        </StyledFooterItem>
+        <StyledFooterItem style={{ alignItems: 'flex-end' }}>
+          <StyledGallery src={LogoGallery} alt="logo gallery" />
+          <StyledPartners>
+            {partnerList.map(logo => (
+              <PartnerLogo logo={logo} />
+            ))}
+          </StyledPartners>
+          <StyledCopyright>©2021 Design by studio nongraphic</StyledCopyright>
+        </StyledFooterItem>
+      </StyledFooterInner>
+    </StyledFooter>
+  )
+}
 
 const StyledFooter = styled.footer`
   display: flex;
   flex-direction: column;
-`
-
-const StyledFooterLine = styled.div`
-  width: 100%;
-  height: 2px;
-  margin: 0 0 4px;
-  background-color: ${(props) => props.theme.color.footer};
 `
 
 const StyledFooterInner = styled.div`

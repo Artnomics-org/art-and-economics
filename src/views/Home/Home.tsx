@@ -1,15 +1,16 @@
-import React from 'react'
-import styled from 'styled-components/macro'
+import React, { useContext } from 'react'
+import styled, { ThemeContext } from 'styled-components/macro'
 import Container from '../../components/Container'
 import Page from '../../components/Page'
+import TripleLine from '../../components/TripleLine'
 
 const Home: React.FC = () => {
+  const theme = useContext(ThemeContext)
+
   return (
     <Page>
       <StyledSectionWrapper>
-        <StyledLine />
-        <StyledLine />
-        <StyledLine />
+        <TripleLine color={theme.color.grey[400]} />
         <StyledSectionIntro>
           <Container size="lg">
             <StyledTitle>The best luxury of the 21st<br />century is art</StyledTitle>
@@ -17,9 +18,7 @@ const Home: React.FC = () => {
         </StyledSectionIntro>
       </StyledSectionWrapper>
       <StyledSectionWrapper>
-        <StyledLine />
-        <StyledLine />
-        <StyledLine />
+        <TripleLine color={theme.color.grey[400]} />
         <StyledSectionWhy>
           <Container size="lg">
             <StyledTitle>Why do they keep<br />the art?</StyledTitle>
@@ -32,13 +31,6 @@ const Home: React.FC = () => {
 
 const StyledSectionWrapper = styled.div`
   width: 100%;
-`
-
-const StyledLine = styled.div`
-  width: 100%;
-  height: 2px;
-  margin: 0 0 4px;
-  background-color: ${(props) => props.theme.color.grey[400]};
 `
 
 const StyledSectionWhy = styled.section`
