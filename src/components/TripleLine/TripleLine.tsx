@@ -2,10 +2,12 @@ import React from 'react'
 import styled from 'styled-components/macro'
 
 interface TripleLineProps {
-  color: string | string[]
+  color: string | string[],
+  height?: number
+  space?: number
 }
 
-const TripleLine: React.FC<TripleLineProps> = ({ color }) => {
+const TripleLine: React.FC<TripleLineProps> = ({ color, height = 2, space = 4 }) => {
   const getColor = (color: string | string[], index: number) => {
     if (Array.isArray(color)) {
       return color[index]
@@ -15,7 +17,7 @@ const TripleLine: React.FC<TripleLineProps> = ({ color }) => {
   return (
     <StyledTripleLine>
       {[...Array<number>(3).keys()].map(i => (
-        <StyledLine color={getColor(color, i)} key={`line-${i}`} />
+        <StyledLine color={getColor(color, i)} height={height} space={space} key={`line-${i}`} />
       ))}
     </StyledTripleLine>
   )
@@ -27,12 +29,14 @@ const StyledTripleLine = styled.div`
 
 interface StyledLineProps {
   color: string
+  height: number
+  space: number
 }
 
 const StyledLine = styled.div<StyledLineProps>`
   width: 100%;
-  height: 2px;
-  margin: 0 0 4px;
+  height: ${(props) => props.height}px;
+  margin-bottom: ${(props) => props.space}px;
   background-color: ${(props) => props.color};
 `
 
