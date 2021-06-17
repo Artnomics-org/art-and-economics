@@ -6,11 +6,17 @@ interface TripleLineProps {
 }
 
 const TripleLine: React.FC<TripleLineProps> = ({ color }) => {
+  const getColor = (color: string | string[], index: number) => {
+    if (Array.isArray(color)) {
+      return color[index]
+    }
+    return color
+  }
   return (
     <StyledTripleLine>
-      <StyledLine color={color} />
-      <StyledLine color={color} />
-      <StyledLine color={color} />
+      {[...Array<number>(3).keys()].map(i => (
+        <StyledLine color={getColor(color, i)} key={`line-${i}`} />
+      ))}
     </StyledTripleLine>
   )
 }
