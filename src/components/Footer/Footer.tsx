@@ -73,8 +73,8 @@ const Footer: React.FC = () => {
         <StyledFooterItem style={{ alignItems: 'flex-end' }}>
           <StyledGallery src={LogoGallery} alt="logo gallery" />
           <StyledPartners>
-            {partnerList.map(logo => (
-              <PartnerLogo logo={logo} />
+            {partnerList.map((logo, i) => (
+              <PartnerLogo logo={logo} key={`partner-logo-${i}`} />
             ))}
           </StyledPartners>
           <StyledCopyright>©2021 Design by studio nongraphic</StyledCopyright>
