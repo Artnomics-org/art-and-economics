@@ -7,13 +7,17 @@ interface TripleLineProps {
 
 const TripleLine: React.FC<TripleLineProps> = ({ color }) => {
   return (
-    <div>
+    <StyledTripleLine>
       <StyledLine color={color} />
       <StyledLine color={color} />
       <StyledLine color={color} />
-    </div>
+    </StyledTripleLine>
   )
 }
+
+const StyledTripleLine = styled.div`
+  width: 100%;
+`
 
 const StyledLine = styled.div<TripleLineProps>`
   width: 100%;
