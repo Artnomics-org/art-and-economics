@@ -58,28 +58,30 @@ const Footer: React.FC = () => {
   return (
     <StyledFooter>
       <TripleLine color={theme.color.footer} />
-      <StyledFooterInner>
-        <StyledFooterItem>
-          <StyledLogoLine>
-            <StyledLogo src={LogoWhite} alt="logo" />
-            ART&amp;ECONOMICS
-          </StyledLogoLine>
-          <StyledAddress>3 Fraser Street #05-25,<br />Duo Tower, Singapore, 189352</StyledAddress>
-          <StyledCopyright>info@artnomics.org +821038997991</StyledCopyright>
-        </StyledFooterItem>
-        <StyledFooterItem>
-          <StyledCoinLogo src={CoinLogo} srcSet={`${CoinLogo2x} 2x, ${CoinLogo3x} 3x`} alt="coin logo" />
-        </StyledFooterItem>
-        <StyledFooterItem style={{ alignItems: 'flex-end' }}>
-          <StyledGallery src={LogoGallery} alt="logo gallery" />
-          <StyledPartners>
-            {partnerList.map((logo, i) => (
-              <PartnerLogo logo={logo} key={`partner-logo-${i}`} />
-            ))}
-          </StyledPartners>
-          <StyledCopyright>©2021 Design by studio nongraphic</StyledCopyright>
-        </StyledFooterItem>
-      </StyledFooterInner>
+      <StyledFooterWrapper>
+        <StyledFooterInner>
+          <StyledFooterItem>
+            <StyledLogoLine>
+              <StyledLogo src={LogoWhite} alt="logo" />
+              ART&amp;ECONOMICS
+            </StyledLogoLine>
+            <StyledAddress>3 Fraser Street #05-25,<br />Duo Tower, Singapore, 189352</StyledAddress>
+            <StyledCopyright>info@artnomics.org +821038997991</StyledCopyright>
+          </StyledFooterItem>
+          <StyledFooterItem>
+            <StyledCoinLogo src={CoinLogo} srcSet={`${CoinLogo2x} 2x, ${CoinLogo3x} 3x`} alt="coin logo" />
+          </StyledFooterItem>
+          <StyledFooterItem style={{ alignItems: 'flex-end' }}>
+            <StyledGallery src={LogoGallery} alt="logo gallery" />
+            <StyledPartners>
+              {partnerList.map((logo, i) => (
+                <PartnerLogo logo={logo} key={`partner-logo-${i}`} />
+              ))}
+            </StyledPartners>
+            <StyledCopyright>©2021 Design by studio nongraphic</StyledCopyright>
+          </StyledFooterItem>
+        </StyledFooterInner>
+      </StyledFooterWrapper>
     </StyledFooter>
   )
 }
@@ -89,12 +91,18 @@ const StyledFooter = styled.footer`
   flex-direction: column;
 `
 
+const StyledFooterWrapper = styled.div`
+  background-color: ${(props) => props.theme.color.footer};
+`
+
 const StyledFooterInner = styled.div`
   align-items: center;
   display: flex;
   justify-content: space-between;
-  background-color: ${(props) => props.theme.color.footer};
+  margin: 0 auto;
   padding: 48px 165px;
+  max-width: ${(props) => props.theme.siteWidth}px;
+  box-sizing: border-box;
 `
 
 const StyledFooterItem = styled.section`
