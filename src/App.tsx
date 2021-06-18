@@ -13,38 +13,18 @@ import Home from './views/Home'
 import Shop from './views/Shop'
 import NFTs from './views/NFTs'
 import Referral from './views/Referral'
-import VestNFT from './views/VestNFT'
-import MyNFT from './views/MyNFT'
 
 const App: React.FC = () => {
   return (
     <Providers>
-      <Router basename={'farm'}>
+      <Router>
         <Switch>
-          <Route path="/" exact>
-            <Home />
-          </Route>
-          <Route path="/home" exact>
-            <Home />
-          </Route>
-          <Route path="/farms">
-            <Farms />
-          </Route>
-          <Route path="/vestnft">
-            <VestNFT />
-          </Route>
-          <Route path="/mynft">
-            <MyNFT />
-          </Route>
-          <Route path="/referral">
-            <Referral />
-          </Route>
-          <Route path="/shop">
-            <Shop />
-          </Route>
-          <Route path="/nfts">
-            <NFTs />
-          </Route>
+          <Route exact strict path="/" component={Home} />
+          <Route exact strict path="/home" component={Home} />
+          <Route exact strict path="/swap" component={Referral} />
+          <Route exact strict path="/pool" component={Shop} />
+          <Route exact strict path="/farm" component={Farms} />
+          <Route exact strict path="/market" component={NFTs} />
         </Switch>
       </Router>
     </Providers>
