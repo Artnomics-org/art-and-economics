@@ -5,16 +5,16 @@ import styled from 'styled-components/macro'
 const Nav: React.FC = () => {
   return (
     <StyledNav>
-      <StyledLink exact activeClassName="active" to="/home">
+      <StyledLink exact activeClassName="active" to="/swap">
         Swap
       </StyledLink>
-      <StyledLink exact activeClassName="active" to="/farms">
+      <StyledLink exact activeClassName="active" to="/pool">
         Pool
       </StyledLink>
-      <StyledLink exact activeClassName="active" to="/vestnft">
+      <StyledLink exact activeClassName="active" to="/farm">
         Farm
       </StyledLink>
-      <StyledLink exact activeClassName="active" to="/mynft">
+      <StyledLink exact activeClassName="active" to="/market">
         NFT Market
       </StyledLink>
     </StyledNav>

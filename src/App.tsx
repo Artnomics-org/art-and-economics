@@ -10,9 +10,9 @@ import AcceleratorsProvider from './contexts/Accelerators'
 import theme from './theme'
 import Farms from './views/Farms'
 import Home from './views/Home'
-import Shop from './views/Shop'
 import NFTs from './views/NFTs'
 import Referral from './views/Referral'
+import Pool from './views/Pool'
 
 const App: React.FC = () => {
   return (
@@ -22,7 +22,7 @@ const App: React.FC = () => {
           <Route exact strict path="/" component={Home} />
           <Route exact strict path="/home" component={Home} />
           <Route exact strict path="/swap" component={Referral} />
-          <Route exact strict path="/pool" component={Shop} />
+          <Route exact strict path="/pool" component={Pool} />
           <Route exact strict path="/farm" component={Farms} />
           <Route exact strict path="/market" component={NFTs} />
         </Switch>
