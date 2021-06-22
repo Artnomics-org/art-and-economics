@@ -11,7 +11,7 @@ import theme from './theme'
 import Farms from './views/Farms'
 import Home from './views/Home'
 import NFTs from './views/NFTs'
-import Referral from './views/Referral'
+import Swap from './views/Swap'
 import Pool from './views/Pool'
 
 const App: React.FC = () => {
@@ -21,7 +21,7 @@ const App: React.FC = () => {
         <Switch>
           <Route exact strict path="/" component={Home} />
           <Route exact strict path="/home" component={Home} />
-          <Route exact strict path="/swap" component={Referral} />
+          <Route exact strict path="/swap" component={Swap} />
           <Route exact strict path="/pool" component={Pool} />
           <Route exact strict path="/farm" component={Farms} />
           <Route exact strict path="/market" component={NFTs} />
