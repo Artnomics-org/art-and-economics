@@ -1,18 +1,27 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+
 import { ThemeProvider } from 'styled-components/macro'
-import { UseWalletProvider } from 'use-wallet'
+import { createWeb3ReactRoot, Web3ReactProvider } from '@web3-react/core'
+import { Provider as ReduxProvider } from 'react-redux'
 import FarmsProvider from './contexts/Farms'
 import ModalsProvider from './contexts/Modals'
 import TransactionProvider from './contexts/Transactions'
 import NFTsProvider from './contexts/NFTs'
 import AcceleratorsProvider from './contexts/Accelerators'
+
+import { getLibrary } from './utils'
+import { NetworkContextName } from './constants'
+import store from './state'
 import theme from './theme'
+
 import Farms from './views/Farms'
 import Home from './views/Home'
 import NFTs from './views/NFTs'
 import Swap from './views/Swap'
 import Pool from './views/Pool'
+
+const Web3ProviderNetwork = createWeb3ReactRoot(NetworkContextName)
 
 const App: React.FC = () => {
   return (
@@ -34,22 +43,21 @@ const App: React.FC = () => {
 const Providers: React.FC = ({ children }) => {
   return (
     <ThemeProvider theme={theme}>
-      <UseWalletProvider
-        chainId={56}
-        connectors={{
-          walletconnect: { rpcUrl: 'https://bsc-dataseed.binance.org/' },
-        }}
-      >
-        <TransactionProvider>
-          <FarmsProvider>
-            <NFTsProvider>
-              <AcceleratorsProvider>
-                <ModalsProvider>{children}</ModalsProvider>
-              </AcceleratorsProvider>
-            </NFTsProvider>
-          </FarmsProvider>
-        </TransactionProvider>
-      </UseWalletProvider>
+      <Web3ReactProvider getLibrary={getLibrary}>
+        <Web3ProviderNetwork getLibrary={getLibrary}>
+          <ReduxProvider store={store}>
+            <TransactionProvider>
+              <FarmsProvider>
+                <NFTsProvider>
+                  <AcceleratorsProvider>
+                    <ModalsProvider>{children}</ModalsProvider>
+                  </AcceleratorsProvider>
+                </NFTsProvider>
+              </FarmsProvider>
+            </TransactionProvider>
+          </ReduxProvider>
+        </Web3ProviderNetwork>
+      </Web3ReactProvider>
     </ThemeProvider>
   )
 }
