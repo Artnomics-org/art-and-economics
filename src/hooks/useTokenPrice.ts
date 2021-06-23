@@ -6,6 +6,7 @@ import { getSwapRouter } from '../utils/swapRouter'
 import { getTotalLiquidityInBNB } from './Liquidity'
 import { address } from '../constants/swap'
 import { ADDRESS_ZERO, WBNB, BUSD } from '../constants/addresses'
+import { useActiveWeb3React } from './wallet'
 // import { BigNumber } from "../sushi";
 
 // const { BigNumber } = utils
@@ -20,13 +21,13 @@ export function useTokenPriceInBNB(
   decimals: number | string = 18,
   isLp = false,
 ) {
-  const { account, ethereum } = useWallet()
+  const { account, library: ethereum } = useActiveWeb3React()
   // use BigNumber, format them at the display part please
   const [priceInBNB, updatePriceInBNB] = useState('0')
   // 97 stands for bsc testnet
   const networkId = 56
   const contract = useMemo(() => {
-    return getSwapRouter(ethereum as provider, address[networkId])
+    return getSwapRouter(ethereum, address[networkId])
   }, [ethereum])
 
   const oneUnitOfToken = utils.parseUnits('1', decimals)
@@ -40,7 +41,7 @@ export function useTokenPriceInBNB(
     if (isLp) {
       // LP 做特殊处理
       const fresult = await getTotalLiquidityInBNB(
-        ethereum as provider,
+        ethereum,
         tokenAddress,
         WBNB[56],
       )
@@ -79,13 +80,13 @@ export function useTokenPriceInBUSD(
   decimals: number | string = 18,
   isLp = false,
 ) {
-  const { account, ethereum } = useWallet()
+  const { account, library: ethereum } = useActiveWeb3React()
   // use BigNumber, format them at the display part please
   const [priceInBUSD, updatePriceInBUSD] = useState('0')
   // 97 stands for bsc testnet
   const networkId = 56
   const contract = useMemo(() => {
-    return getSwapRouter(ethereum as provider, address[networkId])
+    return getSwapRouter(ethereum, address[networkId])
   }, [ethereum])
 
   const oneUnitOfToken = utils.parseUnits('1', decimals)
@@ -98,7 +99,7 @@ export function useTokenPriceInBUSD(
     }
     if (isLp) {
       const fresult = await getTotalLiquidityInBNB(
-        ethereum as provider,
+        ethereum,
         tokenAddress,
         BUSD[56],
       )

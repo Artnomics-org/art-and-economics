@@ -1,13 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useWallet } from 'use-wallet'
-import { provider } from 'web3-core'
 import { HoldingEnumerators } from '../constants/nft'
 import { getHoldingEnumeratorContract } from '../utils/nfts'
+import { useActiveWeb3React } from './wallet'
 
 const useHoldings = (address: string) => {
-  const { account, ethereum, chainId } = useWallet()
+  const { account, library: ethereum, chainId } = useActiveWeb3React()
   const contract = useMemo(() => {
-    return getHoldingEnumeratorContract(ethereum as provider, (HoldingEnumerators as any)[chainId])
+    return getHoldingEnumeratorContract(ethereum, (HoldingEnumerators as any)[chainId])
   }, [ethereum, chainId])
 
   const [holdings, setHoldings] = useState([])

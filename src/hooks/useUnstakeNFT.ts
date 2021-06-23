@@ -1,15 +1,14 @@
 import { useCallback, useMemo } from "react"
-import { useWallet } from "use-wallet"
-import { provider } from 'web3-core'
 import { getAcceleratorContract } from "../utils/nfts"
 import useAccelerator from "./useAccelerator"
+import { useActiveWeb3React } from "./wallet"
 
 export default (symbol: string) => {
-    const { account, ethereum } = useWallet()
+    const { account, library: ethereum } = useActiveWeb3React()
     const accelerator = useAccelerator(symbol)
 
     const contract = useMemo(() => {
-        return getAcceleratorContract(ethereum as provider, accelerator.address)
+        return getAcceleratorContract(ethereum, accelerator.address)
     }, [accelerator.address, ethereum])
 
     const handleUnstake = useCallback(

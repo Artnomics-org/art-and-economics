@@ -7,7 +7,7 @@ import ModalTitle from '../../../components/ModalTitle'
 import TokenInput from '../../../components/TokenInput'
 import { getCookie } from '../../../utils/cookie'
 import { getFullDisplayBalance } from '../../../utils/formatBalance'
-import { useWallet } from 'use-wallet'
+import { useActiveWeb3React } from '../../../hooks/wallet'
 
 interface DepositModalProps extends ModalProps {
   max: BigNumber
@@ -23,7 +23,7 @@ const DepositModalWithRef: React.FC<DepositModalProps> = ({
 }) => {
   const [val, setVal] = useState('')
   const [addr, setAddr] = useState('')
-  const { account } = useWallet()
+  const { account } = useActiveWeb3React()
   const [pendingTx, setPendingTx] = useState(false)
 
   useEffect(() => {

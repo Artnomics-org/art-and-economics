@@ -1,15 +1,14 @@
 import { useCallback, useMemo } from 'react'
-import { useWallet } from 'use-wallet'
-import { provider } from 'web3-core'
 import { getContract } from '../utils/nfts'
 import useNFT from './useNFT'
+import { useActiveWeb3React } from './wallet'
 
 const useApproveNFT = (symbol: string, to: string) => {
-  const { account, ethereum } = useWallet()
+  const { account, library: ethereum } = useActiveWeb3React()
   const nft = useNFT(symbol)
 
   const contract = useMemo(() => {
-    return getContract(ethereum as provider, nft.address)
+    return getContract(ethereum, nft.address)
   }, [ethereum, nft.address])
 
   const handleApprove = useCallback(async (tokenId: string) => {

@@ -1,6 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react'
-
-import { useWallet } from 'use-wallet'
+import { useActiveWeb3React } from '../../hooks/wallet'
 
 import { Sushi } from '../../sushi'
 
@@ -19,7 +18,7 @@ declare global {
 }
 
 const SushiProvider: React.FC = ({ children }) => {
-  const { ethereum }: { ethereum: any } = useWallet()
+  const { library: ethereum, chainId, account } = useActiveWeb3React()
   const [sushi, setSushi] = useState<any>()
 
   // @ts-ignore
@@ -29,9 +28,8 @@ const SushiProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     if (ethereum) {
-      const chainId = Number(ethereum.chainId)
       const sushiLib = new Sushi(ethereum, chainId, false, {
-        defaultAccount: ethereum.selectedAddress,
+        defaultAccount: account,
         defaultConfirmations: 1,
         autoGasMultiplier: 1.5,
         testing: false,

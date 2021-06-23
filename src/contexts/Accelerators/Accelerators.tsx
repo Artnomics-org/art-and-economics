@@ -1,12 +1,12 @@
 import React from 'react'
-import { useWallet } from 'use-wallet'
 import Context from './context'
 
 import { Accelerators as supportedAccelerators } from '../../constants/accelerators'
 import { Accelerator } from './types'
+import { useActiveWeb3React } from '../../hooks/wallet'
 
 const Accelerators: React.FC = ({ children }) => {
-    const { chainId } = useWallet()
+    const { chainId } = useActiveWeb3React()
 
     const accelerators: Array<Accelerator> = supportedAccelerators.filter(accelerator => (accelerator.addresses as any)[chainId]).map(
         ({ addresses, poolAddresses, symbol }: any) => ({

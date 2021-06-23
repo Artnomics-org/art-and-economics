@@ -1,20 +1,18 @@
-// import BigNumber from "bignumber.js"
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useWallet } from 'use-wallet'
-import { provider } from 'web3-core'
 import { getContract } from '../utils/vest'
 import { ACC } from '../constants/acc'
 import { NFTLength } from '../constants/vestNFTs'
+import { useActiveWeb3React } from './wallet'
 
 const useNFTBalance = () => {
   const initBalance = new Array(NFTLength).fill(0); // [0, 0, 0,...,0]
   const [NFTBalance, setNFTBalance] = useState(initBalance)
   const [approveState, setApproveState] = useState(false)
-  const { account, ethereum } = useWallet()
+  const { account, library: ethereum } = useActiveWeb3React()
 
   const contract = useMemo(() => {
     return getContract(
-      ethereum as provider,
+      ethereum,
       '0x9c07A44E2dC4A80d4B4d60e45Dfd5FaA29D283A8',
     )
   }, [ethereum])

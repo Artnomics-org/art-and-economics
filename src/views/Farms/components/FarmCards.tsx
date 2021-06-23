@@ -2,7 +2,6 @@ import BigNumber from 'bignumber.js'
 import React, { useEffect, useState } from 'react'
 import Countdown, { CountdownRenderProps } from 'react-countdown'
 import styled, { keyframes } from 'styled-components/macro'
-import { useWallet } from 'use-wallet'
 import BlackButton from '../../../components/Button/BlackButton'
 import Card from '../../Home/components/Card'
 import CardContent from '../../../components/CardContent'
@@ -21,6 +20,7 @@ import { getBalanceNumber } from '../../../utils/formatBalance'
 import useDecimals from '../../../hooks/useDecimals'
 import { useTokenPriceInBNB } from '../../../hooks/useTokenPrice'
 import { usePoolApy } from '../../../hooks/useFarmApy'
+import { useActiveWeb3React } from '../../../hooks/wallet'
 
 interface FarmWithStakedValue extends Farm, StakedValue {
   apy: BigNumber
@@ -28,7 +28,6 @@ interface FarmWithStakedValue extends Farm, StakedValue {
 
 const FarmCards: React.FC = () => {
   const [farms] = useFarms()
-  // const { account } = useWallet()
   const stakedValue = useAllStakedValue()
 
   const sushiIndex = farms.findIndex(
@@ -100,7 +99,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm }) => {
   const [harvestable, setHarvestable] = useState(0)
   const [imagePath, setImagePath ] = useState('')
 
-  const { account } = useWallet()
+  const { account } = useActiveWeb3React()
   const { stakingTokenAddress, poolAddress, earnTokenAddress, pid, name: symbol } = farm
   const decimalsOfStaking = useDecimals(stakingTokenAddress)
   const decimalsOfEarn = useDecimals(earnTokenAddress)

@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import styled from 'styled-components/macro'
 import { useHistory } from 'react-router-dom'
 import { useState } from 'react'
-import { useWallet } from 'use-wallet'
 import BigNumber from 'bignumber.js'
 
 import web3 from '../../web3/'
@@ -19,6 +18,7 @@ import theme from '../../theme'
 import { setCookie } from '../../utils/cookie'
 import { decryptText, encryptText } from '../../utils/compress'
 import { getDisplayBalance } from '../../utils/formatBalance'
+import { useActiveWeb3React } from '../../hooks/wallet'
 
 const Referral: React.FC = () => {
   const [link, setLink] = useState('')
@@ -30,7 +30,7 @@ const Referral: React.FC = () => {
   const [ rebateScore, setRebateScore ] = useState({})
   const history = useHistory()
 
-  const { account, reset } = useWallet()
+  const { account, deactivate: reset } = useActiveWeb3React()
   const RefAddress = useReferral()
   const Explorer = useExplorer()
   const { refRewardContract } = useClaim()

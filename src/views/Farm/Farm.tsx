@@ -1,19 +1,14 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components/macro'
-import { useWallet } from 'use-wallet'
-import { provider } from 'web3-core'
 import PageHeader from './components/PageHeader'
 import Spacer from '../../components/Spacer'
 import useFarm from '../../hooks/useFarm'
-// import useRedeem from '../../hooks/useRedeem'
-// import useSushi from '../../hooks/useSushi'
-// import { getMasterChefContract } from '../../sushi/utils'
 import { getERC20Contract } from '../../utils/ethers'
 import Harvest from './components/Harvest'
 import Stake from './components/Stake'
 import TokenIcon from './components/TokenIcon'
-import { Web3Provider } from '@ethersproject/providers'
+import { useActiveWeb3React } from '../../hooks/wallet'
 
 const Farm: React.FC = () => {
   const { farmId } = useParams<{ farmId?: string}>()
@@ -44,10 +39,10 @@ const Farm: React.FC = () => {
   }, [icon])
 
   // const sushi = useSushi()
-  const { ethereum } = useWallet()
+  const { library: ethereum } = useActiveWeb3React()
 
   const lpContract = useMemo(() => {
-    return getERC20Contract(stakingTokenAddress, ethereum as Web3Provider)
+    return getERC20Contract(stakingTokenAddress, ethereum)
   }, [ethereum, stakingTokenAddress])
 
   // const { onRedeem } = useRedeem(getMasterChefContract(sushi))

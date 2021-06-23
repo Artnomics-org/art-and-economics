@@ -1,10 +1,10 @@
 import { useCallback } from 'react'
-import { useWallet } from 'use-wallet'
 import { Contract } from 'web3-eth-contract'
 import { redeem } from '../sushi/utils'
+import { useActiveWeb3React } from './wallet'
 
 const useRedeem = (masterChefContract: Contract) => {
-  const { account } = useWallet()
+  const { account } = useActiveWeb3React()
 
   const handleRedeem = useCallback(async () => {
     const txHash = await redeem(masterChefContract, account)

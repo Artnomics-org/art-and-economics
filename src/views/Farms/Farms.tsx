@@ -1,6 +1,5 @@
 import React from 'react'
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
-import { useWallet } from 'use-wallet'
 import Button from '../../components/Button'
 import Page from '../../components/Page'
 import PageHeader from './components/PageHeader'
@@ -11,10 +10,11 @@ import useModal from '../../hooks/useModal'
 import Farm from '../Farm'
 
 import FarmCards from './components/FarmCards'
+import { useActiveWeb3React } from '../../hooks/wallet'
 
 const Farms: React.FC = () => {
   const { path } = useRouteMatch()
-  const { account } = useWallet()
+  const { account } = useActiveWeb3React()
   const [onPresentWalletProviderModal] = useModal(<WalletProviderModal />)
   return (
     <Switch>

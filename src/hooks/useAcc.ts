@@ -1,16 +1,15 @@
 import { useCallback, useMemo, useState, useEffect } from "react"
-import { useWallet } from "use-wallet"
-import { provider } from 'web3-core'
 import { getContract } from "../utils/acc"
 import { ACC } from '../constants/acc'
+import { useActiveWeb3React } from "./wallet"
 
 export default () => {
-    const { account, ethereum } = useWallet()
+    const { account, library: ethereum } = useActiveWeb3React()
 
     const [staked, setStaked] = useState(0)
 
     const contract = useMemo(() => {
-        return getContract(ethereum as provider, ACC)
+        return getContract(ethereum, ACC)
     }, [ethereum])
 
 

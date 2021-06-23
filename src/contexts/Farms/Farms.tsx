@@ -1,7 +1,6 @@
 import React from 'react'
-
-import { useWallet } from 'use-wallet'
 import { Pools } from '../../constants/pools'
+import { useActiveWeb3React } from '../../hooks/wallet'
 
 // import { bnToDec } from '../../utils'
 
@@ -9,7 +8,7 @@ import Context from './context'
 import { Farm } from './types'
 
 const Farms: React.FC = ({ children }) => {
-  const { chainId } = useWallet()
+  const { chainId } = useActiveWeb3React()
 
   const farms: Array<Farm> = Pools.filter(pool => (pool.poolAddresses as any)[chainId]).map(
     ({

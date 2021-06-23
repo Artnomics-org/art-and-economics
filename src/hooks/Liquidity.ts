@@ -1,22 +1,22 @@
 import { utils } from 'ethers'
 import { getPairContract } from '../utils/pair'
-import { provider } from 'web3-core'
-import { useWallet } from 'use-wallet'
 import { useTokenPriceInBNB } from './useTokenPrice'
 import { getSwapRouter } from '../utils/swapRouter'
 import { address } from '../constants/swap'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import BigNumber from 'bignumber.js'
+import { useActiveWeb3React } from './wallet'
+import { Web3Provider } from '@ethersproject/providers'
 
 export async function useTotalLiquidity(pair: string) {
   const [reserve0, setReserve0] = useState('0')
   const [reserve1, setReserve1] = useState('0')
   const [token0, setToken0] = useState('')
   const [token1, setToken1] = useState('')
-  const { account, ethereum } = useWallet()
+  const { account, library: ethereum } = useActiveWeb3React()
 
   const contract = useMemo(() => {
-    return getPairContract(ethereum as provider, pair)
+    return getPairContract(ethereum, pair)
   }, [ethereum, pair])
 
   const update = useCallback(async () => {
@@ -91,12 +91,12 @@ export function useEstimateTotalLiquidtyInBNB({
 }
 
 export async function getTotalLiquidityInBNB(
-  ethereum: provider,
+  ethereum: Web3Provider,
   tokenAddress: string,
   valuationCurrency: string,
 ) {
   const networkId = 56 // BSC
-  const swapRouter = getSwapRouter(ethereum as provider, address[networkId])
+  const swapRouter = getSwapRouter(ethereum, address[networkId])
   // LP 做特殊处理
   const pairContract = getPairContract(ethereum, tokenAddress)
   // rewardRate = reward for every second staking

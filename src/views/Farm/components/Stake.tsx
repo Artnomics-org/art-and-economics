@@ -1,7 +1,6 @@
 import BigNumber from 'bignumber.js'
 import React, { useCallback, useState } from 'react'
 import styled from 'styled-components/macro'
-import { useWallet } from 'use-wallet'
 import { Contract } from 'web3-eth-contract'
 import Button from '../../../components/Button/BlackButton'
 import Card from '../../../components/Card/TransCard'
@@ -25,6 +24,7 @@ import CardIcon from './CardIcon'
 import HarvestIcon from '../../../assets/img/harvest-icon.png'
 
 import { getCookie } from '../../../utils/cookie'
+import { useActiveWeb3React } from '../../../hooks/wallet'
 
 interface StakeProps {
   lpContract: Contract | any,
@@ -36,10 +36,11 @@ interface StakeProps {
 const Stake: React.FC<StakeProps> = ({ lpContract, pid, tokenName, isWBNB }) => {
   const [requestedApproval, setRequestedApproval] = useState(false)
 
-  const { account, balance } = useWallet();
+  const { account } = useActiveWeb3React();
   const allowance = useAllowance(lpContract, pid)
   const { onApprove } = useApprove(lpContract, pid)
 
+  const balance = useTokenBalance(account)
   const tokenBalance = useTokenBalance(lpContract.options.address)
 
   const stakedBalance = useStakedBalance(pid)

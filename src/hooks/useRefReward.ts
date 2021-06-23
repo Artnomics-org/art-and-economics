@@ -1,15 +1,13 @@
-// import BigNumber from "bignumber.js"
 import { useCallback, useEffect, useMemo, useState } from "react"
-import { useWallet } from "use-wallet"
-import { provider } from 'web3-core'
 import { getContract } from '../utils/refReward'
+import { useActiveWeb3React } from "./wallet"
 
 const useRefReward = () => {
     const [rewardStatus, setRewardStatus] = useState([false, false, false])
-    const { account, ethereum } = useWallet()
+    const { account, library: ethereum } = useActiveWeb3React()
 
     const contract = useMemo(() => {
-      return getContract(ethereum as provider, '0x6692D5a360a7Bdc178B276c8e2CaFEf578ea1718')
+      return getContract(ethereum, '0x6692D5a360a7Bdc178B276c8e2CaFEf578ea1718')
     }, [ethereum])
 
     const fetchRewardStatus = useCallback(async () => {

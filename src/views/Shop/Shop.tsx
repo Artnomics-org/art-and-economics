@@ -1,6 +1,5 @@
 import React from 'react'
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
-import { useWallet } from 'use-wallet'
 
 import chef from '../../assets/img/chef.png'
 
@@ -11,10 +10,11 @@ import WalletProviderModal from '../../components/WalletProviderModal'
 import ShopCards from './components/ShopCards'
 
 import useModal from '../../hooks/useModal'
+import { useActiveWeb3React } from '../../hooks/wallet'
 
 const Shop: React.FC = () => {
   const { path } = useRouteMatch()
-  const { account } = useWallet()
+  const { account } = useActiveWeb3React()
   const [onPresentWalletProviderModal] = useModal(<WalletProviderModal />)
   return (
     <Switch>

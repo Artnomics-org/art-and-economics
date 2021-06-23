@@ -1,12 +1,11 @@
 import React from 'react'
-import { useWallet } from 'use-wallet'
 import { Context } from '../NFTs'
-
 import { NFTs as supportedNFTs } from '../../constants/nft'
 import { NFT } from './types'
+import { useActiveWeb3React } from '../../hooks/wallet'
 
 const NFTs: React.FC = ({ children }) => {
-    const { chainId } = useWallet()
+    const { chainId } = useActiveWeb3React()
 
     const nfts: Array<NFT> = supportedNFTs.filter(nft => (nft.addresses as any)[chainId]).map(
         ({ addresses, name, symbol }: any) => ({

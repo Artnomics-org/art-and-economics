@@ -1,10 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { provider } from 'web3-core'
-
 import BigNumber from 'bignumber.js'
-import { useWallet } from 'use-wallet'
-// import { Contract } from 'web3-eth-contract'
-
 import {
   getMasterChefContract,
   // getWethContract,
@@ -13,6 +8,7 @@ import {
 } from '../sushi/utils'
 import useSushi from './useSushi'
 import useBlock from './useBlock'
+import { useActiveWeb3React } from './wallet'
 
 export interface StakedValue {
   tokenAmount: BigNumber
@@ -24,7 +20,7 @@ export interface StakedValue {
 
 const useAllStakedValue = () => {
   const [balances, setBalance] = useState([] as Array<StakedValue>)
-  const { account }: { account: string; ethereum: provider } = useWallet()
+  const { account } = useActiveWeb3React()
   const sushi = useSushi()
   const farms = getFarms(sushi)
   const masterChefContract = getMasterChefContract(sushi)

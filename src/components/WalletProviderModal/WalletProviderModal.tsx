@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components/macro'
-import { useWallet } from 'use-wallet'
 
 import metamaskLogo from '../../assets/img/metamask-fox.svg'
 import walletConnectLogo from '../../assets/img/wallet-connect.svg'
+import { useActiveWeb3React } from '../../hooks/wallet'
 
 import Button from '../Button'
 import Modal, { ModalProps } from '../Modal'
@@ -15,7 +15,7 @@ import Spacer from '../Spacer'
 import WalletCard from './components/WalletCard'
 
 const WalletProviderModal: React.FC<ModalProps> = ({ onDismiss }) => {
-  const { account, connect } = useWallet()
+  const { account } = useActiveWeb3React()
 
   useEffect(() => {
     if (account) {
@@ -32,7 +32,7 @@ const WalletProviderModal: React.FC<ModalProps> = ({ onDismiss }) => {
           <StyledWalletCard>
             <WalletCard
               icon={<img src={metamaskLogo} style={{ height: 32 }} alt="icon" />}
-              onConnect={() => connect('injected')}
+              onConnect={() => {}}
               title="Metamask"
             />
           </StyledWalletCard>
@@ -40,7 +40,7 @@ const WalletProviderModal: React.FC<ModalProps> = ({ onDismiss }) => {
           <StyledWalletCard>
             <WalletCard
               icon={<img src={walletConnectLogo} style={{ height: 24 }} alt="icon" />}
-              onConnect={() => connect('walletconnect')}
+              onConnect={() => {}}
               title="WalletConnect"
             />
           </StyledWalletCard>

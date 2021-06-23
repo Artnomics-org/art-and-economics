@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
-import { useWallet } from 'use-wallet'
 import axios, { AxiosResponse } from 'axios'
 import useMyNFT from '../useMyNFT'
+import { useActiveWeb3React } from '../wallet'
 
 export interface VestAttributes {
   trait_type: string
@@ -21,7 +21,7 @@ export interface TokenItem {
 }
 
 const useFetchMetadata = (tokenList: Array<TokenItem>) => {
-  const { account } = useWallet()
+  const { account } = useActiveWeb3React()
   const [tokens] = useState<Array<TokenItem>>(tokenList)
   const [metadataList, setMetadataList] = useState<Array<VestMetadata>>([])
   const {nftUri} = useMyNFT()

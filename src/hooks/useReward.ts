@@ -1,19 +1,14 @@
 import { useCallback, useMemo } from 'react'
-import { provider } from 'web3-core'
-
-// import useSushi from './useSushi'
-import { useWallet } from 'use-wallet'
-
-// import { harvest, getMasterChefContract } from '../sushi/utils'
 import { getContract } from '../utils/pool'
 import useFarm from './useFarm'
+import { useActiveWeb3React } from './wallet'
 
 const useReward = (pid: number) => {
-  const { account, ethereum } = useWallet()
+  const { account, library: ethereum } = useActiveWeb3React()
   const farm = useFarm(pid)
 
   const contract = useMemo(() => {
-    return getContract(ethereum as provider, farm.poolAddress)
+    return getContract(ethereum, farm.poolAddress)
   }, [ethereum, farm.poolAddress])
 
   const handleReward = useCallback(async () => {

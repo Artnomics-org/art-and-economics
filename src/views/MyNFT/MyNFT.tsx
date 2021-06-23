@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components/macro'
 import web3 from '../../web3/'
-import { useWallet } from 'use-wallet'
 import Page from '../../components/Page'
 import useRefReward from '../../hooks/useRefReward'
 import Switcher from './components/Switcher'
@@ -17,6 +16,7 @@ import VESTCards from './components/VestCards'
 import AcceleratorABI from '../../constants/abi/StakingRewardAccelerator.json'
 import { ACC } from '../../constants/acc'
 import { NFTLength } from '../../constants/vestNFTs' 
+import { useActiveWeb3React } from '../../hooks/wallet'
 
 interface MetadataWithStatus extends VestMetadata {
   rewardStatus: boolean
@@ -107,7 +107,7 @@ const findAssetsByType = (
 }
 
 const MyNFTPage: React.FC = () => {
-  const { account } = useWallet()
+  const { account } = useActiveWeb3React()
   const [onPresentWalletProviderModal] = useModal(<WalletProviderModal />)
   const { rewardStatus } = useRefReward()
   const { metadataList } = useFetchMetadata(tokenList)

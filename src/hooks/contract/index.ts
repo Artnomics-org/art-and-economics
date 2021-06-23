@@ -2,7 +2,7 @@ import { useMemo } from "react"
 import { Contract, ContractInterface } from '@ethersproject/contracts'
 import { ChainId } from '@haneko/uniswap-sdk'
 import { useActiveWeb3React } from "../wallet"
-import { getContract } from "../../utils/ethers"
+import { getContractWithAbi } from "../../utils/ethers"
 import { MULTICALL_ABI, MULTICALL_NETWORKS } from "../../constants/multicall"
 import { ENS_ABI, ENS_PUBLIC_RESOLVER_ABI } from "../../constants/ethers"
 
@@ -13,7 +13,7 @@ function useContract(address: string | undefined, ABI: ContractInterface, withSi
   return useMemo(() => {
     if (!address || !ABI || !library) return null
     try {
-      return getContract(address, ABI, library, withSignerIfPossible && account ? account : undefined)
+      return getContractWithAbi(address, ABI, library, withSignerIfPossible && account ? account : undefined)
     } catch (error) {
       console.error('Failed to get contract', error)
       return null

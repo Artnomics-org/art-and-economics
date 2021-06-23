@@ -1,22 +1,16 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { provider } from 'web3-core'
-
 import BigNumber from 'bignumber.js'
-import { useWallet } from 'use-wallet'
-
-// import { getStaked, getMasterChefContract } from '../sushi/utils'
-// import useSushi from './useSushi'
-// import useBlock from './useBlock'
 import useFarm from './useFarm'
 import { getContract } from '../utils/pool'
+import { useActiveWeb3React } from './wallet'
 
 const useStakedBalance = (pid: number) => {
   const [balance, setBalance] = useState(new BigNumber(0))
-  const { account, ethereum } = useWallet()
+  const { account, library: ethereum } = useActiveWeb3React()
   const farm = useFarm(pid)
 
   const contract = useMemo(() => {
-    return getContract(ethereum as provider, farm.poolAddress)
+    return getContract(ethereum, farm.poolAddress)
   }, [ethereum, farm.poolAddress])
 
   const fetchBalance = useCallback(async () => {

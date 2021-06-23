@@ -1,17 +1,16 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { provider } from 'web3-core'
-import { useWallet } from "use-wallet";
 import { formatUnits } from "ethers/lib/utils";
 import { getContract } from "../utils/pool";
+import { useActiveWeb3React } from "./wallet";
 
 export function usePoolApy(poolAddress: string, everyRewardTokenInBNB: string, everyStakingTokenInBNB: string, 
     rewardTokenDecimal: string, stakingTokenDecimal: string) {
-    const { account, ethereum } = useWallet()
+    const { account, library: ethereum } = useActiveWeb3React()
     const [ rewardRate, updateRewardRate ] = useState("0")
     const [ totalStaked, updateTotalStaked ] = useState("0")
 
     const contract = useMemo(() => {
-        return getContract(ethereum as provider, poolAddress)
+        return getContract(ethereum, poolAddress)
     }, [ethereum, poolAddress])
 
     const update = useCallback(async () => {
