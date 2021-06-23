@@ -9,10 +9,11 @@ import useFarm from '../../hooks/useFarm'
 // import useRedeem from '../../hooks/useRedeem'
 // import useSushi from '../../hooks/useSushi'
 // import { getMasterChefContract } from '../../sushi/utils'
-import { getContract } from '../../utils/erc20'
+import { getERC20Contract } from '../../utils/ethers'
 import Harvest from './components/Harvest'
 import Stake from './components/Stake'
 import TokenIcon from './components/TokenIcon'
+import { Web3Provider } from '@ethersproject/providers'
 
 const Farm: React.FC = () => {
   const { farmId } = useParams<{ farmId?: string}>()
@@ -46,7 +47,7 @@ const Farm: React.FC = () => {
   const { ethereum } = useWallet()
 
   const lpContract = useMemo(() => {
-    return getContract(ethereum as provider, stakingTokenAddress)
+    return getERC20Contract(stakingTokenAddress, ethereum as Web3Provider)
   }, [ethereum, stakingTokenAddress])
 
   // const { onRedeem } = useRedeem(getMasterChefContract(sushi))

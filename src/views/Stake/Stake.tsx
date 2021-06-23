@@ -16,7 +16,7 @@ import useModal from '../../hooks/useModal'
 import useSushi from '../../hooks/useSushi'
 import useFarm from '../../hooks/useFarm'
 import useRedeem from '../../hooks/useRedeem'
-import { getContract } from '../../utils/erc20'
+import { getContract } from '../../utils/ethers'
 import { getMasterChefContract } from '../../sushi/utils'
 
 import Harvest from './components/Harvest'
