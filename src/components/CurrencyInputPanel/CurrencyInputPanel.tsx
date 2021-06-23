@@ -1,9 +1,11 @@
 import React, { useState, useContext, useCallback } from 'react'
 import styled from 'styled-components'
 import { Currency, Pair } from '@haneko/uniswap-sdk'
-import { useWallet } from 'use-wallet'
 import { ReactComponent as DropDownIcon } from '../../assets/img/icon-drop-down.svg'
 import NumericalInput from '../NumericalInput'
+import CurrencyLogo, { DoubleCurrencyLogo } from '../CurrencyLogo'
+import { useCurrencyBalance } from '../../hooks/wallet/balance'
+import { useActiveWeb3React } from '../../hooks/wallet'
 
 interface CurrencyInputPanelProps {
   value: string
@@ -43,15 +45,25 @@ const CurrencyInputPanel: React.FC<CurrencyInputPanelProps> = ({
   style,
 }) => {
   const inputId = `${id}-input`
-  // const { account } = useWallet()
-  const account = true
+  const { account } = useActiveWeb3React()
   const [modalOpen, setModalOpen] = useState(false)
-  // const isMaxDisplay = !hideInput && account && currency && showMaxButton && label !== 'To'
-  const isMaxDisplay = true
+  const selectedCurrencyBalance = useCurrencyBalance(account, currency)
+
+  const isMaxDisplay = !hideInput && account && currency && showMaxButton && label !== 'To'
+  const balanceDisplay =
+    !hideBalance && !!currency && selectedCurrencyBalance
+      ? customBalanceText ?? selectedCurrencyBalance?.toSignificant(6)
+      : '0'
   const currencySymbolName =
     currency && currency.symbol && currency.symbol.length > 20
       ? `${currency.symbol.slice(0, 4)}...${currency.symbol.slice(currency.symbol.length - 5, currency.symbol.length)}`
       : currency?.symbol
+
+  const handleCurrencySelectClick = () => {
+    if (!disableCurrencySelect) {
+      setModalOpen(true)
+    }
+  }
 
   return (
     <InputPanel id={id} style={style}>
@@ -59,19 +71,19 @@ const CurrencyInputPanel: React.FC<CurrencyInputPanelProps> = ({
         {!hideInput && (
           <LabelRow>
             <Label htmlFor={inputId}>{label}</Label>
-            {account && <Balance>balance: 0</Balance>}
+            {account && <Balance>balance: {balanceDisplay}</Balance>}
           </LabelRow>
         )}
         <InputRow>
           {!hideInput && <NumericalInput fontSize={40} value={value} onUserInput={(val) => onUserInput(val)} />}
           <CurrencySelectWrapper>
             {isMaxDisplay && <BalanceMax onClick={onMax}>max</BalanceMax>}
-            <CurrencySelect>
-              {/* {pair ? (
+            <CurrencySelect onClick={handleCurrencySelectClick}>
+              {pair ? (
                 <DoubleCurrencyLogo currency0={pair.token0} currency1={pair.token1} size={18} />
               ) : currency ? (
                 <CurrencyLogo currency={currency} size={18} />
-              ) : null} */}
+              ) : null}
               {pair ? (
                 <TokenName active={true}>
                   {pair?.token0.symbol}:{pair?.token1.symbol}
