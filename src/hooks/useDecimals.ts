@@ -1,14 +1,15 @@
+import { Web3Provider } from "@ethersproject/providers"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { useWallet } from "use-wallet"
 import { provider } from 'web3-core'
-import { getContract } from "../utils/erc20"
+import { getERC20Contract } from "../utils/ethers"
 
 const useDecimals = (tokenAddress: string) => {
     const [decimals, setDecimals] = useState("18")
     const { account, ethereum } = useWallet()
 
     const contract = useMemo(() => {
-      return getContract(ethereum as provider, tokenAddress)
+      return getERC20Contract(tokenAddress, ethereum as Web3Provider)
     }, [ethereum, tokenAddress])
 
     const fetchTotalSupply = useCallback(async () => {
