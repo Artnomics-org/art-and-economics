@@ -1,15 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { provider } from 'web3-core'
 import { utils } from 'ethers'
-import { useWallet } from 'use-wallet'
 import { getSwapRouter } from '../utils/swapRouter'
 import { getTotalLiquidityInBNB } from './Liquidity'
 import { address } from '../constants/swap'
 import { ADDRESS_ZERO, WBNB, BUSD } from '../constants/addresses'
 import { useActiveWeb3React } from './wallet'
-// import { BigNumber } from "../sushi";
-
-// const { BigNumber } = utils
 
 /**
  * useTokenPriceInBNB 获取1个单位的代币在 Swap 合约中的价格（以BNB计价）
