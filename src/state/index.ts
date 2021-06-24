@@ -4,13 +4,19 @@ import { updateVersion } from './global/actions'
 
 import application from './application/reducer'
 import multicall from './multicall/reducer'
+import user from './user/reducer'
+import lists from './lists/reducer'
+import transactions from './transactions/reducer'
 
 const PERSISTED_KEYS: string[] = ['user', 'transactions', 'lists']
 
 const store = configureStore({
   reducer: {
     application,
-    multicall
+    multicall,
+    user,
+    lists,
+    transactions
   },
   middleware: [...getDefaultMiddleware({ thunk: false }), save({ states: PERSISTED_KEYS })],
   preloadedState: load({ states: PERSISTED_KEYS })
