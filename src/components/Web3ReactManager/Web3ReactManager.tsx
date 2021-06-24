@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useWeb3React } from '@web3-react/core'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import { NetworkContextName } from '../../constants'
 import { useEagerConnect, useInactiveListener } from '../../hooks/connector'
 import { network } from '../../connectors'

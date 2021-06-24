@@ -1,5 +1,5 @@
 import React, { useState, useContext, useCallback } from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import { Currency, Pair } from '@haneko/uniswap-sdk'
 import { ReactComponent as DropDownIcon } from '../../assets/img/icon-drop-down.svg'
 import NumericalInput from '../NumericalInput'

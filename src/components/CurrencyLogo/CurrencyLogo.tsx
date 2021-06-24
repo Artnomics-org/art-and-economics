@@ -1,6 +1,6 @@
 import { Currency, ETHER, Token } from '@haneko/uniswap-sdk'
 import React, { useMemo } from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import { useHttpLocations } from '../../hooks'
 import { WrappedTokenInfo } from '../../hooks/lists'
 import TokenLogo from '../TokenLogo'
