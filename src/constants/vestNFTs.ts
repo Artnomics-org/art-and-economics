@@ -1345,4 +1345,4 @@ export const VestNFTList: Array<NftAssets> = [
   },
 ]
 
-export const NFTLength: number = 18
+export const NFTLength = 18

@@ -37,7 +37,7 @@ export default (symbol: string) => {
         if (account && accContract) {
             fetch()
         }
-        let refreshInterval = setInterval(fetch, 10000)
+        const refreshInterval = setInterval(fetch, 10000)
         return () => clearInterval(refreshInterval)
       }, [account, symbol, setStaked, accContract, fetch])
 

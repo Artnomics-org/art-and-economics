@@ -19,7 +19,7 @@ const useAllowance = (lpContract: Contract, pid: number) => {
     if (account && farm && lpContract) {
       fetchAllowance()
     }
-    let refreshInterval = setInterval(fetchAllowance, 10000)
+    const refreshInterval = setInterval(fetchAllowance, 10000)
     return () => clearInterval(refreshInterval)
   }, [account, farm, fetchAllowance, lpContract])
 

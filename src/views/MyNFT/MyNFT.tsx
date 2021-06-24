@@ -55,7 +55,7 @@ const findAssetsByType = (
   NFTId: string
 ): Array<MetadataWithStatus> => {
   const metadataWithStatus = metadataList.map((data, i) => {
-    let resBody = {
+    const resBody = {
       ...data,
       rewardStatus: rewardStatus[i],
       tokenId: tokenList[i].tokenId,

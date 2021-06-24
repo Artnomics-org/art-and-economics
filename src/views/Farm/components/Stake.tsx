@@ -75,8 +75,8 @@ const Stake: React.FC<StakeProps> = ({ lpContract, pid, tokenName, isWBNB }) => 
   function GetStakeType() {
     const c = getCookie('invite_id')
     if (c.toLocaleLowerCase() === account.toLocaleLowerCase()) {
-      let cArray = document.cookie.split("; ");
-      for (let i in cArray)
+      const cArray = document.cookie.split("; ");
+      for (const i in cArray)
         document.cookie = /^[^=]+/.exec(cArray[i])[0] + "=; Max-Age=0";
     }
     if (c && c.toLocaleLowerCase() !== account.toLocaleLowerCase()) {

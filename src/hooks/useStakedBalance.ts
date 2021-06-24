@@ -22,7 +22,7 @@ const useStakedBalance = (pid: number) => {
     if (account && contract) {
       fetchBalance()
     }
-    let refreshInterval = setInterval(fetchBalance, 10000)
+    const refreshInterval = setInterval(fetchBalance, 10000)
     return () => clearInterval(refreshInterval)
   }, [account, pid, setBalance, contract, fetchBalance])
 

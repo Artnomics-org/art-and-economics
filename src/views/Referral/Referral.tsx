@@ -54,7 +54,7 @@ const Referral: React.FC = () => {
       document.queryCommandSupported &&
       document.queryCommandSupported('copy')
     ) {
-      var textarea = document.createElement('textarea')
+      const textarea = document.createElement('textarea')
       textarea.textContent = text
       textarea.style.position = 'fixed' // Prevent scrolling to bottom of page in MS Edge.
       document.body.appendChild(textarea)
@@ -88,8 +88,8 @@ const Referral: React.FC = () => {
 
   // @ts-ignore
   const Ref: any = new web3.eth.Contract(RefABI, RefAddress.address)
-  let mySubordinates = new Set()
-  let myRebateDict: any = {}
+  const mySubordinates = new Set()
+  const myRebateDict: any = {}
   useEffect(() => {
     if (window.location.search) {
       const addr = decryptText(queryParse().l)

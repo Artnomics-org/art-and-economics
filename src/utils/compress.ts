@@ -8,9 +8,9 @@ return decodeURIComponent(escape(window.atob(str)))
 
 export const encryptText = (s: string): string => {
 try {
-    let dict: any = {}
-    let data = (s + '').split('')
-    let out = []
+    const dict: any = {}
+    const data = (s + '').split('')
+    const out = []
     let currChar
     let phrase = data[0]
     let code = 256
@@ -38,16 +38,16 @@ try {
 
 export const decryptText = (base64ZippedString: string): string => {
 try {
-    let s = atou(base64ZippedString)
-    let dict: any = {}
-    let data = (s + '').split('')
+    const s = atou(base64ZippedString)
+    const dict: any = {}
+    const data = (s + '').split('')
     let currChar = data[0]
     let oldPhrase = currChar
-    let out = [currChar]
+    const out = [currChar]
     let code = 256
     let phrase
     for (let i = 1; i < data.length; i++) {
-    let currCode = data[i].charCodeAt(0)
+    const currCode = data[i].charCodeAt(0)
     if (currCode < 256) {
         phrase = data[i]
     } else {
