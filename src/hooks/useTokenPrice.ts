@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { utils } from 'ethers'
 import { getSwapRouter } from '../utils/swapRouter'
-import { getTotalLiquidityInBNB } from './Liquidity'
+import { getTotalLiquidityInBNB } from './useLiquidity'
 import { address } from '../constants/swap'
 import { ADDRESS_ZERO, WBNB, BUSD } from '../constants/addresses'
 import { useActiveWeb3React } from './wallet'
