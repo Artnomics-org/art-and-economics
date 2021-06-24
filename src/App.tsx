@@ -20,22 +20,25 @@ import Home from './views/Home'
 import NFTs from './views/NFTs'
 import Swap from './views/Swap'
 import Pool from './views/Pool'
+import Web3ReactManager from './components/Web3ReactManager'
 
 const Web3ProviderNetwork = createWeb3ReactRoot(NetworkContextName)
 
 const App: React.FC = () => {
   return (
     <Providers>
-      <Router>
-        <Switch>
-          <Route exact strict path="/" component={Home} />
-          <Route exact strict path="/home" component={Home} />
-          <Route exact strict path="/swap" component={Swap} />
-          <Route exact strict path="/pool" component={Pool} />
-          <Route exact strict path="/farm" component={Farms} />
-          <Route exact strict path="/market" component={NFTs} />
-        </Switch>
-      </Router>
+      <Web3ReactManager>
+        <Router>
+          <Switch>
+            <Route exact strict path="/" component={Home} />
+            <Route exact strict path="/home" component={Home} />
+            <Route exact strict path="/swap" component={Swap} />
+            <Route exact strict path="/pool" component={Pool} />
+            <Route exact strict path="/farm" component={Farms} />
+            <Route exact strict path="/market" component={NFTs} />
+          </Switch>
+        </Router>
+      </Web3ReactManager>
     </Providers>
   )
 }
