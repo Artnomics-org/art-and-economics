@@ -26,7 +26,7 @@ const Pool: React.FC = () => {
           <Button>Add liquidity</Button>
         </ButtonWrapper>
         <Info style={{ marginBottom: '48px' }}>No liquidity found.</Info>
-        <Content>Don't see a pool you joined? <Link>Import it.</Link></Content>
+        <Content>Don&#39;t see a pool you joined? <Link>Import it.</Link></Content>
       </PoolWrapper>
     </Page>
   )
