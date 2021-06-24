@@ -8,7 +8,7 @@ const ETHERSCAN_PREFIXES: { [chainId: string]: string } = {
   97: 'testnet.bscscan.com'
 }
 
-export function getBscScanLink(
+export function getScanLink(
   chainId: number,
   data: string,
   type: 'transaction' | 'token' | 'block' | 'address'

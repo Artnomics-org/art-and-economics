@@ -8,7 +8,7 @@ import useMyNFT from '../../../hooks/useMyNFT'
 import useModal from '../../../hooks/useModal'
 import useAcc from '../../../hooks/useAcc'
 import TransactionModal from '../../../components/TransactionModal'
-import { getBscScanLink } from '../../../utils/getBscScanLink'
+import { getScanLink } from '../../../utils/getScanLink'
 
 export interface VESTCardProps {
   info: VestMetadata & { rewardStatus?: boolean, claimId?: number, tokenId?: number, acc?: number },
@@ -51,7 +51,7 @@ const VESTCard: React.FC<VESTCardProps> = ({ info, tab }) => {
   const handleClaimNFT = useCallback(async (id: number) => {
     const txHash = await onClaimNFT(id)
     if (txHash) {
-      const link = getBscScanLink(97, txHash, 'transaction')
+      const link = getScanLink(97, txHash, 'transaction')
       setTxHashLink(link)
       onPresentTransactionModal()
     }
