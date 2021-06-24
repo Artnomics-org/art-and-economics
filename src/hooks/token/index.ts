@@ -1,9 +1,10 @@
 import { Currency, CurrencyAmount, ETHER, JSBI, Token, TokenAmount } from '@haneko/uniswap-sdk'
 import { useMemo } from 'react'
+import { BigNumber } from '@ethersproject/bignumber'
 import { ERC20_INTERFACE } from '../../constants/ethers'
 import { isAddress } from '../../utils/ethers'
-import { useMulticallContract } from '../contract'
-import { useMultipleContractSingleData, useSingleContractMultipleData } from '../multicall'
+import { useMulticallContract, useTokenContract } from '../contract'
+import { useMultipleContractSingleData, useSingleCallResult, useSingleContractMultipleData } from '../multicall'
 
 /**
  * Returns a map of the given addresses to their eventually consistent BNB balances.
@@ -118,4 +119,14 @@ export function useCurrencyBalances(
 
 export function useCurrencyBalance(account?: string, currency?: Currency): CurrencyAmount | undefined {
   return useCurrencyBalances(account, [currency])[0]
+}
+
+// returns undefined if input token is undefined, or fails to get token contract,
+// or contract total supply cannot be fetched
+export function useTotalSupply(token?: Token): TokenAmount | undefined {
+  const contract = useTokenContract(token?.address, false)
+
+  const totalSupply: BigNumber = useSingleCallResult(contract, 'totalSupply')?.result?.[0]
+
+  return token && totalSupply ? new TokenAmount(token, totalSupply.toString()) : undefined
 }

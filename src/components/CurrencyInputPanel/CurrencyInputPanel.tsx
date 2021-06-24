@@ -1,10 +1,10 @@
-import React, { useState, useContext, useCallback } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 import { Currency, Pair } from '@haneko/uniswap-sdk'
 import { ReactComponent as DropDownIcon } from '../../assets/img/icon-drop-down.svg'
 import NumericalInput from '../NumericalInput'
 import CurrencyLogo, { DoubleCurrencyLogo } from '../CurrencyLogo'
-import { useCurrencyBalance } from '../../hooks/wallet/balance'
+import { useCurrencyBalance } from '../../hooks/token'
 import { useActiveWeb3React } from '../../hooks/wallet'
 
 interface CurrencyInputPanelProps {

@@ -4,7 +4,7 @@ import { ChainId } from '@haneko/uniswap-sdk'
 import { useActiveWeb3React } from "../wallet"
 import { getContractWithAbi } from "../../utils/ethers"
 import { MULTICALL_ABI, MULTICALL_NETWORKS } from "../../constants/multicall"
-import { ENS_ABI, ENS_PUBLIC_RESOLVER_ABI } from "../../constants/ethers"
+import { ENS_ABI, ENS_PUBLIC_RESOLVER_ABI, ERC20_ABI } from "../../constants/ethers"
 
 // returns null on errors
 function useContract(address: string | undefined, ABI: ContractInterface, withSignerIfPossible = true): Contract | null {
@@ -44,4 +44,8 @@ export function useENSRegistrarContract(withSignerIfPossible?: boolean): Contrac
 
 export function useENSResolverContract(address: string | undefined, withSignerIfPossible?: boolean): Contract | null {
   return useContract(address, ENS_PUBLIC_RESOLVER_ABI, withSignerIfPossible)
+}
+
+export function useTokenContract(tokenAddress?: string, withSignerIfPossible?: boolean): Contract | null {
+  return useContract(tokenAddress, ERC20_ABI.abi, withSignerIfPossible)
 }
