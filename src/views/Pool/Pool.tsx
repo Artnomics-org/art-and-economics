@@ -1,4 +1,6 @@
 import React, { useMemo } from 'react'
+import { Link as RouterLink } from 'react-router-dom'
+import { Pair } from '@haneko/uniswap-sdk'
 import Page from '../../components/Page'
 import {
   Button,
@@ -17,7 +19,6 @@ import IconLongArrow from '../../assets/img/icon-long-arrow.svg'
 import { useActiveWeb3React } from '../../hooks/wallet'
 import { toV2LiquidityToken, usePairs, useTrackedTokenPairs } from '../../hooks/liquidity'
 import { useTokenBalancesWithLoadingIndicator } from '../../hooks/token'
-import { Pair } from '@haneko/uniswap-sdk'
 import FullPositionCard from '../../components/PositionCard'
 
 const Pool: React.FC = () => {
@@ -75,8 +76,8 @@ const Pool: React.FC = () => {
           </Link>
         </VoteCard>
         <ButtonWrapper>
-          <Button style={{ marginRight: '32px' }}>Create a pair</Button>
-          <Button>Add liquidity</Button>
+          <Button style={{ marginRight: '32px' }} as={RouterLink} to='/create'>Create a pair</Button>
+          <Button as={RouterLink} to='/add'>Add liquidity</Button>
         </ButtonWrapper>
         <PositionCardWrapper>
           {!account && <Info>Connect to a wallet to view your liquidity.</Info>}

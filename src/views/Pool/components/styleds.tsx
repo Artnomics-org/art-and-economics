@@ -62,6 +62,7 @@ export const Button = styled.button`
   text-align: center;
   font-family: 'Helvetica Neue LT W05_53 Ext';
   text-transform: uppercase;
+  text-decoration: none;
   color: ${(props) => props.theme.color.grey[600]};
   background-color: transparent;
   min-width: 271px;
