@@ -21,6 +21,8 @@ interface CurrencyInputPanelProps {
   showCommonBases?: boolean
   customBalanceText?: string
   style?: React.CSSProperties
+  padding?: boolean | number
+  fgColor?: string
   onUserInput: (value: string) => void
   onMax?: () => void
   onCurrencySelect?: (currency: Currency) => void
@@ -43,6 +45,8 @@ const CurrencyInputPanel: React.FC<CurrencyInputPanelProps> = ({
   showCommonBases,
   customBalanceText,
   style,
+  padding = false,
+  fgColor
 }) => {
   const inputId = `${id}-input`
   const { account } = useActiveWeb3React()
@@ -66,34 +70,34 @@ const CurrencyInputPanel: React.FC<CurrencyInputPanelProps> = ({
   }
 
   return (
-    <InputPanel id={id} style={style}>
+    <InputPanel id={id} padding={padding} style={style}>
       <Container>
         {!hideInput && (
           <LabelRow>
-            <Label htmlFor={inputId}>{label}</Label>
-            {account && <Balance>balance: {balanceDisplay}</Balance>}
+            <Label htmlFor={inputId} fgColor={fgColor}>{label}</Label>
+            {account && <Balance fgColor={fgColor}>balance: {balanceDisplay}</Balance>}
           </LabelRow>
         )}
         <InputRow>
-          {!hideInput && <NumericalInput fontSize={40} value={value} onUserInput={(val) => onUserInput(val)} />}
+          {!hideInput && <NumericalInput fgColor={fgColor} fontSize={40} value={value} onUserInput={(val) => onUserInput(val)} />}
           <CurrencySelectWrapper>
-            {isMaxDisplay && <BalanceMax onClick={onMax}>max</BalanceMax>}
-            <CurrencySelect onClick={handleCurrencySelectClick}>
+            {isMaxDisplay && <BalanceMax fgColor={fgColor} onClick={onMax}>max</BalanceMax>}
+            <CurrencySelect fgColor={fgColor} onClick={handleCurrencySelectClick}>
               {pair ? (
                 <DoubleCurrencyLogo currency0={pair.token0} currency1={pair.token1} size={18} />
               ) : currency ? (
                 <CurrencyLogo currency={currency} size={18} />
               ) : null}
               {pair ? (
-                <TokenName active={true}>
+                <TokenName active={true} fgColor={fgColor}>
                   {pair?.token0.symbol}:{pair?.token1.symbol}
                 </TokenName>
               ) : (
-                <TokenName active={Boolean(currency && currency.symbol)}>
+                <TokenName active={Boolean(currency && currency.symbol)} fgColor={fgColor}>
                   {currencySymbolName || 'Select a token'}
                 </TokenName>
               )}
-              {!disableCurrencySelect && <IconDropDown />}
+              {!disableCurrencySelect && <IconDropDown fgColor={fgColor} />}
             </CurrencySelect>
           </CurrencySelectWrapper>
         </InputRow>
@@ -102,9 +106,11 @@ const CurrencyInputPanel: React.FC<CurrencyInputPanelProps> = ({
   )
 }
 
-const InputPanel = styled.div`
+const InputPanel = styled.div<{ padding: boolean | number }>`
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  padding: ${({ padding }) => padding && 20}px;
 `
 
 const Container = styled.div`
@@ -125,24 +131,24 @@ const InputRow = styled(Row)`
   margin-top: 36px;
 `
 
-const Label = styled.label`
+const Label = styled.label<{ fgColor?: string }>`
   display: inline-block;
   font-family: 'Helvetica Neue LT W05_93 Blk E';
   font-size: 16px;
   line-height: 1.38;
   letter-spacing: 1.7px;
   text-transform: uppercase;
-  color: ${(props) => props.theme.color.white};
+  color: ${({ theme, fgColor }) => fgColor ? fgColor : theme.color.white};
 `
 
-const Balance = styled.p`
+const Balance = styled.p<{ fgColor?: string }>`
   font-family: 'Helvetica Neue LT W05_53 Ext';
   font-size: 8px;
   line-height: 2.25;
   letter-spacing: 0.67px;
   text-align: right;
   text-transform: uppercase;
-  color: ${(props) => props.theme.color.white};
+  color: ${({ theme, fgColor }) => fgColor ? fgColor : theme.color.white};
   margin: 0;
 `
 
@@ -153,23 +159,23 @@ const CurrencySelectWrapper = styled.div`
   justify-content: space-between;
 `
 
-const BalanceMax = styled.button`
+const BalanceMax = styled.button<{ fgColor?: string }>`
   box-sizing: border-box;
   width: 68px;
   height: 28px;
   background-color: transparent;
-  border: 2px solid ${(props) => props.theme.color.white};
+  border: 2px solid ${({ theme, fgColor }) => fgColor ? fgColor : theme.color.white};
   border-radius: 60px;
   font-family: 'Helvetica Neue LT W05_93 Blk E';
   font-size: 16px;
   text-transform: uppercase;
-  color: ${(props) => props.theme.color.white};
+  color: ${({ theme, fgColor }) => fgColor ? fgColor : theme.color.white};
   cursor: pointer;
   outline: none;
   margin-right: 6px;
 `
 
-const CurrencySelect = styled.button`
+const CurrencySelect = styled.button<{ fgColor?: string }>`
   box-sizing: border-box;
   display: flex;
   justify-content: center;
@@ -180,26 +186,26 @@ const CurrencySelect = styled.button`
   font-family: 'Helvetica Neue LT W05_53 Ext';
   font-size: 16px;
   text-transform: uppercase;
-  color: ${(props) => props.theme.color.white};
+  color: ${({ theme, fgColor }) => fgColor ? fgColor : theme.color.white};
   border-radius: 60px;
-  border: 2px solid ${(props) => props.theme.color.white};
+  border: 2px solid ${({ theme, fgColor }) => fgColor ? fgColor : theme.color.white};
   outline: none;
   cursor: pointer;
   user-select: none;
 `
 
-const TokenName = styled.span<{ active: boolean }>`
+const TokenName = styled.span<{ active: boolean, fgColor?: string }>`
   font-family: ${({ active }) => (active ? 'Helvetica Neue LT W05_53 Ext' : 'Helvetica Neue LT W05_93 Blk E')};
   font-size: ${({ active }) => (active ? 16 : 10)}px;
   text-align: center;
-  color: ${(props) => props.theme.color.white};
+  color: ${({ theme, fgColor }) => fgColor ? fgColor : theme.color.white};
 `
 
-const IconDropDown = styled(DropDownIcon)`
+const IconDropDown = styled(DropDownIcon)<{ fgColor?: string }>`
   margin-left: 6px;
   height: 16px;
   path {
-    stroke: ${(props) => props.theme.color.white};
+    stroke: ${({ theme, fgColor }) => fgColor ? fgColor : theme.color.white};
   }
 `
 

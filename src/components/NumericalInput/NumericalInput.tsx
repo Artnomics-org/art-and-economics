@@ -5,6 +5,7 @@ import { escapeRegExp } from '../../utils'
 interface InputProps {
   error?: boolean
   fontSize?: number
+  fgColor?: string
   align?: 'right' | 'left'
 }
 
@@ -47,7 +48,7 @@ const NumericalInput: React.FC<NumericalInputProps> = ({ value, onUserInput, pla
 }
 
 const Input = styled.input<InputProps>`
-  color: ${({ error, theme }) => (error ? theme.color.red[500] : theme.color.white)};
+  color: ${({ error, theme, fgColor }) => (error ? theme.color.red[500] : fgColor ? fgColor : theme.color.white)};
   position: relative;
   outline: none;
   border: none;
@@ -74,7 +75,7 @@ const Input = styled.input<InputProps>`
     appearance: none;
   }
   ::placeholder {
-    color: ${({ theme }) => theme.color.white};
+    color: ${({ theme, fgColor }) => fgColor ? fgColor : theme.color.white};
   }
 `
 
