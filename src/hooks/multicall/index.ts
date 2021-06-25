@@ -46,6 +46,11 @@ const INVALID_RESULT: CallResult = { valid: false, blockNumber: undefined, data:
 const INVALID_CALL_STATE: CallState = { valid: false, result: undefined, loading: false, syncing: false, error: false }
 const LOADING_CALL_STATE: CallState = { valid: true, result: undefined, loading: true, syncing: true, error: false }
 
+// use this options object
+export const NEVER_RELOAD: ListenerOptions = {
+  blocksPerFetch: Infinity
+}
+
 function isMethodArg(x: unknown): x is MethodArg {
   return ['string', 'number'].indexOf(typeof x) !== -1
 }
