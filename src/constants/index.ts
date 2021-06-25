@@ -1,3 +1,4 @@
+import { JSBI } from '@haneko/uniswap-sdk'
 import { AbstractConnector } from '@web3-react/abstract-connector'
 import { injected, walletconnect } from '../connectors'
 
@@ -48,3 +49,7 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
 export const INITIAL_ALLOWED_SLIPPAGE = 50
 // 20 minutes, denominated in seconds
 export const DEFAULT_DEADLINE_FROM_NOW = 60 * 20
+
+export const ZERO = JSBI.BigInt(0)
+// used to ensure the user doesn't send so much BNB so they end up with <.01
+export const MIN_ETH: JSBI = JSBI.exponentiate(JSBI.BigInt(10), JSBI.BigInt(16)) // .01 ETH
