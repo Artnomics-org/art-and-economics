@@ -1,59 +1,114 @@
 import React from 'react'
-import styled, { keyframes } from 'styled-components/macro'
+import styled, { css } from 'styled-components/macro'
+import { animated, useTransition, useSpring } from 'react-spring'
+import { DialogOverlay, DialogContent } from '@reach/dialog'
+import { isMobile } from 'react-device-detect'
+import { transparentize } from 'polished'
+import { useGesture } from 'react-use-gesture'
+import '@reach/dialog/styles.css'
 
 export interface ModalProps {
-  onDismiss?: () => void
+  isOpen: boolean
+  onDismiss: () => void
+  minHeight?: number | false
+  maxHeight?: number
+  initialFocusRef?: React.RefObject<unknown>
 }
 
-const Modal: React.FC = ({ children }) => {
+const Modal: React.FC<ModalProps> = ({ minHeight, maxHeight, isOpen, initialFocusRef, onDismiss, children }) => {
+  const fadeTransition = useTransition(isOpen, {
+    config: { duration: 200 },
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
+  })
+  const [{ y }, set] = useSpring(() => ({ y: 0, config: { mass: 1, tension: 210, friction: 20 } }))
+  const bind = useGesture({
+    onDrag: (state) => {
+      set({
+        y: state.down ? state.movement[1] : 0,
+      })
+      if (state.movement[1] > 300 || (state.velocity > 3 && state.direction[1] > 0)) {
+        onDismiss()
+      }
+    },
+  })
+  const contentRes = isMobile
+    ? {
+        ...bind(),
+        style: { transform: y.to((y) => `translateY(${y > 0 ? y : 0}px)`) },
+      }
+    : {}
+
   return (
-    <StyledResponsiveWrapper>
-      <StyledModal>{children}</StyledModal>
-    </StyledResponsiveWrapper>
+    <>
+      {fadeTransition(
+        (style, item, prop, key) =>
+          item && (
+            <StyledDialogOverlay key={key} style={style} onDismiss={onDismiss} initialFocusRef={initialFocusRef}>
+              <StyledDialogContent
+                {...contentRes}
+                aria-label="dialog content"
+                minHeight={minHeight}
+                maxHeight={maxHeight}
+                mobile={isMobile}
+              >
+                {/* prevents the automatic focusing of inputs on mobile by the reach dialog */}
+                {!initialFocusRef && isMobile ? <div tabIndex={1} /> : null}
+                {children}
+              </StyledDialogContent>
+            </StyledDialogOverlay>
+          ),
+      )}
+    </>
   )
 }
 
-const mobileKeyframes = keyframes`
-  0% {
-    transform: translateY(0%);
-  }
-  100% {
-    transform: translateY(-100%);
-  }
-`
-
-const StyledResponsiveWrapper = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  position: relative;
-  width: 100%;
-  max-width: 512px;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}px) {
-    flex: 1;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    left: 0;
-    max-height: calc(100% - ${(props) => props.theme.spacing[4]}px);
-    animation: ${mobileKeyframes} 0.3s forwards ease-out;
+const AnimatedDialogOverlay = animated(DialogOverlay)
+const StyledDialogOverlay = styled(AnimatedDialogOverlay)`
+  &[data-reach-dialog-overlay] {
+    z-index: 2;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: ${({ theme }) => theme.color.bg};
   }
 `
 
-const StyledModal = styled.div`
-  padding: 0 20px;
-  background: ${(props) => props.theme.color.grey[200]};
-  border: 1px solid ${(props) => props.theme.color.grey[300]}ff;
-  border-radius: 12px;
-  box-shadow: inset 1px 1px 0px ${(props) => props.theme.color.grey[100]};
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  width: 100%;
-  min-height: 0;
-`
+const AnimatedDialogContent = animated(DialogContent)
+const StyledDialogContent = styled(({ minHeight, maxHeight, mobile, isOpen, ...rest }) => (
+  <AnimatedDialogContent {...rest} />
+)).attrs({
+  'aria-label': 'dialog',
+})`
+  overflow-y: ${({ mobile }) => (mobile ? 'scroll' : 'hidden')};
 
-// const StyledModalContent = styled.div``
+  &[data-reach-dialog-content] {
+    margin: 0 0 2rem 0;
+    background-color: ${({ theme }) => theme.color.bg};
+    box-shadow: 0 4px 8px 0 ${({ theme }) => transparentize(0.95, theme.color.grey[400])};
+    padding: 0px;
+    width: 50vw;
+    overflow-y: ${({ mobile }) => (mobile ? 'scroll' : 'hidden')};
+    overflow-x: hidden;
+
+    align-self: ${({ mobile }) => (mobile ? 'flex-end' : 'center')};
+
+    max-width: 420px;
+    ${({ maxHeight }) =>
+      maxHeight &&
+      css`
+        max-height: ${maxHeight}vh;
+      `}
+    ${({ minHeight }) =>
+      minHeight &&
+      css`
+        min-height: ${minHeight}vh;
+      `}
+    display: flex;
+    border-radius: 6px;
+  }
+`
 
 export default Modal
