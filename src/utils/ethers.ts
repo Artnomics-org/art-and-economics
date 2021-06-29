@@ -2,12 +2,15 @@ import { getAddress } from '@ethersproject/address'
 import { Contract, ContractInterface } from '@ethersproject/contracts'
 import { AddressZero } from '@ethersproject/constants'
 import { JsonRpcSigner, Web3Provider } from '@ethersproject/providers'
-import { ERC20_INTERFACE } from '../constants/ethers'
+import { Provider } from '@ethersproject/abstract-provider'
+import { namehash } from 'ethers/lib/utils'
+import { ERC20_INTERFACE, REGISTRAR_ABI, RESOLVER_ABI } from '../constants/ethers'
+import { REGISTRAR_ADDRESS } from '../constants/address'
 
 // returns the checksummed address if the address is valid, otherwise returns false
-export function isAddress(value: any): string | false {
+export function isAddress(value: unknown): string | false {
   try {
-    return getAddress(value)
+    return getAddress(String(value))
   } catch {
     return false
   }
@@ -92,4 +95,21 @@ export function parseENSAddress(ensAddress: string): { ensName: string; ensPath:
   const match = ensAddress.match(ENS_NAME_REGEX)
   if (!match) return undefined
   return { ensName: `${match[1].toLowerCase()}eth`, ensPath: match[3] }
+}
+
+// cache the resolver contracts since most of them are the public resolver
+function resolverContract(resolverAddress: string, provider: Provider): Contract {
+  return new Contract(resolverAddress, RESOLVER_ABI, provider)
+}
+
+/**
+ * Fetches and decodes the result of an ENS contenthash lookup on mainnet to a URI
+ * @param ensName to resolve
+ * @param provider provider to use to fetch the data
+ */
+export default async function resolveENSContentHash(ensName: string, provider: Provider): Promise<string> {
+  const ensRegistrarContract = new Contract(REGISTRAR_ADDRESS, REGISTRAR_ABI, provider)
+  const hash = namehash(ensName)
+  const resolverAddress = await ensRegistrarContract.resolver(hash)
+  return resolverContract(resolverAddress, provider).contenthash(hash)
 }
