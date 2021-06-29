@@ -3,7 +3,7 @@ import { utils } from 'ethers'
 import { getSwapRouter } from '../utils/swapRouter'
 import { getTotalLiquidityInBNB } from './useLiquidity'
 import { address } from '../constants/swap'
-import { ADDRESS_ZERO, WBNB, BUSD } from '../constants/addresses'
+import { ADDRESS_ZERO, WBNB, BUSD } from '../constants/address'
 import { useActiveWeb3React } from './wallet'
 
 /**

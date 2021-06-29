@@ -53,3 +53,5 @@ export const DEFAULT_DEADLINE_FROM_NOW = 60 * 20
 export const ZERO = JSBI.BigInt(0)
 // used to ensure the user doesn't send so much BNB so they end up with <.01
 export const MIN_ETH: JSBI = JSBI.exponentiate(JSBI.BigInt(10), JSBI.BigInt(16)) // .01 ETH
+
+export const NETWORK_CHAIN_ID: number = parseInt(process.env.REACT_APP_CHAIN_ID ?? '1')
