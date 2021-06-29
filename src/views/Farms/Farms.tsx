@@ -15,7 +15,7 @@ import { useActiveWeb3React } from '../../hooks/wallet'
 const Farms: React.FC = () => {
   const { path } = useRouteMatch()
   const { account } = useActiveWeb3React()
-  const [onPresentWalletProviderModal] = useModal(<WalletProviderModal />)
+  // const [onPresentWalletProviderModal] = useModal(<WalletProviderModal />)
   return (
     <Switch>
       <Page>
@@ -39,7 +39,7 @@ const Farms: React.FC = () => {
             }}
           >
             <Button
-              onClick={onPresentWalletProviderModal}
+              // onClick={onPresentWalletProviderModal}
               text="🔓 Unlock Wallet"
             />
           </div>

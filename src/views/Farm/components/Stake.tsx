@@ -11,15 +11,15 @@ import Label from '../../../components/Label'
 import Value from '../../../components/Value'
 import useAllowance from '../../../hooks/useAllowance'
 import useApprove from '../../../hooks/useApprove'
-import useModal from '../../../hooks/useModal'
+// import useModal from '../../../hooks/useModal'
 import useStake from '../../../hooks/useStake'
 import useStakedBalance from '../../../hooks/useStakedBalance'
 import useTokenBalance from '../../../hooks/useTokenBalance'
 import useUnstake from '../../../hooks/useUnstake'
 import { getBalanceNumber } from '../../../utils/formatBalance'
-import DepositModal from './DepositModal'
-import DepositModalWithRef from './DepositModalWithRef'
-import WithdrawModal from './WithdrawModal'
+// import DepositModal from './DepositModal'
+// import DepositModalWithRef from './DepositModalWithRef'
+// import WithdrawModal from './WithdrawModal'
 import CardIcon from './CardIcon'
 import HarvestIcon from '../../../assets/img/harvest-icon.png'
 
@@ -48,29 +48,29 @@ const Stake: React.FC<StakeProps> = ({ lpContract, pid, tokenName, isWBNB }) => 
   const { onStake, onStakeWithRef } = useStake(pid)
   const { onUnstake } = useUnstake(pid)
 
-  const [onPresentDepositWithRef] = useModal(
-    <DepositModalWithRef
-      max={isWBNB ? new BigNumber(balance) : tokenBalance}
-      onConfirm={onStakeWithRef}
-      tokenName={tokenName}
-    />,
-  )
+  // const [onPresentDepositWithRef] = useModal(
+  //   <DepositModalWithRef
+  //     max={isWBNB ? new BigNumber(balance) : tokenBalance}
+  //     onConfirm={onStakeWithRef}
+  //     tokenName={tokenName}
+  //   />,
+  // )
 
-  const [onPresentDeposit] = useModal(
-    <DepositModal
-      max={isWBNB ? new BigNumber(balance) : tokenBalance}
-      onConfirm={onStake}
-      tokenName={tokenName}
-    />,
-  )
+  // const [onPresentDeposit] = useModal(
+  //   <DepositModal
+  //     max={isWBNB ? new BigNumber(balance) : tokenBalance}
+  //     onConfirm={onStake}
+  //     tokenName={tokenName}
+  //   />,
+  // )
 
-  const [onPresentWithdraw] = useModal(
-    <WithdrawModal
-      max={stakedBalance}
-      onConfirm={onUnstake}
-      tokenName={tokenName}
-    />,
-  )
+  // const [onPresentWithdraw] = useModal(
+  //   <WithdrawModal
+  //     max={stakedBalance}
+  //     onConfirm={onUnstake}
+  //     tokenName={tokenName}
+  //   />,
+  // )
 
   function GetStakeType() {
     const c = getCookie('invite_id')
@@ -81,13 +81,17 @@ const Stake: React.FC<StakeProps> = ({ lpContract, pid, tokenName, isWBNB }) => 
     }
     if (c && c.toLocaleLowerCase() !== account.toLocaleLowerCase()) {
       return (
-        <IconButton onClick={onPresentDepositWithRef}>
+        <IconButton
+          // onClick={onPresentDepositWithRef}
+        >
           <AddIcon />
         </IconButton>
       )
     } else {
       return (
-        <IconButton onClick={onPresentDeposit}>
+        <IconButton
+          // onClick={onPresentDeposit}
+        >
           <AddIcon />
         </IconButton>
       )
@@ -132,7 +136,7 @@ const Stake: React.FC<StakeProps> = ({ lpContract, pid, tokenName, isWBNB }) => 
                   <Button
                     disabled={stakedBalance.eq(new BigNumber(0))}
                     text="Unstake"
-                    onClick={onPresentWithdraw}
+                    // onClick={onPresentWithdraw}
                   />
                   <StyledActionSpacer />
                   <GetStakeType />

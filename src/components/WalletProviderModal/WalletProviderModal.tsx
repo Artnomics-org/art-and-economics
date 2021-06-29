@@ -24,7 +24,7 @@ const WalletProviderModal: React.FC<ModalProps> = ({ onDismiss }) => {
   }, [account, onDismiss])
 
   return (
-    <Modal>
+    <Modal isOpen={!!account} onDismiss={onDismiss}>
       <ModalTitle text="Select a wallet provider." />
 
       <ModalContent>

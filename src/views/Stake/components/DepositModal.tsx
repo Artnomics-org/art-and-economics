@@ -38,7 +38,7 @@ const DepositModal: React.FC<DepositModalProps> = ({
   }, [fullBalance, setVal])
 
   return (
-    <Modal>
+    <Modal isOpen={true} onDismiss={() => {}}>
       <ModalTitle text={`Deposit ${tokenName} Tokens`} />
       <TokenInput
         value={val}

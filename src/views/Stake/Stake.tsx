@@ -11,7 +11,7 @@ import { useActiveWeb3React } from '../../hooks/wallet'
 
 const Farm: React.FC = () => {
   const { account } = useActiveWeb3React()
-  const [onPresentWalletProviderModal] = useModal(<WalletProviderModal />)
+  // const [onPresentWalletProviderModal] = useModal(<WalletProviderModal />)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -39,7 +39,7 @@ const Farm: React.FC = () => {
           }}
         >
           <Button
-            onClick={onPresentWalletProviderModal}
+            // onClick={onPresentWalletProviderModal}
             text="🔓 Unlock Wallet"
           />
         </div>

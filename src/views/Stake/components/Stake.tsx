@@ -18,8 +18,8 @@ import useStakedBalance from '../../../hooks/useStakedBalance'
 import useTokenBalance from '../../../hooks/useTokenBalance'
 import useUnstake from '../../../hooks/useUnstake'
 import { getBalanceNumber } from '../../../utils/formatBalance'
-import DepositModal from './DepositModal'
-import WithdrawModal from './WithdrawModal'
+// import DepositModal from './DepositModal'
+// import WithdrawModal from './WithdrawModal'
 
 interface StakeProps {
   lpContract: Contract
@@ -39,21 +39,21 @@ const Stake: React.FC<StakeProps> = ({ lpContract, pid, tokenName }) => {
   const { onStake } = useStake(pid)
   const { onUnstake } = useUnstake(pid)
 
-  const [onPresentDeposit] = useModal(
-    <DepositModal
-      max={tokenBalance}
-      onConfirm={onStake}
-      tokenName={tokenName}
-    />,
-  )
+  // const [onPresentDeposit] = useModal(
+  //   <DepositModal
+  //     max={tokenBalance}
+  //     onConfirm={onStake}
+  //     tokenName={tokenName}
+  //   />,
+  // )
 
-  const [onPresentWithdraw] = useModal(
-    <WithdrawModal
-      max={stakedBalance}
-      onConfirm={onUnstake}
-      tokenName={tokenName}
-    />,
-  )
+  // const [onPresentWithdraw] = useModal(
+  //   <WithdrawModal
+  //     max={stakedBalance}
+  //     onConfirm={onUnstake}
+  //     tokenName={tokenName}
+  //   />,
+  // )
 
   const handleApprove = useCallback(async () => {
     try {
@@ -89,10 +89,12 @@ const Stake: React.FC<StakeProps> = ({ lpContract, pid, tokenName }) => {
                 <Button
                   disabled={stakedBalance.eq(new BigNumber(0))}
                   text="Unstake"
-                  onClick={onPresentWithdraw}
+                  // onClick={onPresentWithdraw}
                 />
                 <StyledActionSpacer />
-                <IconButton onClick={onPresentDeposit}>
+                <IconButton
+                  // onClick={onPresentDeposit}
+                >
                   <AddIcon />
                 </IconButton>
               </>
