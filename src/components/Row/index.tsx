@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { Box } from 'rebass/styled-components'
 
 interface RowProps {
   align?: string
@@ -7,7 +6,7 @@ interface RowProps {
   border?: string
   borderRadius?: string
 }
-const Row = styled(Box)<RowProps>`
+const Row = styled.div<RowProps>`
   width: 100%;
   display: flex;
   padding: 0;

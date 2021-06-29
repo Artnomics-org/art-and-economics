@@ -102,7 +102,7 @@ const CurrencyInputPanel: React.FC<CurrencyInputPanelProps> = ({
                   {currencySymbolName || 'Select a token'}
                 </TokenName>
               )}
-              {!disableCurrencySelect && <IconDropDown fgColor={fgColor} />}
+              {!disableCurrencySelect && <IconDropDown color={fgColor} />}
             </CurrencySelect>
           </CurrencySelectWrapper>
         </InputRow>
@@ -216,11 +216,11 @@ const TokenName = styled.span<{ active: boolean, fgColor?: string }>`
   color: ${({ theme, fgColor }) => fgColor ? fgColor : theme.color.white};
 `
 
-const IconDropDown = styled(DropDownIcon)<{ fgColor?: string }>`
+const IconDropDown = styled(DropDownIcon)<{ color?: string }>`
   margin-left: 6px;
   height: 16px;
   path {
-    stroke: ${({ theme, fgColor }) => fgColor ? fgColor : theme.color.white};
+    stroke: ${({ theme, color }) => color ? color : theme.color.white};
   }
 `
 
