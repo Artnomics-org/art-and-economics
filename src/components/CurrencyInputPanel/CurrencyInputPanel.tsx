@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import styled from 'styled-components/macro'
 import { Currency, Pair } from '@haneko/uniswap-sdk'
 import { ReactComponent as DropDownIcon } from '../../assets/img/icon-drop-down.svg'
@@ -6,6 +6,7 @@ import NumericalInput from '../NumericalInput'
 import CurrencyLogo, { DoubleCurrencyLogo } from '../CurrencyLogo'
 import { useCurrencyBalance } from '../../hooks/token'
 import { useActiveWeb3React } from '../../hooks/wallet'
+import { CurrencySearchModal } from '../Modal'
 
 interface CurrencyInputPanelProps {
   value: string
@@ -63,11 +64,15 @@ const CurrencyInputPanel: React.FC<CurrencyInputPanelProps> = ({
       ? `${currency.symbol.slice(0, 4)}...${currency.symbol.slice(currency.symbol.length - 5, currency.symbol.length)}`
       : currency?.symbol
 
-  const handleCurrencySelectClick = () => {
+  const handleCurrencySelectClick = useCallback(() => {
     if (!disableCurrencySelect) {
       setModalOpen(true)
     }
-  }
+  }, [disableCurrencySelect])
+
+  const handleDismissSearch = useCallback(() => {
+    setModalOpen(false)
+  }, [setModalOpen])
 
   return (
     <InputPanel id={id} padding={padding} style={style}>
@@ -102,6 +107,16 @@ const CurrencyInputPanel: React.FC<CurrencyInputPanelProps> = ({
           </CurrencySelectWrapper>
         </InputRow>
       </Container>
+      {!disableCurrencySelect && onCurrencySelect && (
+        <CurrencySearchModal
+          isOpen={modalOpen}
+          onDismiss={handleDismissSearch}
+          onCurrencySelect={onCurrencySelect}
+          selectedCurrency={currency}
+          otherSelectedCurrency={otherCurrency}
+          showCommonBases={showCommonBases}
+        />
+      )}
     </InputPanel>
   )
 }
