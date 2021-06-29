@@ -1,3 +1,4 @@
+import { Web3Provider } from '@ethersproject/providers'
 import { InjectedConnector } from '@web3-react/injected-connector'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { NetworkConnector } from './NetworkConnector'
@@ -24,3 +25,8 @@ export const network = new NetworkConnector({
   },
   defaultChainId: 1
 })
+
+let networkLibrary: Web3Provider | undefined
+export function getNetworkLibrary(): Web3Provider {
+  return (networkLibrary = networkLibrary ?? new Web3Provider(network.provider as unknown))
+}
