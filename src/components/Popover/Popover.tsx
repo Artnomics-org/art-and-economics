@@ -47,7 +47,9 @@ const Popover: React.FC<PopoverProps> = ({ content, show, children, placement = 
   )
 }
 
-const Container = styled.div``
+const Container = styled.div`
+  line-height: 0;
+`
 
 const ReferenceElement = styled.div`
   display: inline-block;

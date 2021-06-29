@@ -35,8 +35,8 @@ export const SearchInput = styled.input`
   padding: 12px;
   background-color: transparent;
   color: ${({ theme }) => theme.color.text[500]};
-  border-radius: 6px;
-  border: 1px solid ${({ theme }) => theme.color.grey[400]};
+  border-radius: 13.5px;
+  border: 2px solid ${({ theme }) => theme.color.grey[600]};
   font-size: 18px;
   ::placeholder {
     color: ${({ theme }) => theme.color.text[500]};
@@ -52,8 +52,8 @@ export const BaseWrapper = styled.div<{ disable?: boolean }>`
   align-items: center;
   background-color: ${({ theme, disable }) => disable && theme.color.bg};
   opacity: ${({ disable }) => disable && '0.4'};
-  border: 1px solid ${({ theme, disable }) => (disable ? 'transparent' : theme.color.bg)};
-  border-radius: 6px;
+  border: 2px solid ${({ theme, disable }) => (disable ? 'transparent' : theme.color.grey[600])};
+  border-radius: 13.5px;
   :hover {
     cursor: ${({ disable }) => !disable && 'pointer'};
     background-color: ${({ theme, disable }) => !disable && theme.color.bg};

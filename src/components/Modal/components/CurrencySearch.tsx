@@ -7,7 +7,7 @@ import { useActiveWeb3React } from '../../../hooks/wallet'
 import { isAddress } from '../../../utils/ethers'
 import { CloseButton, SortButton } from '../../Button'
 import QuestionHelper from '../../QuestionHelper'
-import { RowBetween } from '../../Row'
+import { AutoRow, RowBetween } from '../../Row'
 import CommonBases from './CommonBases'
 import { filterTokens } from './filtering'
 import { useTokenComparator } from './sorting'
@@ -110,10 +110,10 @@ const CurrencySearch: React.FC<CurrencySearchProps> = ({
     <FullColumn>
       <PaddedColumn gap='14px'>
         <RowBetween>
-          <Text>
-            Select a list{' '}
+          <AutoRow>
+            <Text>Select a list{' '}</Text>
             <QuestionHelper text={selAListQues} />
-          </Text>
+          </AutoRow>
           <CloseButton onClick={onDismiss} />
         </RowBetween>
         <SearchInput
