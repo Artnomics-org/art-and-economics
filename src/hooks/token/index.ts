@@ -96,6 +96,15 @@ export function useTokenBalance(account?: string, token?: Token): TokenAmount | 
   return tokenBalances[token.address]
 }
 
+// mimics useAllBalances
+export function useAllTokenBalances(): { [tokenAddress: string]: TokenAmount | undefined } {
+  const { account } = useActiveWeb3React()
+  const allTokens = useAllTokens()
+  const allTokensArray = useMemo(() => Object.values(allTokens ?? {}), [allTokens])
+  const balances = useTokenBalances(account ?? undefined, allTokensArray)
+  return balances ?? {}
+}
+
 export function useCurrencyBalances(
   account?: string,
   currencies?: (Currency | undefined)[]

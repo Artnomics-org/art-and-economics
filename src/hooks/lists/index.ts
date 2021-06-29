@@ -136,6 +136,17 @@ export function useSelectedListUrl(): string | undefined {
   return useSelector<AppState, AppState['lists']['selectedListUrl']>(state => state.lists.selectedListUrl)
 }
 
+export function useSelectedListInfo(): { current: TokenList | null; pending: TokenList | null; loading: boolean } {
+  const selectedUrl = useSelectedListUrl()
+  const listsByUrl = useSelector<AppState, AppState['lists']['byUrl']>(state => state.lists.byUrl)
+  const list = selectedUrl ? listsByUrl[selectedUrl] : undefined
+  return {
+    current: list?.current ?? null,
+    pending: list?.pendingUpdate ?? null,
+    loading: list?.loadingRequestId !== null
+  }
+}
+
 export function useFetchListCallback(): (listUrl: string) => Promise<TokenList> {
   const { chainId, library } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
