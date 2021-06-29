@@ -1,8 +1,7 @@
 import React from 'react'
 import styled from 'styled-components/macro'
-import { Link } from 'react-router-dom'
-import { ArrowLeft as ArrowLeftIcon } from 'react-feather'
 import QuestionHelper from '../QuestionHelper'
+import { BackIconLink } from '../Link'
 
 interface AddRemoveTabsProps {
   adding: boolean
@@ -17,9 +16,7 @@ const AddRemoveTabs: React.FC<AddRemoveTabsProps> = ({ adding, creating }) => {
 
   return (
     <Tabs>
-      <HistoryLink to="/pool">
-        <ArrowLeft />
-      </HistoryLink>
+      <BackIconLink to='/pool' />
       <ActiveText>{creating ? 'Create A Pair' : adding ? 'Add Liquidity' : 'Remove Liquidity'}</ActiveText>
       <QuestionHelper text={adding ? addText : removeText} />
     </Tabs>
@@ -35,15 +32,6 @@ const Tabs = styled.div`
   width: 100%;
   padding: 16px;
   box-sizing: border-box;
-`
-
-const HistoryLink = styled(Link)`
-  display: inline-block;
-  line-height: 0;
-`
-
-const ArrowLeft = styled(ArrowLeftIcon)`
-  color: ${({ theme }) => theme.color.text[500]};
 `
 
 const ActiveText = styled.div`
