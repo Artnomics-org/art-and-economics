@@ -1,6 +1,7 @@
-import styled from 'styled-components'
+import { BoxProps } from 'rebass'
+import styled from 'styled-components/macro'
 
-interface RowProps {
+interface RowProps extends BoxProps {
   align?: string
   padding?: string
   border?: string
