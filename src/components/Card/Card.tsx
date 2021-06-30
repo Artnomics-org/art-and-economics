@@ -1,16 +1,19 @@
-import React from 'react'
+import { BoxProps } from 'rebass'
 import styled from 'styled-components/macro'
 
-const Card: React.FC = ({ children }) => <StyledCard>{children}</StyledCard>
-
-const StyledCard = styled.div`
-  background: ${(props) => props.theme.color.white};
-  border: 1px solid ${(props) => props.theme.color.white}ff;
-  border-radius: 12px;
-  box-shadow: inset 1px 1px 0px ${(props) => props.theme.color.white};
-  display: flex;
-  flex: 1;
-  flex-direction: column;
+interface CardProps extends BoxProps {
+  padding?: string
+  border?: string
+  borderRadius?: string
+}
+const Card = styled.div<CardProps>`
+  width: 100%;
+  border-radius: 6px;
+  padding: 1.25rem;
+  padding: ${({ padding }) => padding};
+  border: ${({ border }) => border};
+  border-radius: ${({ borderRadius }) => borderRadius};
+  box-sizing: border-box;
 `
 
 export default Card
