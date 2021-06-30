@@ -2,7 +2,7 @@ import { ChainId, Currency, currencyEquals, Token } from "@haneko/uniswap-sdk"
 import { useCallback, useMemo } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch, AppState } from "../../state"
-import { addSerializedToken, removeSerializedToken } from "../../state/user/actions"
+import { addSerializedToken, removeSerializedToken, updateUserSlippageTolerance } from "../../state/user/actions"
 import { deserializeToken, serializeToken } from "../../utils/token"
 import { useActiveWeb3React } from "../wallet"
 
@@ -40,4 +40,20 @@ export function useUserAddedTokens(): Token[] {
 export function useIsUserAddedToken(currency: Currency): boolean {
   const userAddedTokens = useUserAddedTokens()
   return !!userAddedTokens.find(token => currencyEquals(currency, token))
+}
+
+export function useUserSlippageTolerance(): [number, (slippage: number) => void] {
+  const dispatch = useDispatch<AppDispatch>()
+  const userSlippageTolerance = useSelector<AppState, AppState['user']['userSlippageTolerance']>(state => {
+    return state.user.userSlippageTolerance
+  })
+
+  const setUserSlippageTolerance = useCallback(
+    (userSlippageTolerance: number) => {
+      dispatch(updateUserSlippageTolerance({ userSlippageTolerance }))
+    },
+    [dispatch]
+  )
+
+  return [userSlippageTolerance, setUserSlippageTolerance]
 }

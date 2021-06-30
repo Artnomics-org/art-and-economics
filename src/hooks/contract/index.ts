@@ -1,10 +1,10 @@
 import { useMemo } from "react"
 import { Contract, ContractInterface } from '@ethersproject/contracts'
-import { ChainId } from '@haneko/uniswap-sdk'
+import { ChainId, WETH } from '@haneko/uniswap-sdk'
 import { useActiveWeb3React } from "../wallet"
 import { getContractWithAbi } from "../../utils/ethers"
 import { MULTICALL_ABI, MULTICALL_NETWORKS } from "../../constants/multicall"
-import { ENS_ABI, ENS_PUBLIC_RESOLVER_ABI, ERC20_ABI, ERC20_BYTES32_ABI } from "../../constants/ethers"
+import { ENS_ABI, ENS_PUBLIC_RESOLVER_ABI, ERC20_ABI, ERC20_BYTES32_ABI, WETH_ABI } from "../../constants/ethers"
 
 // returns null on errors
 function useContract(address: string | undefined, ABI: ContractInterface, withSignerIfPossible = true): Contract | null {
@@ -52,4 +52,9 @@ export function useTokenContract(tokenAddress?: string, withSignerIfPossible?: b
 
 export function useBytes32TokenContract(tokenAddress?: string, withSignerIfPossible?: boolean): Contract | null {
   return useContract(tokenAddress, ERC20_BYTES32_ABI, withSignerIfPossible)
+}
+
+export function useWETHContract(withSignerIfPossible?: boolean): Contract | null {
+  const { chainId } = useActiveWeb3React()
+  return useContract(chainId ? WETH[chainId].address : undefined, WETH_ABI, withSignerIfPossible)
 }
