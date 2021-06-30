@@ -1,7 +1,9 @@
+import { Currency, ETHER, Token } from '@haneko/uniswap-sdk'
 import { TokenList } from '@uniswap/token-lists'
 import schema from '@uniswap/token-lists/src/tokenlist.schema.json'
 import Ajv from 'ajv'
 import { contenthashToUri, uriToHttp } from '.'
+import { TokenAddressMap } from '../hooks/lists'
 import { parseENSAddress } from './ethers'
 
 const tokenListValidator = new Ajv({ allErrors: true }).compile(schema)
@@ -66,3 +68,9 @@ export default async function getTokenList(
   }
   throw new Error('Unrecognized list URL protocol.')
 }
+
+export function isTokenOnList(defaultTokens: TokenAddressMap, currency?: Currency): boolean {
+  if (currency === ETHER) return true
+  return Boolean(currency instanceof Token && defaultTokens[currency.chainId]?.[currency.address])
+}
+
