@@ -1,24 +1,21 @@
 import React from 'react'
-import { Route, Switch, useRouteMatch } from 'react-router-dom'
-import Page from '../../components/Page';
-import NFT from '../NFT';
-import NFTCards from './components/NFTCards';
+import Page from '../../components/Page'
+import IconLongArrow from '../../assets/img/icon-long-arrow.svg'
+import { NFTsWrapper, Title, IconArrow, NFTsBody } from './components/styleds'
+import NFTCards from './components/NFTCards'
 
 const NFTs: React.FC = () => {
-  const { path } = useRouteMatch();
-
   return (
-    <Switch>
-      <Page>
-        <Route exact path={path}>
+    <Page>
+      <NFTsWrapper>
+        <IconArrow src={IconLongArrow} alt="icon arrow" />
+        <NFTsBody>
+          <Title>nft art market</Title>
           <NFTCards />
-        </Route>
-        <Route path={`${path}/:nftSymbol`}>
-          <NFT />
-        </Route>
-      </Page>
-    </Switch>
+        </NFTsBody>
+      </NFTsWrapper>
+    </Page>
   )
 }
 
-export default NFTs;
+export default NFTs

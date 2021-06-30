@@ -8,13 +8,14 @@ export const NFTsWrapper = styled.div`
   width: 100%;
   height: 100%;
   background-color: ${(props) => props.theme.color.bg};
+  // TODO: ask others to correct the background image shadow
   background-image:
     linear-gradient(
-      rgba(255, 255, 255, 0.7),
-      rgba(255, 255, 255, 0.7)
+      rgba(233, 233, 233, 0.79),
+      rgba(233, 233, 233, 0.79)
     ),
     -webkit-image-set(url(${ImageNFTBg}) 1x, url(${ImageNFTBg2x}) 2x, url(${ImageNFTBg3x}) 3x);
-  background-size: 100% 40%;
+  background-size: ${props => props.theme.siteWidth}px 291px;
   background-repeat: no-repeat;
   background-position: top;
 `
