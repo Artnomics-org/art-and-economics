@@ -3,7 +3,7 @@ import styled from 'styled-components/macro'
 import Popover from '../Popover'
 import { PopoverProps } from '../Popover/Popover'
 
-interface TooltipProps extends Omit<PopoverProps, 'content'> {
+export interface TooltipProps extends Omit<PopoverProps, 'content'> {
   text: string
 }
 
