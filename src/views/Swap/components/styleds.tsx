@@ -4,6 +4,7 @@ interface SwapWrapperProps {
   bg: string
 }
 export const SwapWrapper = styled.div<SwapWrapperProps>`
+  display: flex;
   flex: 1;
   width: 100%;
   height: 100%;
@@ -16,6 +17,10 @@ export const SwapWrapper = styled.div<SwapWrapperProps>`
 `
 
 export const SwapBody = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
   max-width: ${props => props.theme.siteWidth}px;
   margin-left: auto;
   margin-right: auto;
@@ -27,7 +32,7 @@ export const Title = styled.h1`
   text-align: center;
   color: ${props => props.theme.color.white};
   text-transform: uppercase;
-  margin-top: 104px;
+  margin-top: -88px;
   margin-bottom: 88px;
 `
 
@@ -40,7 +45,7 @@ export const IconArrow = styled.img`
 `
 
 export const InputBody = styled.div`
-  max-width: 566px;
+  width: 566px;
   margin-left: auto;
   margin-right: auto;
 `
