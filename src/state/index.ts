@@ -8,6 +8,7 @@ import user from './user/reducer'
 import lists from './lists/reducer'
 import transactions from './transactions/reducer'
 import mint from './mint/reducer'
+import swap from './swap/reducer'
 
 const PERSISTED_KEYS: string[] = ['user', 'transactions', 'lists']
 
@@ -18,7 +19,8 @@ const store = configureStore({
     user,
     lists,
     transactions,
-    mint
+    mint,
+    swap
   },
   middleware: [...getDefaultMiddleware({ thunk: false }), save({ states: PERSISTED_KEYS })],
   preloadedState: load({ states: PERSISTED_KEYS })
