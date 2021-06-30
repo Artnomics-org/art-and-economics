@@ -1,5 +1,7 @@
+import { TextProps } from 'rebass'
 import styled from 'styled-components/macro'
 import Column, { AutoColumn } from '../../Column'
+import { RowBetween, RowFixed } from '../../Row'
 
 export const FullColumn = styled(Column)`
   width: 100%;
@@ -17,7 +19,7 @@ export const Separator = styled.div`
   background-color: ${({ theme }) => theme.color.grey[500]};
 `
 
-export const Text = styled.div`
+export const Text = styled.div<TextProps>`
   font-weight: 600;
   font-size: 16px;
 `
@@ -58,4 +60,54 @@ export const BaseWrapper = styled.div<{ disable?: boolean }>`
     cursor: ${({ disable }) => !disable && 'pointer'};
     background-color: ${({ theme, disable }) => !disable && theme.color.bg};
   }
+`
+
+export const ListWrapper = styled.div`
+  flex: 1;
+`
+
+export const ListBalanceText = styled(Text)`
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 5rem;
+  text-overflow: ellipsis;
+`
+
+export const Tag = styled.div`
+  background-color: ${({ theme }) => theme.color.bg};
+  color: ${({ theme }) => theme.color.text[500]};
+  font-size: 14px;
+  border-radius: 4px;
+  padding: 0.25rem 0.3rem;
+  max-width: 6rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  justify-self: flex-end;
+  margin-right: 4px;
+`
+
+export const TagContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`
+
+export const MenuItem = styled(RowBetween)`
+  padding: 4px 20px;
+  height: 56px;
+  display: grid;
+  grid-template-columns: auto minmax(auto, 1fr) auto minmax(0, 72px);
+  grid-gap: 16px;
+  cursor: ${({ disabled }) => !disabled && 'pointer'};
+  pointer-events: ${({ disabled }) => disabled && 'none'};
+  box-sizing: border-box;
+  :hover {
+    background-color: ${({ theme, disabled }) => !disabled && theme.color.bg};
+  }
+  opacity: ${({ disabled, selected }) => (disabled || selected ? 0.5 : 1)};
+`
+
+export const FadedSpan = styled(RowFixed)`
+  color: ${({ theme }) => theme.color.text[500]};
+  font-size: 14px;
 `

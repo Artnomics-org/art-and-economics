@@ -1,17 +1,21 @@
 import { Currency, ETHER, Token } from '@haneko/uniswap-sdk'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { FixedSizeList } from 'react-window'
+import AutoSizer from 'react-virtualized-auto-sizer'
 import { useAllTokens, useSelectedListInfo } from '../../../hooks/lists'
 import { useToken } from '../../../hooks/token'
 import { useActiveWeb3React } from '../../../hooks/wallet'
 import { isAddress } from '../../../utils/ethers'
 import { CloseButton, SortButton } from '../../Button'
 import QuestionHelper from '../../QuestionHelper'
-import { AutoRow, RowBetween } from '../../Row'
+import Row, { AutoRow, RowBetween } from '../../Row'
 import CommonBases from './CommonBases'
 import { filterTokens } from './filtering'
 import { useTokenComparator } from './sorting'
-import { FullColumn, PaddedColumn, SearchInput, Separator, Text } from './styleds'
+import { FullColumn, ListWrapper, PaddedColumn, SearchInput, Separator, Text } from './styleds'
+import CurrencyList from './CurrencyList'
+import Card from '../../Card'
+import { ListLogo } from '../../CurrencyLogo'
 
 interface CurrencySearchProps {
   isOpen: boolean
@@ -29,7 +33,7 @@ const CurrencySearch: React.FC<CurrencySearchProps> = ({
   otherSelectedCurrency,
   showCommonBases,
   onDismiss,
-  isOpen
+  isOpen,
 }) => {
   const { chainId } = useActiveWeb3React()
   const fixedList = useRef<FixedSizeList>()
@@ -53,21 +57,21 @@ const CurrencySearch: React.FC<CurrencySearchProps> = ({
     const symbolMatch = searchQuery
       .toLowerCase()
       .split(/\s+/)
-      .filter(s => s.length > 0)
+      .filter((s) => s.length > 0)
     if (symbolMatch.length > 1) return sorted
 
     return [
       ...(searchToken ? [searchToken] : []),
       // sort any exact symbol matches first
-      ...sorted.filter(token => token.symbol?.toLowerCase() === symbolMatch[0]),
-      ...sorted.filter(token => token.symbol?.toLowerCase() !== symbolMatch[0])
+      ...sorted.filter((token) => token.symbol?.toLowerCase() === symbolMatch[0]),
+      ...sorted.filter((token) => token.symbol?.toLowerCase() !== symbolMatch[0]),
     ]
   }, [filteredTokens, searchQuery, searchToken, tokenComparator])
   const selectedListInfo = useSelectedListInfo()
 
   // manage focus on modal show
   const inputRef = useRef<HTMLInputElement>()
-  const handleInput = useCallback(event => {
+  const handleInput = useCallback((event) => {
     const input = event.target.value
     const checksummedInput = isAddress(input)
     setSearchQuery(checksummedInput || input)
@@ -78,7 +82,7 @@ const CurrencySearch: React.FC<CurrencySearchProps> = ({
       onCurrencySelect(currency)
       onDismiss()
     },
-    [onDismiss, onCurrencySelect]
+    [onDismiss, onCurrencySelect],
   )
   const handleEnter = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -96,9 +100,9 @@ const CurrencySearch: React.FC<CurrencySearchProps> = ({
         }
       }
     },
-    [filteredSortedTokens, handleCurrencySelect, searchQuery]
+    [filteredSortedTokens, handleCurrencySelect, searchQuery],
   )
-  
+
   // clear the input on open
   useEffect(() => {
     if (isOpen) setSearchQuery('')
@@ -108,18 +112,18 @@ const CurrencySearch: React.FC<CurrencySearchProps> = ({
 
   return (
     <FullColumn>
-      <PaddedColumn gap='14px'>
+      <PaddedColumn gap="14px">
         <RowBetween>
           <AutoRow>
-            <Text>Select a list{' '}</Text>
+            <Text>Select a list </Text>
             <QuestionHelper text={selAListQues} />
           </AutoRow>
           <CloseButton onClick={onDismiss} />
         </RowBetween>
         <SearchInput
-          type='text'
-          id='token-search-input'
-          placeholder='Search name or paste address'
+          type="text"
+          id="token-search-input"
+          placeholder="Search name or paste address"
           value={searchQuery}
           ref={inputRef as React.RefObject<HTMLInputElement>}
           onChange={handleInput}
@@ -130,10 +134,42 @@ const CurrencySearch: React.FC<CurrencySearchProps> = ({
         )}
         <RowBetween>
           <Text>Token name</Text>
-          <SortButton ascending={invertSearchOrder} toggleSortOrder={() => setInvertSearchOrder(iso => !iso)} />
+          <SortButton ascending={invertSearchOrder} toggleSortOrder={() => setInvertSearchOrder((iso) => !iso)} />
         </RowBetween>
-        <Separator />
       </PaddedColumn>
+      <Separator />
+      <ListWrapper>
+        <AutoSizer disableWidth>
+          {({ height }) => (
+            <CurrencyList
+              height={height}
+              showETH={showETH}
+              currencies={filteredSortedTokens}
+              onCurrencySelect={handleCurrencySelect}
+              otherCurrency={otherSelectedCurrency}
+              selectedCurrency={selectedCurrency}
+              fixedListRef={fixedList}
+            />
+          )}
+        </AutoSizer>
+      </ListWrapper>
+      <Separator />
+      <Card>
+        <RowBetween>
+          {selectedListInfo.current ? (
+            <Row>
+              {selectedListInfo.current.logoURI ? (
+                <ListLogo
+                  style={{ marginRight: 12 }}
+                  logoURI={selectedListInfo.current.logoURI}
+                  alt={`${selectedListInfo.current.name} list logo`}
+                />
+              ) : null}
+              <Text id="currency-search-selected-list-name">{selectedListInfo.current.name}</Text>
+            </Row>
+          ) : 'No list selected.'}
+        </RowBetween>
+      </Card>
     </FullColumn>
   )
 }
