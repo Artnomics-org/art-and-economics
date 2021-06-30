@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { contenthashToUri, uriToHttp } from '../utils'
 import { parseENSAddress } from '../utils/ethers'
 import { useENSContentHash } from './ethers'
@@ -39,12 +39,37 @@ export function useInterval(callback: () => void, delay: null | number, leading 
   }, [delay, leading])
 }
 
+const VISIBILITY_STATE_SUPPORTED = 'visibilityState' in document
+function isWindowVisible() {
+  return !VISIBILITY_STATE_SUPPORTED || document.visibilityState !== 'hidden'
+}
+/**
+ * Returns whether the window is currently visible to the user.
+ */
+export function useIsWindowVisible(): boolean {
+  const [focused, setFocused] = useState<boolean>(isWindowVisible())
+  const listener = useCallback(() => {
+    setFocused(isWindowVisible())
+  }, [setFocused])
+
+  useEffect(() => {
+    if (!VISIBILITY_STATE_SUPPORTED) return undefined
+
+    document.addEventListener('visibilitychange', listener)
+    return () => {
+      document.removeEventListener('visibilitychange', listener)
+    }
+  }, [listener])
+
+  return focused
+}
+
 /**
  * Returns the last value of type T that passes a filter function
  * @param value changing value
  * @param filterFn function that determines whether a given value should be considered for the last value
  */
-export default function useLast<T>(
+export function useLast<T>(
   value: T | undefined | null,
   filterFn?: (value: T | null | undefined) => boolean
 ): T | null | undefined {
@@ -69,4 +94,25 @@ function isDefined<T>(x: T | null | undefined): x is T {
  */
 export function useLastTruthy<T>(value: T | undefined | null): T | null | undefined {
   return useLast(value, isDefined)
+}
+
+// modified from https://usehooks.com/useDebounce/
+export function useDebounce<T>(value: T, delay: number): T {
+  const [debouncedValue, setDebouncedValue] = useState<T>(value)
+
+  useEffect(() => {
+    // Update debounced value after delay
+    const handler = setTimeout(() => {
+      setDebouncedValue(value)
+    }, delay)
+
+    // Cancel the timeout if value changes (also on delay change or unmount)
+    // This is how we prevent debounced value from updating if value is changed ...
+    // .. within the delay period. Timeout gets cleared and restarted.
+    return () => {
+      clearTimeout(handler)
+    }
+  }, [value, delay])
+
+  return debouncedValue
 }

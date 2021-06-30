@@ -1,6 +1,6 @@
 import { Currency } from '@haneko/uniswap-sdk'
 import React, { useCallback, useEffect, useState } from 'react'
-import useLast from '../../hooks'
+import { useLast } from '../../hooks'
 import CurrencySearch from './components/CurrencySearch'
 import Modal from './Modal'
 
