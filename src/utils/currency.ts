@@ -1,6 +1,7 @@
-import { ChainId, Currency, CurrencyAmount, ETHER, JSBI, Token, TokenAmount, WETH } from '@haneko/uniswap-sdk'
+import { ChainId, Currency, CurrencyAmount, ETHER, JSBI, Percent, Token, TokenAmount, Trade, WETH } from '@haneko/uniswap-sdk'
 import { parseUnits } from '@ethersproject/units'
 import { MIN_ETH } from '../constants'
+import { Field } from '../state/swap/actions'
 
 export function wrappedCurrency(currency: Currency | undefined, chainId: ChainId | undefined): Token | undefined {
   return chainId && currency === ETHER ? WETH[chainId] : currency instanceof Token ? currency : undefined
@@ -59,4 +60,21 @@ export function currencyId(currency: Currency): string {
   if (currency === ETHER) return 'BNB'
   if (currency instanceof Token) return currency.address
   throw new Error('invalid currency')
+}
+
+// converts a basis points value to a sdk percent
+export function basisPointsToPercent(num: number): Percent {
+  return new Percent(JSBI.BigInt(num), JSBI.BigInt(10000))
+}
+
+// computes the minimum amount out and maximum amount in for a trade given a user specified allowed slippage in bips
+export function computeSlippageAdjustedAmounts(
+  trade: Trade | undefined,
+  allowedSlippage: number
+): { [field in Field]?: CurrencyAmount } {
+  const pct = basisPointsToPercent(allowedSlippage)
+  return {
+    [Field.INPUT]: trade?.maximumAmountIn(pct),
+    [Field.OUTPUT]: trade?.minimumAmountOut(pct)
+  }
 }
