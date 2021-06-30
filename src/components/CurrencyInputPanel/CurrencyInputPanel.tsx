@@ -91,7 +91,7 @@ const CurrencyInputPanel: React.FC<CurrencyInputPanelProps> = ({
               {pair ? (
                 <DoubleCurrencyLogo currency0={pair.token0} currency1={pair.token1} size={18} />
               ) : currency ? (
-                <CurrencyLogo currency={currency} size={18} />
+                <CurrencyLogo currency={currency} size={18} margin={true} />
               ) : null}
               {pair ? (
                 <TokenName active={true} fgColor={fgColor}>

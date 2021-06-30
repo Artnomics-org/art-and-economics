@@ -15,6 +15,9 @@ const TokenLogo: React.FC<TokenLogoProps> = ({ srcs, alt, ...rest }) => {
 
   const src: string | undefined = srcs.find((src) => !BAD_SRCS[src])
 
+  // @ts-ignore margin from styled components
+  delete rest.margin
+
   if (src) {
     return (
       <img

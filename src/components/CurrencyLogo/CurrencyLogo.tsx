@@ -10,9 +10,10 @@ interface CurrencyLogoProps {
   currency?: Currency
   size?: number
   style?: React.CSSProperties
+  margin?: boolean
 }
 
-const CurrencyLogo: React.FC<CurrencyLogoProps> = ({ currency, size = 24, style }) => {
+const CurrencyLogo: React.FC<CurrencyLogoProps> = ({ currency, size = 24, style, margin = false }) => {
   const getTokenLogoURL = (address: string) =>
     `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`
 
@@ -32,20 +33,22 @@ const CurrencyLogo: React.FC<CurrencyLogoProps> = ({ currency, size = 24, style 
   }, [currency, uriLocations])
 
   if (currency === ETHER) {
-    return <StyledEthereumLogo src={EthereumLogo} size={size} style={style} />
+    return <StyledEthereumLogo src={EthereumLogo} size={size} margin={margin} style={style} />
   }
 
-  return <StyledLogo size={size} srcs={srcs} alt={`${currency?.symbol ?? 'token'} logo`} style={style} />
+  return <StyledLogo size={size} margin={margin} srcs={srcs} alt={`${currency?.symbol ?? 'token'} logo`} style={style} />
 }
 
 interface LogoSizeProp {
   size: number
+  margin: boolean
 }
 const StyledEthereumLogo = styled.img<LogoSizeProp>`
   width: ${({ size }) => size}px;
   height: ${({ size }) => size}px;
   box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.075);
   border-radius: 24px;
+  margin-right: ${({ size, margin }) => margin && (size / 2).toString() + 'px'};
 `
 
 const StyledLogo = styled(TokenLogo)<LogoSizeProp>`
@@ -53,6 +56,7 @@ const StyledLogo = styled(TokenLogo)<LogoSizeProp>`
   height: ${({ size }) => size}px;
   border-radius: ${({ size }) => size}px;
   box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.075);
+  margin-right: ${({ size, margin }) => margin && (size / 2).toString() + 'px'};
 `
 
 export default CurrencyLogo
