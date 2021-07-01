@@ -1,11 +1,11 @@
 import { JSBI, Percent } from '@haneko/uniswap-sdk'
-import React, { useState } from 'react'
-import { useCallback } from 'react'
+import React, { useState, useCallback } from 'react'
+import { Link as RouterLink } from 'react-router-dom'
 import { ChevronDown, ChevronUp } from 'react-feather'
 import styled from 'styled-components/macro'
 import { useTokenBalance, useTotalSupply } from '../../hooks/token'
 import { useActiveWeb3React } from '../../hooks/wallet'
-import { unwrappedToken } from '../../utils/currency'
+import { currencyId, unwrappedToken } from '../../utils/currency'
 import { LinkStyledButton } from '../Button'
 import { AutoColumn } from '../Column'
 import CurrencyLogo, { DoubleCurrencyLogo } from '../CurrencyLogo'
@@ -35,9 +35,9 @@ const FullPositionCard: React.FC<PositionCardProps> = ({ pair, border }) => {
         ]
       : [undefined, undefined]
 
-    const handleShowMore = useCallback(() => {
-      setShowMore(!showMore)
-    }, [showMore])
+  const handleShowMore = useCallback(() => {
+    setShowMore(!showMore)
+  }, [showMore])
 
   return (
     <PositionCard>
@@ -63,7 +63,7 @@ const FullPositionCard: React.FC<PositionCardProps> = ({ pair, border }) => {
           </RowFixed>
         </FixedHeightRow>
         {showMore && (
-          <AutoColumn gap='8px'>
+          <AutoColumn gap="8px">
             <FixedHeightRow>
               <CardText>Your pool tokens:</CardText>
               <CardText>{userPoolBalance ? userPoolBalance.toSignificant(4) : '-'}</CardText>
@@ -77,7 +77,9 @@ const FullPositionCard: React.FC<PositionCardProps> = ({ pair, border }) => {
                   <CardText style={{ marginLeft: '6px' }}>{token0Deposited?.toSignificant(6)}</CardText>
                   <CurrencyLogo size={20} style={{ marginLeft: '8px' }} currency={currency0} />
                 </RowFixed>
-              ) : '-'}
+              ) : (
+                '-'
+              )}
             </FixedHeightRow>
             <FixedHeightRow>
               <RowFixed>
@@ -88,12 +90,22 @@ const FullPositionCard: React.FC<PositionCardProps> = ({ pair, border }) => {
                   <CardText style={{ marginLeft: '6px' }}>{token1Deposited?.toSignificant(6)}</CardText>
                   <CurrencyLogo size={20} style={{ marginLeft: '8px' }} currency={currency1} />
                 </RowFixed>
-              ) : '-'}
+              ) : (
+                '-'
+              )}
             </FixedHeightRow>
             <FixedHeightRow>
               <CardText>Your pool share:</CardText>
               <CardText>{poolTokenPercentage ? poolTokenPercentage.toFixed(2) + '%' : '-'}</CardText>
             </FixedHeightRow>
+            <RowBetween style={{ marginTop: '10px' }}>
+              <Button as={RouterLink} to={`/add/${currencyId(currency0)}/${currencyId(currency1)}`}>
+                Add
+              </Button>
+              <Button as={RouterLink} to={`/remove/${currencyId(currency0)}/${currencyId(currency1)}`}>
+                Remove
+              </Button>
+            </RowBetween>
           </AutoColumn>
         )}
       </AutoColumn>
@@ -128,6 +140,25 @@ const CardText = styled.p`
   margin: 0;
   font-size: 16px;
   font-weight: 500;
+`
+
+export const Button = styled.button`
+  appearance: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  border-radius: 60px;
+  border: solid 2px ${(props) => props.theme.color.grey[600]};
+  font-size: 16px;
+  line-height: 26px;
+  text-align: center;
+  font-family: 'Helvetica Neue LT W05_53 Ext';
+  text-transform: uppercase;
+  text-decoration: none;
+  color: ${(props) => props.theme.color.text[500]};
+  background-color: transparent;
+  padding: 0 16px;
+  margin: 0;
+  min-width: 160px;
 `
 
 export default FullPositionCard
