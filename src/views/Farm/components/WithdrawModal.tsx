@@ -4,7 +4,7 @@ import Button from '../../../components/Button'
 import Modal, { ModalProps } from '../../../components/Modal'
 import ModalActions from '../../../components/ModalActions'
 import ModalTitle from '../../../components/ModalTitle'
-import TokenInput from '../../../components/TokenInput'
+// import TokenInput from '../../../components/TokenInput'
 import { getFullDisplayBalance } from '../../../utils/formatBalance'
 
 interface WithdrawModalProps extends ModalProps {
@@ -40,13 +40,13 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({
   return (
     <Modal isOpen={true} onDismiss={() => {}}>
       <ModalTitle text={`Withdraw ${tokenName}`} />
-      <TokenInput
+      {/* <TokenInput
         onSelectMax={handleSelectMax}
         onChange={handleChange}
         value={val}
         max={fullBalance}
         symbol={tokenName}
-      />
+      /> */}
       <ModalActions>
         <Button text="Cancel" variant="secondary" onClick={onDismiss} />
         <Button

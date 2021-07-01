@@ -3,7 +3,7 @@ import chef from '../../assets/img/chef.png'
 
 import Page from '../../components/Page'
 import Button from '../../components/Button'
-import PageHeader from '../../components/PageHeader'
+// import PageHeader from '../../components/PageHeader'
 import WalletProviderModal from '../../components/WalletProviderModal'
 
 import useModal from '../../hooks/useModal'
@@ -21,11 +21,11 @@ const Farm: React.FC = () => {
     <Page>
       {!!account ? (
         <>
-          <PageHeader
+          {/* <PageHeader
             icon={<img src={chef} height="120" />}
             title="Stake Sushi Tokens & Earn Fees"
             subtitle="0.05% of all SushiSwap trades are rewarded to SUSHI stakers"
-          />
+          /> */}
           {/* <FarmCards /> */}
           <div>TBD</div>
         </>

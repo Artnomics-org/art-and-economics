@@ -4,7 +4,7 @@ import Button from '../../../components/Button'
 import Modal, { ModalProps } from '../../../components/Modal'
 import ModalActions from '../../../components/ModalActions'
 import ModalTitle from '../../../components/ModalTitle'
-import TokenInput from '../../../components/TokenInput'
+// import TokenInput from '../../../components/TokenInput'
 import { getFullDisplayBalance } from '../../../utils/formatBalance'
 
 interface DepositModalProps extends ModalProps {
@@ -40,13 +40,13 @@ const DepositModal: React.FC<DepositModalProps> = ({
   return (
     <Modal isOpen={true} onDismiss={() => {}}>
       <ModalTitle text={`Deposit ${tokenName} Tokens`} />
-      <TokenInput
+      {/* <TokenInput
         value={val}
         onSelectMax={handleSelectMax}
         onChange={handleChange}
         max={fullBalance}
         symbol={tokenName}
-      />
+      /> */}
       <ModalActions>
         <Button text="Cancel" variant="secondary" onClick={onDismiss} />
         <Button

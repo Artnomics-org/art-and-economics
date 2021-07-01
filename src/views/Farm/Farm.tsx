@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components/macro'
-import PageHeader from './components/PageHeader'
+// import PageHeader from './components/PageHeader'
 import Spacer from '../../components/Spacer'
 import useFarm from '../../hooks/useFarm'
 import { getERC20Contract } from '../../utils/ethers'
@@ -57,10 +57,10 @@ const Farm: React.FC = () => {
 
   return (
     <>
-      <PageHeader
+      {/* <PageHeader
         icon={<TokenIcon path={imagePath} />}
         title={`Deposit ${lpTokenName} Tokens and earn ${earnTokenName}`}
-      />
+      /> */}
       <StyledFarm>
         <StyledCardsWrapper>
           <StyledCardWrapper>
