@@ -19,7 +19,7 @@ const Swap: React.FC = () => {
   const [approvalSubmitted, setApprovalSubmitted] = useState<boolean>(false)
 
   // swap state
-  const { independentField, typedValue, recipient } = useSwapState()
+  const { independentField, typedValue } = useSwapState()
   const { v2Trade, currencyBalances, parsedAmount, currencies, inputError: swapInputError } = useDerivedSwapInfo()
   const {
     wrapType,
@@ -49,7 +49,7 @@ const Swap: React.FC = () => {
   const maxAmountInput: CurrencyAmount | undefined = maxAmountSpend(currencyBalances[Field.INPUT])
   const atMaxAmountInput = Boolean(maxAmountInput && parsedAmounts[Field.INPUT]?.equalTo(maxAmountInput))
 
-  const { onSwitchTokens, onCurrencySelection, onUserInput, onChangeRecipient } = useSwapActionHandlers()
+  const { onSwitchTokens, onCurrencySelection, onUserInput } = useSwapActionHandlers()
   const handleTypeInput = useCallback(
     (value: string) => {
       onUserInput(Field.INPUT, value)

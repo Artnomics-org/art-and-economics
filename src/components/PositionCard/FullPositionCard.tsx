@@ -1,9 +1,15 @@
 import { JSBI, Percent } from '@haneko/uniswap-sdk'
 import React, { useState } from 'react'
+import { useCallback } from 'react'
+import { ChevronDown, ChevronUp } from 'react-feather'
 import styled from 'styled-components/macro'
 import { useTokenBalance, useTotalSupply } from '../../hooks/token'
 import { useActiveWeb3React } from '../../hooks/wallet'
 import { unwrappedToken } from '../../utils/currency'
+import { LinkStyledButton } from '../Button'
+import { AutoColumn } from '../Column'
+import CurrencyLogo, { DoubleCurrencyLogo } from '../CurrencyLogo'
+import { AutoRow, RowBetween, RowFixed } from '../Row'
 import { PositionCardProps } from './types'
 
 const FullPositionCard: React.FC<PositionCardProps> = ({ pair, border }) => {
@@ -25,13 +31,72 @@ const FullPositionCard: React.FC<PositionCardProps> = ({ pair, border }) => {
     JSBI.greaterThanOrEqual(totalPoolTokens.raw, userPoolBalance.raw)
       ? [
           pair.getLiquidityValue(pair.token0, totalPoolTokens, userPoolBalance, false),
-          pair.getLiquidityValue(pair.token1, totalPoolTokens, userPoolBalance, false)
+          pair.getLiquidityValue(pair.token1, totalPoolTokens, userPoolBalance, false),
         ]
       : [undefined, undefined]
 
+    const handleShowMore = useCallback(() => {
+      setShowMore(!showMore)
+    }, [showMore])
+
   return (
     <PositionCard>
-      
+      <AutoColumn gap="12px">
+        <FixedHeightRow>
+          <RowFixed>
+            <DoubleCurrencyLogo currency0={currency0} currency1={currency1} margin={true} size={20} />
+            <CardTitleText>
+              {!currency0 || !currency1 ? 'Loading...' : `${currency0.symbol}/${currency1.symbol}`}
+            </CardTitleText>
+          </RowFixed>
+          <RowFixed>
+            <LinkStyledButton onClick={handleShowMore}>
+              <AutoRow>
+                Manage
+                {showMore ? (
+                  <ChevronUp size="20" style={{ marginLeft: '10px' }} />
+                ) : (
+                  <ChevronDown size="20" style={{ marginLeft: '10px' }} />
+                )}
+              </AutoRow>
+            </LinkStyledButton>
+          </RowFixed>
+        </FixedHeightRow>
+        {showMore && (
+          <AutoColumn gap='8px'>
+            <FixedHeightRow>
+              <CardText>Your pool tokens:</CardText>
+              <CardText>{userPoolBalance ? userPoolBalance.toSignificant(4) : '-'}</CardText>
+            </FixedHeightRow>
+            <FixedHeightRow>
+              <RowFixed>
+                <CardText>Pooled {currency0.symbol}:</CardText>
+              </RowFixed>
+              {token0Deposited ? (
+                <RowFixed>
+                  <CardText style={{ marginLeft: '6px' }}>{token0Deposited?.toSignificant(6)}</CardText>
+                  <CurrencyLogo size={20} style={{ marginLeft: '8px' }} currency={currency0} />
+                </RowFixed>
+              ) : '-'}
+            </FixedHeightRow>
+            <FixedHeightRow>
+              <RowFixed>
+                <CardText>Pooled {currency1.symbol}:</CardText>
+              </RowFixed>
+              {token1Deposited ? (
+                <RowFixed>
+                  <CardText style={{ marginLeft: '6px' }}>{token1Deposited?.toSignificant(6)}</CardText>
+                  <CurrencyLogo size={20} style={{ marginLeft: '8px' }} currency={currency1} />
+                </RowFixed>
+              ) : '-'}
+            </FixedHeightRow>
+            <FixedHeightRow>
+              <CardText>Your pool share:</CardText>
+              <CardText>{poolTokenPercentage ? poolTokenPercentage.toFixed(2) + '%' : '-'}</CardText>
+            </FixedHeightRow>
+          </AutoColumn>
+        )}
+      </AutoColumn>
     </PositionCard>
   )
 }
@@ -49,5 +114,20 @@ const PositionCard = styled.div`
   overflow: hidden;
 `
 
-export default FullPositionCard
+const FixedHeightRow = styled(RowBetween)`
+  height: 24px;
+`
 
+const CardTitleText = styled.p`
+  margin: 0;
+  font-size: 20px;
+  font-weight: 500;
+`
+
+const CardText = styled.p`
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+`
+
+export default FullPositionCard
