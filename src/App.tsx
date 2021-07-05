@@ -28,6 +28,7 @@ import Swap from './views/Swap'
 import Pool from './views/Pool'
 import AddLiquidity from './views/AddLiquidity'
 import { RedirectDuplicateTokenIds } from './views/AddLiquidity/redirects'
+import { RedirectPathToHome } from './views/Home/redirects'
 
 
 const Web3ProviderNetwork = createWeb3ReactRoot(NetworkContextName)
@@ -58,6 +59,7 @@ const Routers: React.FC = () => {
           <Route exact path="/add/:currencyIdA/:currencyIdB" component={RedirectDuplicateTokenIds} />
           <Route exact path="/create" component={AddLiquidity} />
           <Route exact path="/create/:currencyIdA/:currencyIdB" component={RedirectDuplicateTokenIds} />
+          <Route component={RedirectPathToHome} />
         </Switch>
       </Router>
     </Web3ReactManager>
