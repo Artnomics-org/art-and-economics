@@ -2,7 +2,8 @@ import styled from 'styled-components/macro'
 
 export const PageCard = styled.div`
   box-sizing: border-box;
-  margin-top: 120px;
+  margin-top: 80px;
+  margin-bottom: 80px;
   width: 640px;
   border-radius: 14px;
   border: solid 2px ${(props) => props.theme.color.grey[600]};
