@@ -27,6 +27,7 @@ import NFTs from './views/NFTs'
 import Swap from './views/Swap'
 import Pool from './views/Pool'
 import AddLiquidity from './views/AddLiquidity'
+import { RedirectDuplicateTokenIds } from './views/AddLiquidity/redirects'
 
 
 const Web3ProviderNetwork = createWeb3ReactRoot(NetworkContextName)
@@ -54,7 +55,9 @@ const Routers: React.FC = () => {
           <Route exact strict path="/farm" component={Farms} />
           <Route exact strict path="/market" component={NFTs} />
           <Route exact path="/add" component={AddLiquidity} />
+          <Route exact path="/add/:currencyIdA/:currencyIdB" component={RedirectDuplicateTokenIds} />
           <Route exact path="/create" component={AddLiquidity} />
+          <Route exact path="/create/:currencyIdA/:currencyIdB" component={RedirectDuplicateTokenIds} />
         </Switch>
       </Router>
     </Web3ReactManager>
