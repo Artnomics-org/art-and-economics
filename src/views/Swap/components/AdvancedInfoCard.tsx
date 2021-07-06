@@ -1,6 +1,7 @@
 import React from 'react'
 import { animated, useTransition } from 'react-spring'
 import styled from 'styled-components/macro'
+import { AutoColumn } from '../../../components/Column'
 
 interface AdvancedInfoCardProps {
   isShow: boolean
@@ -17,7 +18,9 @@ const AdvancedInfoCard: React.FC<AdvancedInfoCardProps> = ({ isShow, mobile = fa
     <>
       {transitions((style, item, props, key) => item && (
         <AdvancedInfoCardWrapper key={key} style={style} mobile={!!mobile}>
-          {children}
+          <AutoColumn gap='20px'>
+            {children}
+          </AutoColumn>
         </AdvancedInfoCardWrapper>
       ))}
     </>
@@ -42,7 +45,6 @@ const AdvancedInfoCardWrapper = styled(animated.div)<{ mobile: boolean }>`
   align-self: ${({ mobile }) => (mobile ? 'flex-end' : 'center')};
   max-width: 420px;
   max-height: 60vh;
-  min-height: 40vh;
 `
 
 export default AdvancedInfoCard
