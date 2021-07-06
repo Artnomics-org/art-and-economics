@@ -63,3 +63,17 @@ export const ErrorText = styled.p<{ severity?: 0 | 1 | 2 | 3 | 4 }>`
       ? theme.color.text[500]
       : theme.color.green[500]};
 `
+
+export const Text = styled.p`
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
+  color: ${({ theme }) => theme.color.text[500]};
+`
+
+export const SectionBreak = styled.div`
+  height: 1px;
+  width: 100%;
+  background-color: ${({ theme }) => theme.color.grey[500]};
+  margin: 8px 0;
+`

@@ -1,12 +1,12 @@
 import { Trade, TradeType } from '@haneko/uniswap-sdk'
 import React from 'react'
-import styled from 'styled-components/macro'
 import { AutoColumn } from '../../../components/Column'
 import QuestionHelper from '../../../components/QuestionHelper'
 import { RowBetween, RowFixed } from '../../../components/Row'
 import { Field } from '../../../state/swap/actions'
 import { computeSlippageAdjustedAmounts } from '../../../utils/currency'
 import { computeTradePriceBreakdown } from '../../../utils/prices'
+import { Text } from './styleds'
 import FormattedPriceImpact from './FormattedPriceImpact'
 
 interface TradeSummaryProps {
@@ -24,7 +24,7 @@ const TradeSummary: React.FC<TradeSummaryProps> = ({ trade, allowedSlippage }) =
   const questLiqFee = 'A portion of each trade (0.30%) goes to liquidity providers as a protocol incentive.'
 
   return (
-    <AutoColumn style={{ padding: '0 20px' }}>
+    <AutoColumn style={{ padding: '0 10px' }}>
       <RowBetween>
         <RowFixed>
           <Text>{isExactIn ? 'Minimum received' : 'Maximum sold'}</Text>
@@ -56,12 +56,5 @@ const TradeSummary: React.FC<TradeSummaryProps> = ({ trade, allowedSlippage }) =
     </AutoColumn>
   )
 }
-
-const Text = styled.p`
-  margin: 0;
-  font-size: 14px;
-  font-weight: 400;
-  color: ${({ theme }) => theme.color.text[500]};
-`
 
 export default TradeSummary
