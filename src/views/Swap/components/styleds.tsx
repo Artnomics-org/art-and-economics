@@ -9,7 +9,7 @@ export const SwapWrapper = styled.div<SwapWrapperProps>`
   width: 100%;
   height: 100%;
   background-color: ${(props) => props.theme.color.grey[500]};
-  background-image: url(${props => props.bg});
+  background-image: url(${(props) => props.bg});
   background-size: 100% auto;
   background-repeat: no-repeat;
   background-position: bottom center;
@@ -21,7 +21,7 @@ export const SwapBody = styled.div`
   flex: 1;
   flex-direction: column;
   justify-content: center;
-  max-width: ${props => props.theme.siteWidth}px;
+  max-width: ${(props) => props.theme.siteWidth}px;
   margin-left: auto;
   margin-right: auto;
 `
@@ -30,7 +30,7 @@ export const Title = styled.h1`
   font-family: 'Helvetica Neue LT W05_93 Blk E';
   font-size: 36px;
   text-align: center;
-  color: ${props => props.theme.color.white};
+  color: ${(props) => props.theme.color.white};
   text-transform: uppercase;
   margin-top: -88px;
   margin-bottom: 88px;
@@ -48,4 +48,18 @@ export const InputBody = styled.div`
   width: 566px;
   margin-left: auto;
   margin-right: auto;
+`
+
+export const ErrorText = styled.p<{ severity?: 0 | 1 | 2 | 3 | 4 }>`
+  margin: 0;
+  font-weight: 500;
+  font-size: 14px;
+  color: ${({ theme, severity }) =>
+    severity === 3 || severity === 4
+      ? theme.color.red[500]
+      : severity === 2
+      ? theme.color.yellow
+      : severity === 1
+      ? theme.color.text[500]
+      : theme.color.green[500]};
 `
