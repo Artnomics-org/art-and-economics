@@ -5,13 +5,22 @@ import IconSwapBg from '../../assets/img/icon-swap-bg.svg'
 import IconLongArrow from '../../assets/img/icon-long-arrow.svg'
 import CurrencyInputPanel from '../../components/CurrencyInputPanel'
 import { useWalletModalToggle } from '../../hooks/application'
-import useWrapCallback, { useSwapState, useDerivedSwapInfo, WrapType, useSwapActionHandlers } from '../../hooks/swap'
+import useWrapCallback, {
+  useSwapState,
+  useDerivedSwapInfo,
+  WrapType,
+  useSwapActionHandlers,
+  useDefaultsFromURLSearch,
+} from '../../hooks/swap'
 import { useActiveWeb3React } from '../../hooks/wallet'
 import { Field } from '../../state/swap/actions'
 import { CurrencyAmount } from '@haneko/uniswap-sdk'
 import { maxAmountSpend } from '../../utils/currency'
+import AdvancedInfoCard from './components/AdvancedInfoCard'
+import AdvancedSwapDetailsDropdown from './components/AdvancedSwapDetailsDropdown'
 
 const Swap: React.FC = () => {
+  const loadedUrlParams = useDefaultsFromURLSearch()
   const { account } = useActiveWeb3React()
   // toggle wallet when disconnected
   const toggleWalletModal = useWalletModalToggle()
@@ -48,6 +57,8 @@ const Swap: React.FC = () => {
 
   const maxAmountInput: CurrencyAmount | undefined = maxAmountSpend(currencyBalances[Field.INPUT])
   const atMaxAmountInput = Boolean(maxAmountInput && parsedAmounts[Field.INPUT]?.equalTo(maxAmountInput))
+
+  const isMoreInfoShow = !!trade;
 
   const { onSwitchTokens, onCurrencySelection, onUserInput } = useSwapActionHandlers()
   const handleTypeInput = useCallback(
@@ -109,6 +120,9 @@ const Swap: React.FC = () => {
           </InputBody>
         </SwapBody>
       </SwapWrapper>
+      <AdvancedInfoCard isShow={isMoreInfoShow}>
+        <AdvancedSwapDetailsDropdown trade={trade} />
+      </AdvancedInfoCard>
     </Page>
   )
 }
