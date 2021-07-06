@@ -1,9 +1,12 @@
 import { Currency, CurrencyAmount, Trade, ETHER, currencyEquals, WETH, Token } from "@haneko/uniswap-sdk"
-import { useCallback, useMemo } from "react"
+import { ParsedQs } from "qs"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { useParsedQueryString } from ".."
 import { BAD_RECIPIENT_ADDRESSES } from "../../constants/address"
 import { AppDispatch, AppState } from "../../state"
-import { Field, selectCurrency, setRecipient, switchCurrencies, typeInput } from "../../state/swap/actions"
+import { Field, replaceSwapState, selectCurrency, setRecipient, switchCurrencies, typeInput } from "../../state/swap/actions"
+import { SwapState } from "../../state/swap/reducer"
 import { computeSlippageAdjustedAmounts, tryParseAmount } from "../../utils/currency"
 import { isAddress } from "../../utils/ethers"
 import { useWETHContract } from "../contract"
@@ -238,4 +241,91 @@ export function useSwapActionHandlers(): {
     onUserInput,
     onChangeRecipient
   }
+}
+
+function parseCurrencyFromURLParameter(urlParam: unknown): string {
+  if (typeof urlParam === 'string') {
+    const valid = isAddress(urlParam)
+    if (valid) return valid
+    if (urlParam.toUpperCase() === 'BNB') return 'BNB'
+    if (valid === false) return 'BNB'
+  }
+  return 'BNB' ?? ''
+}
+
+function parseTokenAmountURLParameter(urlParam: unknown): string {
+  return typeof urlParam === 'string' && !isNaN(parseFloat(urlParam)) ? urlParam : ''
+}
+
+function parseIndependentFieldURLParameter(urlParam: unknown): Field {
+  return typeof urlParam === 'string' && urlParam.toLowerCase() === 'output' ? Field.OUTPUT : Field.INPUT
+}
+
+const ENS_NAME_REGEX = /^[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)?$/
+const ADDRESS_REGEX = /^0x[a-fA-F0-9]{40}$/
+function validatedRecipient(recipient: unknown): string | null {
+  if (typeof recipient !== 'string') return null
+  const address = isAddress(recipient)
+  if (address) return address
+  if (ENS_NAME_REGEX.test(recipient)) return recipient
+  if (ADDRESS_REGEX.test(recipient)) return recipient
+  return null
+}
+
+export function queryParametersToSwapState(parsedQs: ParsedQs): SwapState {
+  let inputCurrency = parseCurrencyFromURLParameter(parsedQs.inputCurrency)
+  let outputCurrency = parseCurrencyFromURLParameter(parsedQs.outputCurrency)
+  if (inputCurrency === outputCurrency) {
+    if (typeof parsedQs.outputCurrency === 'string') {
+      inputCurrency = ''
+    } else {
+      outputCurrency = ''
+    }
+  }
+
+  const recipient = validatedRecipient(parsedQs.recipient)
+
+  return {
+    [Field.INPUT]: {
+      currencyId: inputCurrency
+    },
+    [Field.OUTPUT]: {
+      currencyId: outputCurrency
+    },
+    typedValue: parseTokenAmountURLParameter(parsedQs.exactAmount),
+    independentField: parseIndependentFieldURLParameter(parsedQs.exactField),
+    recipient
+  }
+}
+
+// updates the swap state to use the defaults for a given network
+export function useDefaultsFromURLSearch():
+  | { inputCurrencyId: string | undefined; outputCurrencyId: string | undefined }
+  | undefined {
+  const { chainId } = useActiveWeb3React()
+  const dispatch = useDispatch<AppDispatch>()
+  const parsedQs = useParsedQueryString()
+  const [result, setResult] = useState<
+    { inputCurrencyId: string | undefined; outputCurrencyId: string | undefined } | undefined
+  >()
+
+  useEffect(() => {
+    if (!chainId) return
+    const parsed = queryParametersToSwapState(parsedQs)
+
+    dispatch(
+      replaceSwapState({
+        typedValue: parsed.typedValue,
+        field: parsed.independentField,
+        inputCurrencyId: parsed[Field.INPUT].currencyId,
+        outputCurrencyId: parsed[Field.OUTPUT].currencyId,
+        recipient: parsed.recipient
+      })
+    )
+
+    setResult({ inputCurrencyId: parsed[Field.INPUT].currencyId, outputCurrencyId: parsed[Field.OUTPUT].currencyId })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, chainId])
+
+  return result
 }

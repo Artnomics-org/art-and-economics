@@ -1,4 +1,6 @@
+import { parse, ParsedQs } from 'qs'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { contenthashToUri, uriToHttp } from '../utils'
 import { parseENSAddress } from '../utils/ethers'
 import { useENSContentHash } from './ethers'
@@ -115,4 +117,12 @@ export function useDebounce<T>(value: T, delay: number): T {
   }, [value, delay])
 
   return debouncedValue
+}
+
+export function useParsedQueryString(): ParsedQs {
+  const { search } = useLocation()
+  return useMemo(
+    () => (search && search.length > 1 ? parse(search, { parseArrays: false, ignoreQueryPrefix: true }) : {}),
+    [search]
+  )
 }
