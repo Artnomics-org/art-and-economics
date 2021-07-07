@@ -1,4 +1,5 @@
 import { Trade, Percent, CurrencyAmount, Fraction, TokenAmount } from '@haneko/uniswap-sdk'
+import { BigNumber } from '@ethersproject/bignumber'
 import {
   ONE_HUNDRED_PERCENT,
   BASE_FEE,
@@ -78,4 +79,9 @@ export function formatExecutionPrice(trade?: Trade, inverted?: boolean): string 
     : `${trade.executionPrice.toSignificant(6)} ${trade.outputAmount.currency.symbol} / ${
         trade.inputAmount.currency.symbol
       }`
+}
+
+// add 10%
+export function calculateGasMargin(value: BigNumber): BigNumber {
+  return value.mul(BigNumber.from(10000).add(BigNumber.from(1000))).div(BigNumber.from(10000))
 }

@@ -10,7 +10,7 @@ export const bnToDec = (bn: BigNumber, decimals = 18): number => {
   return bn.dividedBy(new BigNumber(10).pow(decimals)).toNumber()
 }
 
-export const decToBn = (dec: number, decimals = 18) => {
+export const decToBn = (dec: number, decimals = 18): BigNumber => {
   return new BigNumber(dec).multipliedBy(new BigNumber(10).pow(decimals))
 }
 
@@ -18,7 +18,7 @@ export function escapeRegExp(string: string): string {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') // $& means the whole matched string
 }
 
-export function getLibrary(provider: any): Web3Provider {
+export function getLibrary(provider: unknown): Web3Provider {
   const library = new Web3Provider(provider, 'any')
   library.pollingInterval = 15000
   return library
