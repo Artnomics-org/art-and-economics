@@ -1,7 +1,7 @@
 import React from 'react'
-import styled from 'styled-components/macro'
 import QuestionHelper from '../QuestionHelper'
 import { BackIconLink } from '../Link'
+import { Tabs, ActiveText } from './styleds'
 
 interface AddRemoveTabsProps {
   adding: boolean
@@ -22,23 +22,5 @@ const AddRemoveTabs: React.FC<AddRemoveTabsProps> = ({ adding, creating }) => {
     </Tabs>
   )
 }
-
-const Tabs = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 16px;
-  box-sizing: border-box;
-`
-
-const ActiveText = styled.div`
-  font-family: 'Helvetica Neue LT W05_93 Blk E';
-  font-size: 20px;
-  text-transform: uppercase;
-  color: ${({ theme }) => theme.color.text[500]};
-`
 
 export default AddRemoveTabs
