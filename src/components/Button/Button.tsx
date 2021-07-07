@@ -4,6 +4,7 @@ import { darken } from 'polished'
 import { Link } from 'react-router-dom'
 
 interface ButtonProps {
+  id?: string
   children?: React.ReactNode,
   disabled?: boolean,
   href?: string,
@@ -16,13 +17,14 @@ interface ButtonProps {
 
 const Button: React.FC<ButtonProps> = ({
   children,
-  disabled,
+  disabled = false,
   href,
   onClick,
   size,
   text,
   to,
   variant,
+  id
 }) => {
   const { spacing, color } = useContext(ThemeContext)
 
@@ -76,6 +78,7 @@ const Button: React.FC<ButtonProps> = ({
       onClick={onClick}
       padding={buttonPadding}
       size={buttonSize}
+      id={id}
     >
       {ButtonChild}
     </StyledButton>
@@ -97,8 +100,8 @@ const StyledButton = styled.button<StyledButtonProps>`
   align-items: center;
   justify-content: center;
   background-color: transparent;
-  border: solid 2px ${({ color, disabled }) => !disabled ? color : `${color}55`};
-  color: ${({ color, disabled }) => !disabled ? color : `${color}55`};
+  border: solid 2px ${({ color, disabled }) => !disabled ? color : `${color}70`};
+  color: ${({ color, disabled }) => !disabled ? color : `${color}70`};
   font-family: 'Helvetica Neue LT W05_93 Blk E';
   font-size: ${({ fontSize }) => fontSize}px;
   text-transform: uppercase;
@@ -108,7 +111,7 @@ const StyledButton = styled.button<StyledButtonProps>`
   pointer-events: ${({ disabled }) => !disabled ? undefined : 'none'};
   width: 100%;
   &:hover {
-    color: ${({ color }) => darken(0.25, color)};
+    /* color: ${({ color }) => darken(0.25, color)}; */
     border-color: ${({ color }) => darken(0.25, color)};
   }
 `
