@@ -27,6 +27,7 @@ import NFTs from './views/NFTs'
 import Swap from './views/Swap'
 import Pool from './views/Pool'
 import AddLiquidity from './views/AddLiquidity'
+import FindPool from './views/FindPool'
 import { RedirectDuplicateTokenIds } from './views/AddLiquidity/redirects'
 import { RedirectPathToHome } from './views/Home/redirects'
 
@@ -53,6 +54,7 @@ const Routers: React.FC = () => {
           <Route exact strict path="/home" component={Home} />
           <Route exact strict path="/swap" component={Swap} />
           <Route exact strict path="/pool" component={Pool} />
+          <Route exact strict path="/find" component={FindPool} />
           <Route exact strict path="/farm" component={Farms} />
           <Route exact strict path="/market" component={NFTs} />
           <Route exact path="/add" component={AddLiquidity} />
