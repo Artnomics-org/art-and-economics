@@ -17,7 +17,7 @@ const AdvancedInfoCard: React.FC<AdvancedInfoCardProps> = ({ isShow, mobile = fa
   return (
     <>
       {transitions((style, item, props, key) => item && (
-        <AdvancedInfoCardWrapper key={key} style={style} mobile={!!mobile}>
+        <AdvancedInfoCardWrapper key={key} style={style} mobile={mobile ? mobile : undefined}>
           <AutoColumn gap='20px'>
             {children}
           </AutoColumn>
@@ -27,7 +27,7 @@ const AdvancedInfoCard: React.FC<AdvancedInfoCardProps> = ({ isShow, mobile = fa
   )
 }
 
-const AdvancedInfoCardWrapper = styled(animated.div)<{ mobile: boolean }>`
+const AdvancedInfoCardWrapper = styled(animated.div)<{ mobile?: boolean }>`
   position: fixed;
   z-index: 1000;
   top: 50%;
