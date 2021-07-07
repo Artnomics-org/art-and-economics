@@ -1,8 +1,9 @@
+import { BigNumber } from 'ethers'
 import { namehash } from 'ethers/lib/utils'
 import { useMemo } from 'react'
 import { useDebounce } from '..'
 import { isAddress } from '../../utils/ethers'
-import { useENSRegistrarContract, useENSResolverContract } from '../contract'
+import { useENSRegistrarContract, useENSResolverContract, useMulticallContract } from '../contract'
 import { useSingleCallResult } from '../multicall'
 
 /**
@@ -115,4 +116,9 @@ export function useENS(
     address: validated ? validated : lookup.address,
     name: reverseLookup.ENSName ? reverseLookup.ENSName : !validated && lookup.address ? nameOrAddress || null : null
   }
+}
+
+export function useCurrentBlockTimestamp(): BigNumber | undefined {
+  const multicall = useMulticallContract()
+  return useSingleCallResult(multicall, 'getCurrentBlockTimestamp')?.result?.[0]
 }
