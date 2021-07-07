@@ -32,7 +32,7 @@ export const Title = styled.h1`
   text-align: center;
   color: ${(props) => props.theme.color.white};
   text-transform: uppercase;
-  margin-top: -88px;
+  margin-top: -56px;
   margin-bottom: 88px;
 `
 
@@ -76,4 +76,8 @@ export const SectionBreak = styled.div`
   width: 100%;
   background-color: ${({ theme }) => theme.color.grey[500]};
   margin: 8px 0;
+`
+
+export const BottomGrouping = styled.div`
+  margin-top: 50px;
 `
