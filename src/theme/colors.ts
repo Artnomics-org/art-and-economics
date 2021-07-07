@@ -1,5 +1,5 @@
-export const white = '#FFF'
-export const black = '#000'
+export const white = '#FFFFFF'
+export const black = '#000000'
 export const yellow = '#FEC600'
 export const nav = {
   def: '#c8c9c9',

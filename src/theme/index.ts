@@ -13,6 +13,7 @@ const theme = {
     black,
     grey,
     red,
+    green,
     primary: {
       light: red[200],
       main: red[500],
