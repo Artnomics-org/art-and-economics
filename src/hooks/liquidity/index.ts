@@ -1,16 +1,17 @@
-import { useMemo } from "react"
-import { useSelector } from "react-redux"
+import { useCallback, useMemo } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Pair, Token, TokenAmount, Currency } from '@haneko/uniswap-sdk'
 import { Interface } from '@ethersproject/abi'
 import { abi as IUniswapV2PairABI } from '@uniswap/v2-core/build/IUniswapV2Pair.json'
 import flatMap from 'lodash.flatmap'
-import { AppState } from "../../state"
-import { useActiveWeb3React } from "../wallet"
-import { BASES_TO_TRACK_LIQUIDITY_FOR, PINNED_PAIRS } from "../../constants/lists"
-import { deserializeToken } from "../../utils/token"
-import { useAllTokens } from "../lists"
-import { useMultipleContractSingleData } from "../multicall"
-import { wrappedCurrency } from "../../utils/currency"
+import { AppDispatch, AppState } from '../../state'
+import { useActiveWeb3React } from '../wallet'
+import { BASES_TO_TRACK_LIQUIDITY_FOR, PINNED_PAIRS } from '../../constants/lists'
+import { deserializeToken, serializeToken } from '../../utils/token'
+import { useAllTokens } from '../lists'
+import { useMultipleContractSingleData } from '../multicall'
+import { wrappedCurrency } from '../../utils/currency'
+import { addSerializedPair, SerializedPair } from '../../state/user/actions'
 
 /**
  * Returns all the pairs of tokens that are tracked by the user for the current chain ID.
@@ -26,14 +27,14 @@ export function useTrackedTokenPairs(): [Token, Token][] {
   const generatedPairs: [Token, Token][] = useMemo(
     () =>
       chainId
-        ? flatMap(Object.keys(tokens), tokenAddress => {
+        ? flatMap(Object.keys(tokens), (tokenAddress) => {
             const token = tokens[tokenAddress]
             // for each token on the current chain,
             return (
               // loop though all bases on the current chain
               (BASES_TO_TRACK_LIQUIDITY_FOR[chainId] ?? [])
                 // to construct pairs of the given token with each base
-                .map(base => {
+                .map((base) => {
                   if (base.address === token.address) {
                     return null
                   } else {
@@ -44,7 +45,7 @@ export function useTrackedTokenPairs(): [Token, Token][] {
             )
           })
         : [],
-    [tokens, chainId]
+    [tokens, chainId],
   )
 
   // pairs saved by users
@@ -55,16 +56,15 @@ export function useTrackedTokenPairs(): [Token, Token][] {
     const forChain = savedSerializedPairs[chainId]
     if (!forChain) return []
 
-    return Object.keys(forChain).map(pairId => {
+    return Object.keys(forChain).map((pairId) => {
       return [deserializeToken(forChain[pairId].token0), deserializeToken(forChain[pairId].token1)]
     })
   }, [savedSerializedPairs, chainId])
 
-  const combinedList = useMemo(() => userPairs.concat(generatedPairs).concat(pinnedPairs), [
-    generatedPairs,
-    pinnedPairs,
-    userPairs
-  ])
+  const combinedList = useMemo(
+    () => userPairs.concat(generatedPairs).concat(pinnedPairs),
+    [generatedPairs, pinnedPairs, userPairs],
+  )
 
   return useMemo(() => {
     // dedupes pairs of tokens in the combined list
@@ -76,7 +76,7 @@ export function useTrackedTokenPairs(): [Token, Token][] {
       return memo
     }, {})
 
-    return Object.keys(keyed).map(key => keyed[key])
+    return Object.keys(keyed).map((key) => keyed[key])
   }, [combinedList])
 }
 
@@ -95,7 +95,7 @@ export enum PairState {
   LOADING,
   NOT_EXISTS,
   EXISTS,
-  INVALID
+  INVALID,
 }
 
 export function usePairs(currencies: [Currency | undefined, Currency | undefined][]): [PairState, Pair | null][] {
@@ -105,9 +105,9 @@ export function usePairs(currencies: [Currency | undefined, Currency | undefined
     () =>
       currencies.map(([currencyA, currencyB]) => [
         wrappedCurrency(currencyA, chainId),
-        wrappedCurrency(currencyB, chainId)
+        wrappedCurrency(currencyB, chainId),
       ]),
-    [chainId, currencies]
+    [chainId, currencies],
   )
 
   const pairAddresses = useMemo(
@@ -115,7 +115,7 @@ export function usePairs(currencies: [Currency | undefined, Currency | undefined
       tokens.map(([tokenA, tokenB]) => {
         return tokenA && tokenB && !tokenA.equals(tokenB) ? Pair.getAddress(tokenA, tokenB) : undefined
       }),
-    [tokens]
+    [tokens],
   )
 
   const results = useMultipleContractSingleData(pairAddresses, PAIR_INTERFACE, 'getReserves')
@@ -133,7 +133,7 @@ export function usePairs(currencies: [Currency | undefined, Currency | undefined
       const [token0, token1] = tokenA.sortsBefore(tokenB) ? [tokenA, tokenB] : [tokenB, tokenA]
       return [
         PairState.EXISTS,
-        new Pair(new TokenAmount(token0, reserve0.toString()), new TokenAmount(token1, reserve1.toString()))
+        new Pair(new TokenAmount(token0, reserve0.toString()), new TokenAmount(token1, reserve1.toString())),
       ]
     })
   }, [results, tokens])
@@ -141,4 +141,22 @@ export function usePairs(currencies: [Currency | undefined, Currency | undefined
 
 export function usePair(tokenA?: Currency, tokenB?: Currency): [PairState, Pair | null] {
   return usePairs([[tokenA, tokenB]])[0]
+}
+
+function serializePair(pair: Pair): SerializedPair {
+  return {
+    token0: serializeToken(pair.token0),
+    token1: serializeToken(pair.token1),
+  }
+}
+
+export function usePairAdder(): (pair: Pair) => void {
+  const dispatch = useDispatch<AppDispatch>()
+
+  return useCallback(
+    (pair: Pair) => {
+      dispatch(addSerializedPair({ serializedPair: serializePair(pair) }))
+    },
+    [dispatch],
+  )
 }
