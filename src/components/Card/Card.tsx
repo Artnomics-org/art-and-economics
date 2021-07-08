@@ -16,4 +16,9 @@ const Card = styled.div<CardProps>`
   box-sizing: border-box;
 `
 
+export const LightCard = styled(Card)`
+  border: 1px solid ${({ theme }) => theme.color.grey[500]};
+  background-color: ${({ theme }) => theme.color.bg1};
+`
+
 export default Card

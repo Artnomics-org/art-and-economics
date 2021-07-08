@@ -1,1 +1,1 @@
-export { default } from './Card'
+export { default, LightCard } from './Card'
