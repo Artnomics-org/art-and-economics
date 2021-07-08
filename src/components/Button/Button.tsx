@@ -2,6 +2,7 @@ import React, { useContext, useMemo } from 'react'
 import styled, { ThemeContext } from 'styled-components/macro'
 import { darken } from 'polished'
 import { Link } from 'react-router-dom'
+import { BaseButton } from './styleds'
 
 interface ButtonProps {
   id?: string
@@ -93,12 +94,7 @@ interface StyledButtonProps {
   size: number
 }
 
-const StyledButton = styled.button<StyledButtonProps>`
-  outline: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+const StyledButton = styled(BaseButton)<StyledButtonProps>`
   background-color: transparent;
   border: solid 2px ${({ color, disabled }) => !disabled ? color : `${color}70`};
   color: ${({ color, disabled }) => !disabled ? color : `${color}70`};
