@@ -314,12 +314,17 @@ const AddLiquidity: React.FC<RouteComponentProps<AddLiquidityProps>> = ({
                 </LightCard>
               </LightCard>
             )}
-            <AutoColumn>
-              {!account && <Button onClick={toggleWalletModal}>Connect Wallet</Button>}
+            <AutoColumn gap="md">
+              {!account && (
+                <Button variant="secondary" onClick={toggleWalletModal}>
+                  Connect Wallet
+                </Button>
+              )}
               {isApproveFlowShow && (
                 <RowBetween>
                   {approvalA !== ApprovalState.APPROVED && (
                     <Button
+                      variant="secondary"
                       onClick={approveACallback}
                       disabled={approvalA === ApprovalState.PENDING}
                       style={approveButtonWidth(approvalB !== ApprovalState.APPROVED)}
@@ -329,6 +334,7 @@ const AddLiquidity: React.FC<RouteComponentProps<AddLiquidityProps>> = ({
                   )}
                   {approvalB !== ApprovalState.APPROVED && (
                     <Button
+                      variant="secondary"
                       onClick={approveBCallback}
                       disabled={approvalB === ApprovalState.PENDING}
                       style={approveButtonWidth(approvalA !== ApprovalState.APPROVED)}
