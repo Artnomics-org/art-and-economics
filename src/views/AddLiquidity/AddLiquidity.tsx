@@ -8,13 +8,15 @@ import { AddRemoveTabs } from '../../components/NavigationTabs'
 import Page from '../../components/Page'
 import { useCurrency } from '../../hooks/token'
 import { useActiveWeb3React } from '../../hooks/wallet'
-import { ContentCard, PageCard, Wrapper } from './components/styleds'
+import { ContentCard, PageCard, PositionCard, Wrapper } from './components/styleds'
 import CurrencyInputPanel from '../../components/CurrencyInputPanel'
 import { useDerivedMintInfo, useMintActionHandlers, useMintState } from '../../hooks/mint'
 import { Field } from '../../state/mint/actions'
 import { currencyId, maxAmountSpend } from '../../utils/currency'
 import { useWalletModalToggle } from '../../hooks/application'
 import Button from '../../components/Button'
+import { PairState } from '../../hooks/liquidity'
+import { MinimalPositionCard } from '../../components/PositionCard'
 
 interface AddLiquidityProps {
   currencyIdA?: string
@@ -110,6 +112,8 @@ const AddLiquidity: React.FC<RouteComponentProps<AddLiquidityProps>> = ({
     [currencyIdA, history, currencyIdB]
   )
 
+  const isShowCard = pair && !noLiquidity && pairState !== PairState.INVALID
+
   return (
     <Page>
       <PageCard>
@@ -160,6 +164,11 @@ const AddLiquidity: React.FC<RouteComponentProps<AddLiquidityProps>> = ({
           </AutoColumn>
         </Wrapper>
       </PageCard>
+      {isShowCard && (
+        <PositionCard>
+          <MinimalPositionCard showUnwrapped={oneCurrencyIsWETH} pair={pair} />
+        </PositionCard>
+      )}
     </Page>
   )
 }
