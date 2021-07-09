@@ -19,6 +19,7 @@ const Card = styled.div<CardProps>`
 export const LightCard = styled(Card)`
   border: 1px solid ${({ theme }) => theme.color.grey[500]};
   background-color: ${({ theme }) => theme.color.bg1};
+  color: ${({ theme }) => theme.color.grey[500]};
 `
 
 export default Card
