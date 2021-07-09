@@ -11,6 +11,7 @@ import { AutoColumn } from '../Column'
 import CurrencyLogo, { DoubleCurrencyLogo } from '../CurrencyLogo'
 import { AutoRow, RowBetween, RowFixed } from '../Row'
 import { PositionCardProps } from './types'
+import { FixedHeightRow  } from './styleds'
 
 const FullPositionCard: React.FC<PositionCardProps> = ({ pair, border }) => {
   const { account } = useActiveWeb3React()
@@ -124,10 +125,6 @@ const PositionCard = styled.div`
   background-color: ${(props) => props.theme.color.bg};
   position: relative;
   overflow: hidden;
-`
-
-const FixedHeightRow = styled(RowBetween)`
-  height: 24px;
 `
 
 const CardTitleText = styled.p`
