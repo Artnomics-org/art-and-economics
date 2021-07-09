@@ -1,4 +1,4 @@
-import { Trade, Percent, CurrencyAmount, Fraction, TokenAmount } from '@haneko/uniswap-sdk'
+import { Trade, Percent, CurrencyAmount, Fraction, TokenAmount, JSBI } from '@haneko/uniswap-sdk'
 import { BigNumber } from '@ethersproject/bignumber'
 import {
   ONE_HUNDRED_PERCENT,
@@ -84,4 +84,14 @@ export function formatExecutionPrice(trade?: Trade, inverted?: boolean): string 
 // add 10%
 export function calculateGasMargin(value: BigNumber): BigNumber {
   return value.mul(BigNumber.from(10000).add(BigNumber.from(1000))).div(BigNumber.from(10000))
+}
+
+export function calculateSlippageAmount(value: CurrencyAmount, slippage: number): [JSBI, JSBI] {
+  if (slippage < 0 || slippage > 10000) {
+    throw Error(`Unexpected slippage value: ${slippage}`)
+  }
+  return [
+    JSBI.divide(JSBI.multiply(value.raw, JSBI.BigInt(10000 - slippage)), JSBI.BigInt(10000)),
+    JSBI.divide(JSBI.multiply(value.raw, JSBI.BigInt(10000 + slippage)), JSBI.BigInt(10000)),
+  ]
 }
