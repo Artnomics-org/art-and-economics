@@ -38,3 +38,9 @@ export const PositionCard = styled(AutoColumn)`
   position: relative;
   overflow: hidden;
 `
+
+export const SmallText = styled.p`
+  margin: 0;
+  font-weight: 500;
+  font-size: 14px;
+`
