@@ -32,7 +32,6 @@ const AdvancedInfoCardWrapper = styled(animated.div)<{ mobile?: boolean }>`
   z-index: 1000;
   top: 50%;
   transform: translateY(-50%);
-  pointer-events: none;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
