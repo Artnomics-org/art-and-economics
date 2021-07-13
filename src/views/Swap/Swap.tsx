@@ -24,9 +24,12 @@ import { computeTradePriceBreakdown, confirmPriceImpactWithoutFee, warningSeveri
 import { useUserSlippageTolerance } from '../../hooks/user'
 import { useApproveCallbackFromTrade, ApprovalState } from '../../hooks/approve'
 import { RowBetween } from '../../components/Row'
+import Column, { AutoColumn } from '../../components/Column'
+import ProgressCircles from './components/ProgressCircles'
+import SwapCallbackError from './components/SwapCallbackError'
 
 const Swap: React.FC = () => {
-  const loadedUrlParams = useDefaultsFromURLSearch()
+  useDefaultsFromURLSearch()
   const { account } = useActiveWeb3React()
   // toggle wallet when disconnected
   const toggleWalletModal = useWalletModalToggle()
@@ -59,7 +62,6 @@ const Swap: React.FC = () => {
   } = useWrapCallback(currencies[Field.INPUT], currencies[Field.OUTPUT], typedValue)
   const showWrap: boolean = wrapType !== WrapType.NOT_APPLICABLE
   const trade = showWrap ? undefined : v2Trade
-  const isMoreInfoShow = !!trade
 
   const dependentField: Field = independentField === Field.INPUT ? Field.OUTPUT : Field.INPUT
   const parsedAmounts = showWrap
@@ -195,6 +197,8 @@ const Swap: React.FC = () => {
       ? 'Price impact to high'
       : `Swap${priceImpactSeverity > 2 ? ' anyway' : ''}`
 
+  const isMoreInfoShow = !!trade || showApproveFlow || (isExpertMode && !!swapErrorMessage)
+
   return (
     <Page>
       <SwapWrapper bg={IconSwapBg}>
@@ -202,28 +206,29 @@ const Swap: React.FC = () => {
         <SwapBody>
           <Title>nft art market</Title>
           <InputBody>
-            <CurrencyInputPanel
-              id="swap-currency-input"
-              label={independentField === Field.OUTPUT && !showWrap && trade ? 'From (estimated)' : 'From'}
-              value={formattedAmounts[Field.INPUT]}
-              showMaxButton={!atMaxAmountInput}
-              currency={currencies[Field.INPUT]}
-              onUserInput={handleTypeInput}
-              onMax={handleMaxInput}
-              onCurrencySelect={handleInputSelect}
-              otherCurrency={currencies[Field.OUTPUT]}
-              style={{ marginBottom: '100px' }}
-            />
-            <CurrencyInputPanel
-              id="swap-currency-output"
-              value={formattedAmounts[Field.OUTPUT]}
-              onUserInput={handleTypeOutput}
-              label={independentField === Field.INPUT && !showWrap && trade ? 'To (estimated)' : 'To'}
-              showMaxButton={false}
-              currency={currencies[Field.OUTPUT]}
-              onCurrencySelect={handleOutputSelect}
-              otherCurrency={currencies[Field.INPUT]}
-            />
+            <AutoColumn gap="100px">
+              <CurrencyInputPanel
+                id="swap-currency-input"
+                label={independentField === Field.OUTPUT && !showWrap && trade ? 'From (estimated)' : 'From'}
+                value={formattedAmounts[Field.INPUT]}
+                showMaxButton={!atMaxAmountInput}
+                currency={currencies[Field.INPUT]}
+                onUserInput={handleTypeInput}
+                onMax={handleMaxInput}
+                onCurrencySelect={handleInputSelect}
+                otherCurrency={currencies[Field.OUTPUT]}
+              />
+              <CurrencyInputPanel
+                id="swap-currency-output"
+                value={formattedAmounts[Field.OUTPUT]}
+                onUserInput={handleTypeOutput}
+                label={independentField === Field.INPUT && !showWrap && trade ? 'To (estimated)' : 'To'}
+                showMaxButton={false}
+                currency={currencies[Field.OUTPUT]}
+                onCurrencySelect={handleOutputSelect}
+                otherCurrency={currencies[Field.INPUT]}
+              />
+            </AutoColumn>
             <BottomGrouping>
               {!account && (
                 <Button id="wallet-button" onClick={toggleWalletModal}>
@@ -265,7 +270,13 @@ const Swap: React.FC = () => {
         </SwapBody>
       </SwapWrapper>
       <AdvancedInfoCard isShow={isMoreInfoShow}>
-        <AdvancedSwapDetailsDropdown trade={trade} />
+        {trade && <AdvancedSwapDetailsDropdown trade={trade} />}
+        {showApproveFlow && (
+          <Column style={{ marginTop: '16px' }}>
+            <ProgressCircles steps={[approval === ApprovalState.APPROVED]} />
+          </Column>
+        )}
+        {isExpertMode && swapErrorMessage && <SwapCallbackError error={swapErrorMessage} />}
       </AdvancedInfoCard>
     </Page>
   )
