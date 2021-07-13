@@ -15,12 +15,12 @@ import useWrapCallback, {
 } from '../../hooks/swap'
 import { useActiveWeb3React } from '../../hooks/wallet'
 import { Field } from '../../state/swap/actions'
-import { CurrencyAmount, JSBI } from '@haneko/uniswap-sdk'
+import { CurrencyAmount, JSBI, Trade } from '@haneko/uniswap-sdk'
 import { maxAmountSpend } from '../../utils/currency'
 import AdvancedInfoCard from './components/AdvancedInfoCard'
 import AdvancedSwapDetailsDropdown from './components/AdvancedSwapDetailsDropdown'
 import Button from '../../components/Button'
-import { computeTradePriceBreakdown, warningSeverity } from '../../utils/prices'
+import { computeTradePriceBreakdown, confirmPriceImpactWithoutFee, warningSeverity } from '../../utils/prices'
 import { useUserSlippageTolerance } from '../../hooks/user'
 import { useApproveCallbackFromTrade, ApprovalState } from '../../hooks/approve'
 import { RowBetween } from '../../components/Row'
@@ -32,6 +32,21 @@ const Swap: React.FC = () => {
   const toggleWalletModal = useWalletModalToggle()
   // check if user has gone through approval process, used to show two step buttons, reset on token change
   const [approvalSubmitted, setApprovalSubmitted] = useState<boolean>(false)
+  // modal and loading
+  interface SwapState {
+    showConfirm: boolean
+    tradeToConfirm: Trade | undefined
+    attemptingTxn: boolean
+    swapErrorMessage: string | undefined
+    txHash: string | undefined
+  }
+  const [{ showConfirm, tradeToConfirm, swapErrorMessage, attemptingTxn, txHash }, setSwapState] = useState<SwapState>({
+    showConfirm: false,
+    tradeToConfirm: undefined,
+    attemptingTxn: false,
+    swapErrorMessage: undefined,
+    txHash: undefined,
+  })
   const isExpertMode = true
 
   // swap state
@@ -119,6 +134,41 @@ const Swap: React.FC = () => {
   const handleMaxInput = useCallback(() => {
     maxAmountInput && onUserInput(Field.INPUT, maxAmountInput.toExact())
   }, [maxAmountInput, onUserInput])
+  const handleSwap = useCallback(() => {
+    if (priceImpactWithoutFee && !confirmPriceImpactWithoutFee(priceImpactWithoutFee)) {
+      return
+    }
+    if (!swapCallback) {
+      return
+    }
+    setSwapState({ attemptingTxn: true, tradeToConfirm, showConfirm, swapErrorMessage: undefined, txHash: undefined })
+    swapCallback()
+      .then((hash) => {
+        setSwapState({ attemptingTxn: false, tradeToConfirm, showConfirm, swapErrorMessage: undefined, txHash: hash })
+      })
+      .catch((error) => {
+        setSwapState({
+          attemptingTxn: false,
+          tradeToConfirm,
+          showConfirm,
+          swapErrorMessage: error.message,
+          txHash: undefined,
+        })
+      })
+  }, [tradeToConfirm, priceImpactWithoutFee, showConfirm, swapCallback])
+  const handleSwapButtonClick = useCallback(() => {
+    if (isExpertMode) {
+      handleSwap()
+    } else {
+      setSwapState({
+        tradeToConfirm: trade,
+        attemptingTxn: false,
+        swapErrorMessage: undefined,
+        showConfirm: true,
+        txHash: undefined,
+      })
+    }
+  }, [handleSwap, isExpertMode, trade])
 
   const isWrapButtonShow = account && showWrap
   const wrapButtonText =
@@ -144,8 +194,6 @@ const Swap: React.FC = () => {
     priceImpactSeverity > 3 && !isExpertMode
       ? 'Price impact to high'
       : `Swap${priceImpactSeverity > 2 ? ' anyway' : ''}`
-
-  console.log(isSwapButtonDisabled)
 
   return (
     <Page>
@@ -187,19 +235,28 @@ const Swap: React.FC = () => {
                   {wrapButtonText}
                 </Button>
               )}
-              {isNoRouteShow && <p>{noRouteButtonText}</p>}
+              {isNoRouteShow && (
+                <Button id="no-router-show" disabled={true}>
+                  {noRouteButtonText}
+                </Button>
+              )}
               {isApproveFlowShow && (
                 <RowBetween>
-                  <Button id="approve-button" disabled={isApproveButtonDisabled}>
+                  <Button
+                    id="approve-button"
+                    disabled={isApproveButtonDisabled}
+                    style={{ width: '48%' }}
+                    onClick={approveCallback}
+                  >
                     {approvalButtonText}
                   </Button>
-                  <Button id="swap-button" disabled={isApproveFlowSwapButtonDisabled}>
+                  <Button id="swap-button" disabled={isApproveFlowSwapButtonDisabled} onClick={handleSwapButtonClick}>
                     {swapButtonText}
                   </Button>
                 </RowBetween>
               )}
               {isNormalSwapButtonShow && (
-                <Button id="swap-button" disabled={isSwapButtonDisabled}>
+                <Button id="swap-button" disabled={isSwapButtonDisabled} onClick={handleSwapButtonClick}>
                   {swapInputError ? swapInputError : swapButtonText}
                 </Button>
               )}
