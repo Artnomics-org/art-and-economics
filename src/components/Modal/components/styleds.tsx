@@ -1,6 +1,6 @@
 import { TextProps } from 'rebass'
-import styled from 'styled-components/macro'
-import Column, { AutoColumn } from '../../Column'
+import styled, { keyframes } from 'styled-components/macro'
+import Column, { AutoColumn, ColumnCenter } from '../../Column'
 import { RowBetween, RowFixed } from '../../Row'
 
 export const FullColumn = styled(Column)`
@@ -110,4 +110,41 @@ export const MenuItem = styled(RowBetween)`
 export const FadedSpan = styled(RowFixed)`
   color: ${({ theme }) => theme.color.text[500]};
   font-size: 14px;
+`
+
+export const Wrapper = styled.div`
+  width: 100%;
+`
+export const Section = styled(AutoColumn)`
+  padding: 24px;
+`
+
+export const BottomSection = styled(Section)`
+  background-color: ${({ theme }) => theme.bg2};
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+`
+
+export const ConfirmedIcon = styled(ColumnCenter)`
+  padding: 60px 0;
+`
+
+const rotate = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`
+
+export const Spinner = styled.img`
+  animation: 2s ${rotate} linear infinite;
+  width: 16px;
+  height: 16px;
+`
+
+export const CustomLightSpinner = styled(Spinner)<{ size: string }>`
+  height: ${({ size }) => size};
+  width: ${({ size }) => size};
 `
