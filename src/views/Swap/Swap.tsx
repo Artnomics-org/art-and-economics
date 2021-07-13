@@ -33,7 +33,7 @@ import { computeTradePriceBreakdown, confirmPriceImpactWithoutFee, warningSeveri
 import { useUserSlippageTolerance } from '../../hooks/user'
 import { useApproveCallbackFromTrade, ApprovalState } from '../../hooks/approve'
 import { RowBetween } from '../../components/Row'
-import Column, { AutoColumn } from '../../components/Column'
+import { AutoColumn } from '../../components/Column'
 import ProgressCircles from './components/ProgressCircles'
 import SwapCallbackError from './components/SwapCallbackError'
 import TradePrice from './components/TradePrice'
@@ -282,13 +282,6 @@ const Swap: React.FC = () => {
         </SwapBody>
       </SwapWrapper>
       <AdvancedInfoCard isShow={isMoreInfoShow}>
-        {trade && <AdvancedSwapDetailsDropdown trade={trade} />}
-        {showApproveFlow && (
-          <Column style={{ marginTop: '16px' }}>
-            <ProgressCircles steps={[approval === ApprovalState.APPROVED]} />
-          </Column>
-        )}
-        {isExpertMode && swapErrorMessage && <SwapCallbackError error={swapErrorMessage} />}
         {showWrap ? null : (
           <AdvancedCard>
             <AutoColumn gap="4px">
@@ -303,6 +296,17 @@ const Swap: React.FC = () => {
                 </RowBetween>
               )}
             </AutoColumn>
+          </AdvancedCard>
+        )}
+        {trade && <AdvancedSwapDetailsDropdown trade={trade} />}
+        {showApproveFlow && (
+          <AdvancedCard>
+            <ProgressCircles steps={[approval === ApprovalState.APPROVED]} />
+          </AdvancedCard>
+        )}
+        {isExpertMode && swapErrorMessage && (
+          <AdvancedCard>
+            <SwapCallbackError error={swapErrorMessage} />
           </AdvancedCard>
         )}
       </AdvancedInfoCard>
