@@ -29,6 +29,10 @@ import { useApproveCallback, ApprovalState } from '../../hooks/approve'
 import { RowBetween } from '../../components/Row'
 import { LightCard } from '../../components/Card'
 import PoolPriceBar from './components/PoolPriceBar'
+import ConfirmationModalContent from '../../components/Modal/components/ConfirmationModalContent'
+import TransactionConfirmationModal from '../../components/Modal/TransactionConfirmationModal'
+import ConfirmationContentTop from './components/ConfirmationContentTop'
+import ConfirmationContentBottom from './components/ConfirmationContentBottom'
 
 interface AddLiquidityProps {
   currencyIdA?: string
@@ -222,6 +226,9 @@ const AddLiquidity: React.FC<RouteComponentProps<AddLiquidityProps>> = ({
       width: isPending ? '48%' : '100%',
     }
   }
+  const pendingText = `Supplying ${parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)} ${
+    currencies[Field.CURRENCY_A]?.symbol
+  } and ${parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)} ${currencies[Field.CURRENCY_B]?.symbol}`
 
   const handleCurrencyASelect = useCallback(
     (currencyA: Currency) => {
@@ -258,12 +265,50 @@ const AddLiquidity: React.FC<RouteComponentProps<AddLiquidityProps>> = ({
   const handleSupplyButtonClick = useCallback(() => {
     expertMode ? onAdd() : setShowConfirm(true)
   }, [expertMode, onAdd])
+  const handleDismissConfirmation = useCallback(() => {
+    setShowConfirm(false)
+    // if there was a tx hash, we want to clear the input
+    if (txHash) {
+      onFieldAInput('')
+    }
+    setTxHash('')
+  }, [onFieldAInput, txHash])
 
   return (
     <Page>
       <PageCard>
         <AddRemoveTabs creating={isCreate} adding={true} />
         <Wrapper>
+          <TransactionConfirmationModal
+            isOpen={showConfirm}
+            onDismiss={handleDismissConfirmation}
+            attemptingTxn={attemptingTxn}
+            hash={txHash}
+            pendingText={pendingText}
+          >
+            <ConfirmationModalContent
+              title={noLiquidity ? 'You are creating a pool' : 'You will receive'}
+              onDismiss={handleDismissConfirmation}
+              topContent={
+                <ConfirmationContentTop
+                  noLiquidity={noLiquidity}
+                  liquidityMinted={liquidityMinted}
+                  allowedSlippage={allowedSlippage}
+                  currencies={currencies}
+                />
+              }
+              bottomContent={
+                <ConfirmationContentBottom
+                  price={price}
+                  currencies={currencies}
+                  parsedAmounts={parsedAmounts}
+                  noLiquidity={noLiquidity}
+                  onAdd={onAdd}
+                  poolTokenPercentage={poolTokenPercentage}
+                />
+              }
+            />
+          </TransactionConfirmationModal>
           <AutoColumn gap="20px">
             {isCreate && (
               <ContentCard>
