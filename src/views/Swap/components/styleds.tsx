@@ -81,3 +81,17 @@ export const SectionBreak = styled.div`
 export const BottomGrouping = styled.div`
   margin-top: 50px;
 `
+
+export const TradePriceText = styled.div`
+  font-weight: 500;
+  font-size: 14px;
+  color: ${({ theme }) => theme.color.text[500]};
+`
+
+export const AdvancedCard = styled.div`
+  width: 100%;
+  padding: 16px;
+  color: ${({ theme }) => theme.color.text[400]};
+  border: 1px solid ${({ theme }) => theme.color.grey[600]};
+  border-radius: 13.5px;
+`

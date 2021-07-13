@@ -1,6 +1,15 @@
 import React, { useCallback, useState } from 'react'
 import Page from '../../components/Page'
-import { SwapWrapper, Title, IconArrow, SwapBody, InputBody, BottomGrouping } from './components/styleds'
+import {
+  SwapWrapper,
+  Title,
+  IconArrow,
+  SwapBody,
+  InputBody,
+  BottomGrouping,
+  AdvancedCard,
+  TradePriceText,
+} from './components/styleds'
 import IconSwapBg from '../../assets/img/icon-swap-bg.svg'
 import IconLongArrow from '../../assets/img/icon-long-arrow.svg'
 import CurrencyInputPanel from '../../components/CurrencyInputPanel'
@@ -27,6 +36,7 @@ import { RowBetween } from '../../components/Row'
 import Column, { AutoColumn } from '../../components/Column'
 import ProgressCircles from './components/ProgressCircles'
 import SwapCallbackError from './components/SwapCallbackError'
+import TradePrice from './components/TradePrice'
 
 const Swap: React.FC = () => {
   useDefaultsFromURLSearch()
@@ -50,6 +60,8 @@ const Swap: React.FC = () => {
     swapErrorMessage: undefined,
     txHash: undefined,
   })
+  // errors
+  const [showInverted, setShowInverted] = useState<boolean>(false)
   const isExpertMode = true
 
   // swap state
@@ -197,7 +209,7 @@ const Swap: React.FC = () => {
       ? 'Price impact to high'
       : `Swap${priceImpactSeverity > 2 ? ' anyway' : ''}`
 
-  const isMoreInfoShow = !!trade || showApproveFlow || (isExpertMode && !!swapErrorMessage)
+  const isMoreInfoShow = !!trade || showApproveFlow || (isExpertMode && !!swapErrorMessage) || showWrap
 
   return (
     <Page>
@@ -277,6 +289,22 @@ const Swap: React.FC = () => {
           </Column>
         )}
         {isExpertMode && swapErrorMessage && <SwapCallbackError error={swapErrorMessage} />}
+        {showWrap ? null : (
+          <AdvancedCard>
+            <AutoColumn gap="4px">
+              {Boolean(trade) && (
+                <RowBetween align="center">
+                  <TradePriceText>Price</TradePriceText>
+                  <TradePrice
+                    price={trade?.executionPrice}
+                    showInverted={showInverted}
+                    setShowInverted={setShowInverted}
+                  />
+                </RowBetween>
+              )}
+            </AutoColumn>
+          </AdvancedCard>
+        )}
       </AdvancedInfoCard>
     </Page>
   )
