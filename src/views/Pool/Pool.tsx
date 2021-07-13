@@ -50,7 +50,7 @@ const Pool: React.FC = () => {
   const isLoading = account && (fetchingV2PairBalances || v2Pairs?.length < liquidityTokensWithBalances.length || v2Pairs?.some(V2Pair => !V2Pair))
   const isNoLiquidity = account && !isLoading && !allV2PairsWithLiquidity.length
 
-  console.log(allV2PairsWithLiquidity)
+  // console.log(allV2PairsWithLiquidity)
 
   return (
     <Page>
