@@ -40,3 +40,12 @@ Poppins 家族。
 ```css
 font-family: Poppins;
 ```
+
+## Frontend TODOs
+
+- Header ANE balance
+- Header swap popup/side
+- Wallet connect modal (like Uniswap)
+- User account switcher (like Uniswap)
+- Pending transactions popper (like Uniswap)
+- NFT upload flow pages
