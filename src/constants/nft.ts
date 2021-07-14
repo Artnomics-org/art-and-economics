@@ -1,3 +1,9 @@
+export enum UserRole {
+  Collector = 'COLLECTOR',
+  Artist = 'ARTIST',
+  SuperAdmin = 'SUPER_ADMIN',
+}
+
 export const NFTs = [
   {
     addresses: {
