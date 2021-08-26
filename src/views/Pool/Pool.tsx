@@ -90,7 +90,7 @@ const Pool: React.FC = () => {
           {!account && <Info>Connect to a wallet to view your liquidity.</Info>}
           {isLoading && <Info>Loading...</Info>}
           {isNoLiquidity && <Info>No liquidity found.</Info>}
-          {allV2PairsWithLiquidity.length && (
+          {allV2PairsWithLiquidity.length > 0 && (
             <AutoColumn gap="20px">
               {allV2PairsWithLiquidity.map((v2Pair) => (
                 <FullPositionCard key={v2Pair.liquidityToken.address} pair={v2Pair} />
