@@ -5,19 +5,26 @@ import ImageNFTBg3x from '../../../assets/img/image-nft-bg@3x.png'
 
 export const NFTsWrapper = styled.div`
   flex: 1;
+  position: relative;
   width: 100%;
   height: 100%;
+`
+
+export const Banner = styled.div`
+  width: 100vw;
+  height: 290px;
+  position: static;
+  margin-bottom: -290px;
   background-color: ${(props) => props.theme.color.bg};
-  // TODO: ask others to correct the background image shadow
   background-image:
     linear-gradient(
       rgba(233, 233, 233, 0.79),
       rgba(233, 233, 233, 0.79)
     ),
     -webkit-image-set(url(${ImageNFTBg}) 1x, url(${ImageNFTBg2x}) 2x, url(${ImageNFTBg3x}) 3x);
-  background-size: ${props => props.theme.siteWidth}px 291px;
+  background-size: cover;
   background-repeat: no-repeat;
-  background-position: top;
+  background-position: center;
 `
 
 export const NFTsBody = styled.div`
