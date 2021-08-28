@@ -12,10 +12,19 @@ export interface ModalProps {
   onDismiss: () => void
   minHeight?: number | false
   maxHeight?: number
+  contentHeight?: number
   initialFocusRef?: React.RefObject<unknown>
 }
 
-const Modal: React.FC<ModalProps> = ({ minHeight, maxHeight, isOpen, initialFocusRef, onDismiss, children }) => {
+const Modal: React.FC<ModalProps> = ({
+  minHeight,
+  maxHeight,
+  isOpen,
+  initialFocusRef,
+  onDismiss,
+  children,
+  contentHeight,
+}) => {
   const fadeTransition = useTransition(isOpen, {
     config: { duration: 200 },
     from: { opacity: 0 },
@@ -52,6 +61,7 @@ const Modal: React.FC<ModalProps> = ({ minHeight, maxHeight, isOpen, initialFocu
                 minHeight={minHeight}
                 maxHeight={maxHeight}
                 mobile={isMobile}
+                contentHeight={contentHeight}
               >
                 {/* prevents the automatic focusing of inputs on mobile by the reach dialog */}
                 {!initialFocusRef && isMobile ? <div tabIndex={1} /> : null}
@@ -78,7 +88,7 @@ const StyledDialogOverlay = styled(AnimatedDialogOverlay)`
 `
 
 const AnimatedDialogContent = animated(DialogContent)
-const StyledDialogContent = styled(({ minHeight, maxHeight, mobile, isOpen, ...rest }) => (
+const StyledDialogContent = styled(({ minHeight, maxHeight, contentHeight, mobile, isOpen, ...rest }) => (
   <AnimatedDialogContent {...rest} />
 )).attrs({
   'aria-label': 'dialog',
@@ -96,7 +106,6 @@ const StyledDialogContent = styled(({ minHeight, maxHeight, mobile, isOpen, ...r
     overflow-y: ${({ mobile }) => (mobile ? 'scroll' : 'hidden')};
     overflow-x: hidden;
     align-self: ${({ mobile }) => (mobile ? 'flex-end' : 'center')};
-    height: 100%;
     max-width: 420px;
     ${({ maxHeight }) =>
       maxHeight &&
@@ -107,6 +116,11 @@ const StyledDialogContent = styled(({ minHeight, maxHeight, mobile, isOpen, ...r
       minHeight &&
       css`
         min-height: ${minHeight}vh;
+      `}
+    ${({ contentHeight }) =>
+      contentHeight &&
+      css`
+        height: ${contentHeight}%;
       `}
   }
 `
