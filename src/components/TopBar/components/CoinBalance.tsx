@@ -1,8 +1,13 @@
 import React from 'react'
 import styled from 'styled-components/macro'
+import { ANE } from '../../../constants/lists'
+import { useTokenBalance } from '../../../hooks/token'
+import { useActiveWeb3React } from '../../../hooks/wallet'
 
 const CoinBalance: React.FC = () => {
-  return <StyledBalance>0 ANE</StyledBalance>
+  const { account } = useActiveWeb3React()
+  const balance = useTokenBalance(account, ANE)
+  return <StyledBalance>{balance?.toSignificant(2) || 0} ANE</StyledBalance>
 }
 
 const StyledBalance = styled.div`
