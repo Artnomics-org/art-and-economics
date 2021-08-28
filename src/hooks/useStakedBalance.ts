@@ -14,7 +14,7 @@ const useStakedBalance = (pid: number) => {
   }, [ethereum, farm.poolAddress])
 
   const fetchBalance = useCallback(async () => {
-    const balance = await contract.methods.balanceOf(account).call();
+    const balance = await contract.methods.balanceOf(account).call()
     setBalance(new BigNumber(balance))
   }, [account, contract])
 

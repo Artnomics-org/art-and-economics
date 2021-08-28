@@ -12,14 +12,14 @@ const useReward = (pid: number) => {
   }, [ethereum, farm.poolAddress])
 
   const handleReward = useCallback(async () => {
-      const txHash = await contract.methods
+    const txHash = await contract.methods
       .getReward()
       .send({ from: account })
       .on('transactionHash', (tx: any) => {
         console.log(tx)
         return tx.transactionHash
       })
-      console.log(txHash)
+    console.log(txHash)
     return ''
   }, [account, contract.methods])
 

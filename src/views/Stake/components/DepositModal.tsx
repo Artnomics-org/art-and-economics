@@ -13,12 +13,7 @@ interface DepositModalProps extends ModalProps {
   tokenName?: string
 }
 
-const DepositModal: React.FC<DepositModalProps> = ({
-  max,
-  onConfirm,
-  onDismiss,
-  tokenName = '',
-}) => {
+const DepositModal: React.FC<DepositModalProps> = ({ max, onConfirm, onDismiss, tokenName = '' }) => {
   const [val, setVal] = useState('')
   const [pendingTx, setPendingTx] = useState(false)
 

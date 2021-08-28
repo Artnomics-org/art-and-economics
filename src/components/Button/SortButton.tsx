@@ -7,15 +7,10 @@ interface SortButtonProps {
   ascending: boolean
 }
 
-const SortButton: React.FC<SortButtonProps> = ({
-  toggleSortOrder,
-  ascending
-}) => {
+const SortButton: React.FC<SortButtonProps> = ({ toggleSortOrder, ascending }) => {
   return (
     <FilterWrapper onClick={toggleSortOrder}>
-      <Text>
-        {ascending ? '↑' : '↓'}
-      </Text>
+      <Text>{ascending ? '↑' : '↓'}</Text>
     </FilterWrapper>
   )
 }

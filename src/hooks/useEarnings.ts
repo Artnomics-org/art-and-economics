@@ -14,7 +14,7 @@ const useEarnings = (pid: number) => {
   }, [ethereum, farm.poolAddress])
 
   const fetchBalance = useCallback(async () => {
-    const balance = await contract.methods.earned(account).call();
+    const balance = await contract.methods.earned(account).call()
     setBalance(new BigNumber(balance))
   }, [account, contract])
 

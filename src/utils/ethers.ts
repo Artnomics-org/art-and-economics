@@ -27,7 +27,12 @@ export function getProviderOrSigner(library: Web3Provider, account?: string): We
 }
 
 // account is optional
-export function getContractWithAbi(address: string, ABI: ContractInterface, library: Web3Provider, account?: string): Contract {
+export function getContractWithAbi(
+  address: string,
+  ABI: ContractInterface,
+  library: Web3Provider,
+  account?: string,
+): Contract {
   if (!isAddress(address) || address === AddressZero) {
     throw Error(`Invalid 'address' parameter '${address}'.`)
   }
@@ -49,9 +54,7 @@ export const getAllowance = async (
   account: string,
 ): Promise<string> => {
   try {
-    const allowance: string = await lpContract.methods
-      .allowance(account, masterChefContract.options.address)
-      .call()
+    const allowance: string = await lpContract.methods.allowance(account, masterChefContract.options.address).call()
     return allowance
   } catch (e) {
     return '0'
@@ -65,24 +68,17 @@ export const getBalance = async (
 ): Promise<string> => {
   const lpContract = getERC20Contract(tokenAddress, provider)
   try {
-    const balance: string = await lpContract.methods
-      .balanceOf(userAddress)
-      .call()
+    const balance: string = await lpContract.methods.balanceOf(userAddress).call()
     return balance
   } catch (e) {
     return '0'
   }
 }
 
-export const getTotalSupply = async (
-  provider: Web3Provider,
-  tokenAddress: string,
-): Promise<string> => {
+export const getTotalSupply = async (provider: Web3Provider, tokenAddress: string): Promise<string> => {
   const lpContract = getERC20Contract(tokenAddress, provider)
   try {
-    const balance: string = await lpContract.methods
-      .totalSupply()
-      .call()
+    const balance: string = await lpContract.methods.totalSupply().call()
     return balance
   } catch (e) {
     return '0'

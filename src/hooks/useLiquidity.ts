@@ -63,25 +63,17 @@ export function useEstimateTotalLiquidtyInBNB({
   const totalLiquidity = useMemo(() => {
     if (token0Price !== '0' && token1Price !== '0') {
       const isToken0ExpensiveThan1 = new BigNumber(token0Price).lt(token1Price)
-      const token0Total = new BigNumber(
-        utils.parseUnits(token0Price, decimal0).toString(),
-      )
+      const token0Total = new BigNumber(utils.parseUnits(token0Price, decimal0).toString())
         .multipliedBy(2)
         .multipliedBy(reserve0)
-      const token1Ttotal = new BigNumber(
-        utils.parseUnits(token1Price, decimal1).toString(),
-      )
+      const token1Ttotal = new BigNumber(utils.parseUnits(token1Price, decimal1).toString())
         .multipliedBy(2)
         .multipliedBy(reserve1)
       return isToken0ExpensiveThan1 ? token0Total : token1Ttotal
     } else if (token0Price !== '0') {
-      return new BigNumber(utils.parseUnits(token0Price, decimal0).toString())
-        .multipliedBy(2)
-        .multipliedBy(reserve0)
+      return new BigNumber(utils.parseUnits(token0Price, decimal0).toString()).multipliedBy(2).multipliedBy(reserve0)
     } else if (token1Price !== '0') {
-      return new BigNumber(utils.parseUnits(token1Price, decimal1).toString())
-        .multipliedBy(2)
-        .multipliedBy(reserve1)
+      return new BigNumber(utils.parseUnits(token1Price, decimal1).toString()).multipliedBy(2).multipliedBy(reserve1)
     } else {
       return new BigNumber(0)
     }
@@ -90,20 +82,13 @@ export function useEstimateTotalLiquidtyInBNB({
   return totalLiquidity
 }
 
-export async function getTotalLiquidityInBNB(
-  ethereum: Web3Provider,
-  tokenAddress: string,
-  valuationCurrency: string,
-) {
+export async function getTotalLiquidityInBNB(ethereum: Web3Provider, tokenAddress: string, valuationCurrency: string) {
   const networkId = 56 // BSC
   const swapRouter = getSwapRouter(ethereum, address[networkId])
   // LP 做特殊处理
   const pairContract = getPairContract(ethereum, tokenAddress)
   // rewardRate = reward for every second staking
-  const {
-    _reserve0,
-    _reserve1,
-  } = await pairContract.methods.getReserves().call()
+  const { _reserve0, _reserve1 } = await pairContract.methods.getReserves().call()
   const _token0 = await pairContract.methods.token0().call()
   const totalSupply = await pairContract.methods.totalSupply().call()
   const _token1 = await pairContract.methods.token1().call()

@@ -16,14 +16,12 @@ const useUnstake = (pid: number) => {
     async (amount: string) => {
       const value = new BigNumber(amount).times(new BigNumber(10).pow(18)).toString()
       const txHash = await contract.methods
-      .withdraw(
-        value,
-      )
-      .send({ from: account })
-      .on('transactionHash', (tx: any) => {
-        console.log(tx)
-        return tx.transactionHash
-      })
+        .withdraw(value)
+        .send({ from: account })
+        .on('transactionHash', (tx: any) => {
+          console.log(tx)
+          return tx.transactionHash
+        })
       console.log(txHash)
     },
     [account, contract],

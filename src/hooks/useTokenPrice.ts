@@ -11,11 +11,7 @@ import { useActiveWeb3React } from './wallet'
  * @param tokenAddress Address of ERC20/BEP20 Token
  * @param decimals Token decimals, optional, default is 18. Needs to fill if decimals is not 18
  */
-export function useTokenPriceInBNB(
-  tokenAddress: string,
-  decimals: number | string = 18,
-  isLp = false,
-) {
+export function useTokenPriceInBNB(tokenAddress: string, decimals: number | string = 18, isLp = false) {
   const { account, library: ethereum } = useActiveWeb3React()
   // use BigNumber, format them at the display part please
   const [priceInBNB, updatePriceInBNB] = useState('0')
@@ -35,11 +31,7 @@ export function useTokenPriceInBNB(
     }
     if (isLp) {
       // LP 做特殊处理
-      const fresult = await getTotalLiquidityInBNB(
-        ethereum,
-        tokenAddress,
-        WBNB[56],
-      )
+      const fresult = await getTotalLiquidityInBNB(ethereum, tokenAddress, WBNB[56])
       updatePriceInBNB(fresult)
       return
     }
@@ -70,11 +62,7 @@ export function useTokenPriceInBNB(
  * @param tokenAddress Address of ERC20/BEP20 Token
  * @param decimals Token decimals, optional, default is 18. Needs to fill if decimals is not 18
  */
-export function useTokenPriceInBUSD(
-  tokenAddress: string,
-  decimals: number | string = 18,
-  isLp = false,
-) {
+export function useTokenPriceInBUSD(tokenAddress: string, decimals: number | string = 18, isLp = false) {
   const { account, library: ethereum } = useActiveWeb3React()
   // use BigNumber, format them at the display part please
   const [priceInBUSD, updatePriceInBUSD] = useState('0')
@@ -93,11 +81,7 @@ export function useTokenPriceInBUSD(
       return
     }
     if (isLp) {
-      const fresult = await getTotalLiquidityInBNB(
-        ethereum,
-        tokenAddress,
-        BUSD[56],
-      )
+      const fresult = await getTotalLiquidityInBNB(ethereum, tokenAddress, BUSD[56])
       updatePriceInBUSD(fresult)
       return
     }

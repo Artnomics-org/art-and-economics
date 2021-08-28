@@ -47,7 +47,7 @@ const CurrencyInputPanel: React.FC<CurrencyInputPanelProps> = ({
   customBalanceText,
   style,
   padding = false,
-  fgColor
+  fgColor,
 }) => {
   const inputId = `${id}-input`
   const { account } = useActiveWeb3React()
@@ -79,14 +79,22 @@ const CurrencyInputPanel: React.FC<CurrencyInputPanelProps> = ({
       <Container>
         {!hideInput && (
           <LabelRow>
-            <Label htmlFor={inputId} fgColor={fgColor}>{label}</Label>
+            <Label htmlFor={inputId} fgColor={fgColor}>
+              {label}
+            </Label>
             {account && <Balance fgColor={fgColor}>balance: {balanceDisplay}</Balance>}
           </LabelRow>
         )}
         <InputRow>
-          {!hideInput && <NumericalInput fgColor={fgColor} fontSize={40} value={value} onUserInput={(val) => onUserInput(val)} />}
+          {!hideInput && (
+            <NumericalInput fgColor={fgColor} fontSize={40} value={value} onUserInput={(val) => onUserInput(val)} />
+          )}
           <CurrencySelectWrapper>
-            {isMaxDisplay && <BalanceMax fgColor={fgColor} onClick={onMax}>max</BalanceMax>}
+            {isMaxDisplay && (
+              <BalanceMax fgColor={fgColor} onClick={onMax}>
+                max
+              </BalanceMax>
+            )}
             <CurrencySelect fgColor={fgColor} onClick={handleCurrencySelectClick}>
               {pair ? (
                 <DoubleCurrencyLogo currency0={pair.token0} currency1={pair.token1} size={18} />
@@ -153,7 +161,7 @@ const Label = styled.label<{ fgColor?: string }>`
   line-height: 1.38;
   letter-spacing: 1.7px;
   text-transform: uppercase;
-  color: ${({ theme, fgColor }) => fgColor ? fgColor : theme.color.white};
+  color: ${({ theme, fgColor }) => (fgColor ? fgColor : theme.color.white)};
 `
 
 const Balance = styled.p<{ fgColor?: string }>`
@@ -163,7 +171,7 @@ const Balance = styled.p<{ fgColor?: string }>`
   letter-spacing: 0.67px;
   text-align: right;
   text-transform: uppercase;
-  color: ${({ theme, fgColor }) => fgColor ? fgColor : theme.color.white};
+  color: ${({ theme, fgColor }) => (fgColor ? fgColor : theme.color.white)};
   margin: 0;
 `
 
@@ -179,12 +187,12 @@ const BalanceMax = styled.button<{ fgColor?: string }>`
   width: 68px;
   height: 28px;
   background-color: transparent;
-  border: 2px solid ${({ theme, fgColor }) => fgColor ? fgColor : theme.color.white};
+  border: 2px solid ${({ theme, fgColor }) => (fgColor ? fgColor : theme.color.white)};
   border-radius: 60px;
   font-family: 'Helvetica Neue LT W05_93 Blk E';
   font-size: 16px;
   text-transform: uppercase;
-  color: ${({ theme, fgColor }) => fgColor ? fgColor : theme.color.white};
+  color: ${({ theme, fgColor }) => (fgColor ? fgColor : theme.color.white)};
   cursor: pointer;
   outline: none;
   margin-right: 6px;
@@ -201,26 +209,26 @@ const CurrencySelect = styled.button<{ fgColor?: string }>`
   font-family: 'Helvetica Neue LT W05_53 Ext';
   font-size: 16px;
   text-transform: uppercase;
-  color: ${({ theme, fgColor }) => fgColor ? fgColor : theme.color.white};
+  color: ${({ theme, fgColor }) => (fgColor ? fgColor : theme.color.white)};
   border-radius: 60px;
-  border: 2px solid ${({ theme, fgColor }) => fgColor ? fgColor : theme.color.white};
+  border: 2px solid ${({ theme, fgColor }) => (fgColor ? fgColor : theme.color.white)};
   outline: none;
   cursor: pointer;
   user-select: none;
 `
 
-const TokenName = styled.span<{ active: boolean, fgColor?: string }>`
+const TokenName = styled.span<{ active: boolean; fgColor?: string }>`
   font-family: ${({ active }) => (active ? 'Helvetica Neue LT W05_53 Ext' : 'Helvetica Neue LT W05_93 Blk E')};
   font-size: ${({ active }) => (active ? 16 : 10)}px;
   text-align: center;
-  color: ${({ theme, fgColor }) => fgColor ? fgColor : theme.color.white};
+  color: ${({ theme, fgColor }) => (fgColor ? fgColor : theme.color.white)};
 `
 
 const IconDropDown = styled(DropDownIcon)<{ color?: string }>`
   margin-left: 6px;
   height: 16px;
   path {
-    stroke: ${({ theme, color }) => color ? color : theme.color.white};
+    stroke: ${({ theme, color }) => (color ? color : theme.color.white)};
   }
 `
 

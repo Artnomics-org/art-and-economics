@@ -1,8 +1,8 @@
-import { createContext } from "react";
-import { NFTsContext } from "./types";
+import { createContext } from 'react'
+import { NFTsContext } from './types'
 
 const context = createContext<NFTsContext>({
-    nfts: [],
+  nfts: [],
 })
 
 export default context

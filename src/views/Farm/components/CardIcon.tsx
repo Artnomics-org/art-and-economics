@@ -2,14 +2,10 @@ import React from 'react'
 import styled from 'styled-components/macro'
 
 interface CardIconProps {
-  children?: React.ReactNode,
+  children?: React.ReactNode
 }
 
-const CardIcon: React.FC<CardIconProps> = ({ children }) => (
-  <StyledCardIcon>
-    {children}
-  </StyledCardIcon>
-)
+const CardIcon: React.FC<CardIconProps> = ({ children }) => <StyledCardIcon>{children}</StyledCardIcon>
 
 const StyledCardIcon = styled.div`
   background-color: transparent;
@@ -18,7 +14,7 @@ const StyledCardIcon = styled.div`
   align-items: center;
   display: flex;
   justify-content: center;
-  margin: ${props => props.theme.spacing[3]}px auto ${props => props.theme.spacing[3]}px;
+  margin: ${(props) => props.theme.spacing[3]}px auto ${(props) => props.theme.spacing[3]}px;
 `
 
 export default CardIcon

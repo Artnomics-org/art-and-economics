@@ -11,7 +11,7 @@ import { AutoColumn } from '../Column'
 import CurrencyLogo, { DoubleCurrencyLogo } from '../CurrencyLogo'
 import { AutoRow, RowBetween, RowFixed } from '../Row'
 import { PositionCardProps } from './types'
-import { FixedHeightRow  } from './styleds'
+import { FixedHeightRow } from './styleds'
 
 const FullPositionCard: React.FC<PositionCardProps> = ({ pair, border }) => {
   const { account } = useActiveWeb3React()

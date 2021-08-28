@@ -5,16 +5,21 @@ import { parseBytes32String } from '@ethersproject/strings'
 import { ERC20_INTERFACE } from '../../constants/ethers'
 import { isAddress } from '../../utils/ethers'
 import { useBytes32TokenContract, useMulticallContract, useTokenContract } from '../contract'
-import { NEVER_RELOAD, useMultipleContractSingleData, useSingleCallResult, useSingleContractMultipleData } from '../multicall'
+import {
+  NEVER_RELOAD,
+  useMultipleContractSingleData,
+  useSingleCallResult,
+  useSingleContractMultipleData,
+} from '../multicall'
 import { useActiveWeb3React } from '../wallet'
 import { useAllTokens } from '../lists'
 
 /**
  * Returns a map of the given addresses to their eventually consistent BNB balances.
  */
-export function useETHBalances(
-  uncheckedAddresses?: (string | undefined)[]
-): { [address: string]: CurrencyAmount | undefined } {
+export function useETHBalances(uncheckedAddresses?: (string | undefined)[]): {
+  [address: string]: CurrencyAmount | undefined
+} {
   const multicallContract = useMulticallContract()
 
   const addresses: string[] = useMemo(
@@ -25,13 +30,13 @@ export function useETHBalances(
             .filter((a): a is string => a !== false)
             .sort()
         : [],
-    [uncheckedAddresses]
+    [uncheckedAddresses],
   )
 
   const results = useSingleContractMultipleData(
     multicallContract,
     'getEthBalance',
-    addresses.map(address => [address])
+    addresses.map((address) => [address]),
   )
 
   return useMemo(
@@ -41,7 +46,7 @@ export function useETHBalances(
         if (value) memo[address] = CurrencyAmount.ether(JSBI.BigInt(value.toString()))
         return memo
       }, {}),
-    [addresses, results]
+    [addresses, results],
   )
 }
 
@@ -50,18 +55,18 @@ export function useETHBalances(
  */
 export function useTokenBalancesWithLoadingIndicator(
   address?: string,
-  tokens?: (Token | undefined)[]
+  tokens?: (Token | undefined)[],
 ): [{ [tokenAddress: string]: TokenAmount | undefined }, boolean] {
   const validatedTokens: Token[] = useMemo(
     () => tokens?.filter((t?: Token): t is Token => isAddress(t?.address) !== false) ?? [],
-    [tokens]
+    [tokens],
   )
 
-  const validatedTokenAddresses = useMemo(() => validatedTokens.map(vt => vt.address), [validatedTokens])
+  const validatedTokenAddresses = useMemo(() => validatedTokens.map((vt) => vt.address), [validatedTokens])
 
   const balances = useMultipleContractSingleData(validatedTokenAddresses, ERC20_INTERFACE, 'balanceOf', [address])
 
-  const anyLoading: boolean = useMemo(() => balances.some(callState => callState.loading), [balances])
+  const anyLoading: boolean = useMemo(() => balances.some((callState) => callState.loading), [balances])
 
   return [
     useMemo(
@@ -76,15 +81,15 @@ export function useTokenBalancesWithLoadingIndicator(
               return memo
             }, {})
           : {},
-      [address, validatedTokens, balances]
+      [address, validatedTokens, balances],
     ),
-    anyLoading
+    anyLoading,
   ]
 }
 
 export function useTokenBalances(
   address?: string,
-  tokens?: (Token | undefined)[]
+  tokens?: (Token | undefined)[],
 ): { [tokenAddress: string]: TokenAmount | undefined } {
   return useTokenBalancesWithLoadingIndicator(address, tokens)[0]
 }
@@ -107,25 +112,26 @@ export function useAllTokenBalances(): { [tokenAddress: string]: TokenAmount | u
 
 export function useCurrencyBalances(
   account?: string,
-  currencies?: (Currency | undefined)[]
+  currencies?: (Currency | undefined)[],
 ): (CurrencyAmount | undefined)[] {
-  const tokens = useMemo(() => currencies?.filter((currency): currency is Token => currency instanceof Token) ?? [], [
-    currencies
-  ])
+  const tokens = useMemo(
+    () => currencies?.filter((currency): currency is Token => currency instanceof Token) ?? [],
+    [currencies],
+  )
 
   const tokenBalances = useTokenBalances(account, tokens)
-  const containsETH: boolean = useMemo(() => currencies?.some(currency => currency === ETHER) ?? false, [currencies])
+  const containsETH: boolean = useMemo(() => currencies?.some((currency) => currency === ETHER) ?? false, [currencies])
   const ethBalance = useETHBalances(containsETH ? [account] : [])
 
   return useMemo(
     () =>
-      currencies?.map(currency => {
+      currencies?.map((currency) => {
         if (!account || !currency) return undefined
         if (currency instanceof Token) return tokenBalances[currency.address]
         if (currency === ETHER) return ethBalance[account]
         return undefined
       }) ?? [],
-    [account, currencies, ethBalance, tokenBalances]
+    [account, currencies, ethBalance, tokenBalances],
   )
 }
 
@@ -142,7 +148,6 @@ export function useTotalSupply(token?: Token): TokenAmount | undefined {
 
   return token && totalSupply ? new TokenAmount(token, totalSupply.toString()) : undefined
 }
-
 
 // parse a name or symbol from a token response
 const BYTES32_REGEX = /^0x[a-fA-F0-9]{64}$/
@@ -172,7 +177,7 @@ export function useToken(tokenAddress?: string): Token | undefined | null {
     token ? undefined : tokenContractBytes32,
     'name',
     undefined,
-    NEVER_RELOAD
+    NEVER_RELOAD,
   )
   const symbol = useSingleCallResult(token ? undefined : tokenContract, 'symbol', undefined, NEVER_RELOAD)
   const symbolBytes32 = useSingleCallResult(token ? undefined : tokenContractBytes32, 'symbol', undefined, NEVER_RELOAD)
@@ -188,7 +193,7 @@ export function useToken(tokenAddress?: string): Token | undefined | null {
         address,
         decimals.result[0],
         parseStringOrBytes32(symbol.result?.[0], symbolBytes32.result?.[0], 'UNKNOWN'),
-        parseStringOrBytes32(tokenName.result?.[0], tokenNameBytes32.result?.[0], 'Unknown Token')
+        parseStringOrBytes32(tokenName.result?.[0], tokenNameBytes32.result?.[0], 'Unknown Token'),
       )
     }
     return undefined
@@ -203,7 +208,7 @@ export function useToken(tokenAddress?: string): Token | undefined | null {
     token,
     tokenName.loading,
     tokenName.result,
-    tokenNameBytes32.result
+    tokenNameBytes32.result,
   ])
 }
 

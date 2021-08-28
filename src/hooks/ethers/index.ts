@@ -31,13 +31,13 @@ export function useENSContentHash(ensName?: string | null): { loading: boolean; 
   const resolverAddress = resolverAddressResult.result?.[0]
   const resolverContract = useENSResolverContract(
     resolverAddress && isZeroHex(resolverAddress) ? undefined : resolverAddress,
-    false
+    false,
   )
   const contenthash = useSingleCallResult(resolverContract, 'contenthash', ensNodeArgument)
 
   return {
     contenthash: contenthash.result?.[0] ?? null,
-    loading: resolverAddressResult.loading || contenthash.loading
+    loading: resolverAddressResult.loading || contenthash.loading,
   }
 }
 
@@ -60,14 +60,14 @@ export function useENSName(address?: string): { ENSName: string | null; loading:
   const resolverAddressResult = resolverAddress.result?.[0]
   const resolverContract = useENSResolverContract(
     resolverAddressResult && !isZeroHex(resolverAddressResult) ? resolverAddressResult : undefined,
-    false
+    false,
   )
   const name = useSingleCallResult(resolverContract, 'name', ensNodeArgument)
 
   const changed = debouncedAddress !== address
   return {
     ENSName: changed ? null : name.result?.[0] ?? null,
-    loading: changed || resolverAddress.loading || name.loading
+    loading: changed || resolverAddress.loading || name.loading,
   }
 }
 
@@ -89,14 +89,14 @@ export function useENSAddress(ensName?: string | null): { loading: boolean; addr
   const resolverAddressResult = resolverAddress.result?.[0]
   const resolverContract = useENSResolverContract(
     resolverAddressResult && !isZeroHex(resolverAddressResult) ? resolverAddressResult : undefined,
-    false
+    false,
   )
   const addr = useSingleCallResult(resolverContract, 'addr', ensNodeArgument)
 
   const changed = debouncedName !== ensName
   return {
     address: changed ? null : addr.result?.[0] ?? null,
-    loading: changed || resolverAddress.loading || addr.loading
+    loading: changed || resolverAddress.loading || addr.loading,
   }
 }
 
@@ -104,9 +104,11 @@ export function useENSAddress(ensName?: string | null): { loading: boolean; addr
  * Given a name or address, does a lookup to resolve to an address and name
  * @param nameOrAddress ENS name or address
  */
-export function useENS(
-  nameOrAddress?: string | null
-): { loading: boolean; address: string | null; name: string | null } {
+export function useENS(nameOrAddress?: string | null): {
+  loading: boolean
+  address: string | null
+  name: string | null
+} {
   const validated = isAddress(nameOrAddress)
   const reverseLookup = useENSName(validated ? validated : undefined)
   const lookup = useENSAddress(nameOrAddress)
@@ -114,7 +116,7 @@ export function useENS(
   return {
     loading: reverseLookup.loading || lookup.loading,
     address: validated ? validated : lookup.address,
-    name: reverseLookup.ENSName ? reverseLookup.ENSName : !validated && lookup.address ? nameOrAddress || null : null
+    name: reverseLookup.ENSName ? reverseLookup.ENSName : !validated && lookup.address ? nameOrAddress || null : null,
   }
 }
 

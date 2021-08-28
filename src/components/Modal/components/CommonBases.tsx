@@ -14,11 +14,7 @@ interface CommonBasesProps {
   onSelect: (currency: Currency) => void
 }
 
-const CommonBases: React.FC<CommonBasesProps> = ({
-  chainId,
-  onSelect,
-  selectedCurrency
-}) => {
+const CommonBases: React.FC<CommonBasesProps> = ({ chainId, onSelect, selectedCurrency }) => {
   const helperText = 'These tokens are commonly paired with other tokens.'
   const handleETHClick = useCallback(() => {
     if (!selectedCurrency || !currencyEquals(selectedCurrency, ETHER)) {
@@ -27,12 +23,12 @@ const CommonBases: React.FC<CommonBasesProps> = ({
   }, [onSelect, selectedCurrency])
 
   return (
-    <AutoColumn gap='md'>
+    <AutoColumn gap="md">
       <AutoRow>
         <Text>Common bases</Text>
         <QuestionHelper text={helperText} />
       </AutoRow>
-      <AutoRow gap='4px'>
+      <AutoRow gap="4px">
         <BaseWrapper onClick={handleETHClick} disable={selectedCurrency === ETHER}>
           <CurrencyLogo currency={ETHER} style={{ marginRight: 8 }} />
           <Text>BNB</Text>

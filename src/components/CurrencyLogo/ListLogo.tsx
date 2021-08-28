@@ -10,17 +10,10 @@ interface ListLogoProps {
   alt?: string
 }
 
-const ListLogo: React.FC<ListLogoProps> = ({
-  logoURI,
-  style,
-  size = 24,
-  alt
-}) => {
+const ListLogo: React.FC<ListLogoProps> = ({ logoURI, style, size = 24, alt }) => {
   const srcs: string[] = useHttpLocations(logoURI)
 
-  return (
-    <StyledListLogo alt={alt} size={size} srcs={srcs} style={style} />
-  )
+  return <StyledListLogo alt={alt} size={size} srcs={srcs} style={style} />
 }
 
 const StyledListLogo = styled(TokenLogo)<{ size: number }>`

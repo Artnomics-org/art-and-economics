@@ -15,12 +15,7 @@ interface DepositModalProps extends ModalProps {
   tokenName?: string
 }
 
-const DepositModalWithRef: React.FC<DepositModalProps> = ({
-  max,
-  onConfirm,
-  onDismiss,
-  tokenName = '',
-}) => {
+const DepositModalWithRef: React.FC<DepositModalProps> = ({ max, onConfirm, onDismiss, tokenName = '' }) => {
   const [val, setVal] = useState('')
   const [addr, setAddr] = useState('')
   const { account } = useActiveWeb3React()

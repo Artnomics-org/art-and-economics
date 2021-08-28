@@ -1,8 +1,8 @@
-import { createContext } from "react";
-import { AcceleratorsContext } from "./types";
+import { createContext } from 'react'
+import { AcceleratorsContext } from './types'
 
 const context = createContext<AcceleratorsContext>({
-    accelerators: [],
+  accelerators: [],
 })
 
 export default context

@@ -1,10 +1,10 @@
-import { ChainId, Currency, currencyEquals, Token } from "@haneko/uniswap-sdk"
-import { useCallback, useMemo } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { AppDispatch, AppState } from "../../state"
-import { addSerializedToken, removeSerializedToken, updateUserSlippageTolerance } from "../../state/user/actions"
-import { deserializeToken, serializeToken } from "../../utils/token"
-import { useActiveWeb3React } from "../wallet"
+import { ChainId, Currency, currencyEquals, Token } from '@haneko/uniswap-sdk'
+import { useCallback, useMemo } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, AppState } from '../../state'
+import { addSerializedToken, removeSerializedToken, updateUserSlippageTolerance } from '../../state/user/actions'
+import { deserializeToken, serializeToken } from '../../utils/token'
+import { useActiveWeb3React } from '../wallet'
 
 export function useAddUserToken(): (token: Token) => void {
   const dispatch = useDispatch<AppDispatch>()
@@ -12,7 +12,7 @@ export function useAddUserToken(): (token: Token) => void {
     (token: Token) => {
       dispatch(addSerializedToken({ serializedToken: serializeToken(token) }))
     },
-    [dispatch]
+    [dispatch],
   )
 }
 
@@ -22,7 +22,7 @@ export function useRemoveUserAddedToken(): (chainId: number, address: string) =>
     (chainId: number, address: string) => {
       dispatch(removeSerializedToken({ chainId, address }))
     },
-    [dispatch]
+    [dispatch],
   )
 }
 
@@ -39,12 +39,12 @@ export function useUserAddedTokens(): Token[] {
 // Check if currency is included in custom list from user storage
 export function useIsUserAddedToken(currency: Currency): boolean {
   const userAddedTokens = useUserAddedTokens()
-  return !!userAddedTokens.find(token => currencyEquals(currency, token))
+  return !!userAddedTokens.find((token) => currencyEquals(currency, token))
 }
 
 export function useUserSlippageTolerance(): [number, (slippage: number) => void] {
   const dispatch = useDispatch<AppDispatch>()
-  const userSlippageTolerance = useSelector<AppState, AppState['user']['userSlippageTolerance']>(state => {
+  const userSlippageTolerance = useSelector<AppState, AppState['user']['userSlippageTolerance']>((state) => {
     return state.user.userSlippageTolerance
   })
 
@@ -52,7 +52,7 @@ export function useUserSlippageTolerance(): [number, (slippage: number) => void]
     (userSlippageTolerance: number) => {
       dispatch(updateUserSlippageTolerance({ userSlippageTolerance }))
     },
-    [dispatch]
+    [dispatch],
   )
 
   return [userSlippageTolerance, setUserSlippageTolerance]

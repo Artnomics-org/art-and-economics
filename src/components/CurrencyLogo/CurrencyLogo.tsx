@@ -36,7 +36,9 @@ const CurrencyLogo: React.FC<CurrencyLogoProps> = ({ currency, size = 24, style,
     return <StyledEthereumLogo src={EthereumLogo} size={size} margin={margin} style={style} />
   }
 
-  return <StyledLogo size={size} margin={margin} srcs={srcs} alt={`${currency?.symbol ?? 'token'} logo`} style={style} />
+  return (
+    <StyledLogo size={size} margin={margin} srcs={srcs} alt={`${currency?.symbol ?? 'token'} logo`} style={style} />
+  )
 }
 
 interface LogoSizeProp {

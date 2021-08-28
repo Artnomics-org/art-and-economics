@@ -59,8 +59,10 @@ export const ButtonPrimary = styled(BaseButton)<ButtonPrimaryProps>`
     background-color: ${({ theme }) => darken(0.1, theme.color.bg)};
   }
   &:disabled {
-    background-color: ${({ theme, altDisabledStyle }) => (altDisabledStyle ? darken(0.1, theme.color.bg) : theme.color.bg)};
-    color: ${({ theme, altDisabledStyle }) => (altDisabledStyle ? lighten(0.1, theme.color.text[500]) : theme.color.text[500])};
+    background-color: ${({ theme, altDisabledStyle }) =>
+      altDisabledStyle ? darken(0.1, theme.color.bg) : theme.color.bg};
+    color: ${({ theme, altDisabledStyle }) =>
+      altDisabledStyle ? lighten(0.1, theme.color.text[500]) : theme.color.text[500]};
     cursor: auto;
     box-shadow: none;
     border: 1px solid transparent;

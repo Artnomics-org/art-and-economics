@@ -31,11 +31,11 @@ const Harvest: React.FC<HarvestProps> = ({ pid }) => {
         <StyledCardContentInner>
           <StyledCardHeader>
             <CardIcon>
-              <StyledImageIcon src={FarmIcon} alt="icon"/>
+              <StyledImageIcon src={FarmIcon} alt="icon" />
             </CardIcon>
             <Value value={getBalanceNumber(earnings)} />
             <Label text="BEST Earned" />
-            { nftSymbol && acc > 0 ? `(+${acc / 10}% with ⛏)` : '' }
+            {nftSymbol && acc > 0 ? `(+${acc / 10}% with ⛏)` : ''}
           </StyledCardHeader>
           <StyledCardActions>
             <BlackButton

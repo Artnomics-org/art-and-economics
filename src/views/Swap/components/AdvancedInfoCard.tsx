@@ -12,17 +12,18 @@ const AdvancedInfoCard: React.FC<AdvancedInfoCardProps> = ({ isShow, mobile = fa
     config: { duration: 200 },
     from: { opacity: 0, left: '20px' },
     enter: { opacity: 1, left: '20px' },
-    leave: { opacity: 0 , left: '-120%'},
+    leave: { opacity: 0, left: '-120%' },
   })
   return (
     <>
-      {transitions((style, item, props, key) => item && (
-        <AdvancedInfoCardWrapper key={key} style={style} mobile={mobile ? mobile : undefined}>
-          <AutoColumn gap='20px'>
-            {children}
-          </AutoColumn>
-        </AdvancedInfoCardWrapper>
-      ))}
+      {transitions(
+        (style, item, props, key) =>
+          item && (
+            <AdvancedInfoCardWrapper key={key} style={style} mobile={mobile ? mobile : undefined}>
+              <AutoColumn gap="20px">{children}</AutoColumn>
+            </AdvancedInfoCardWrapper>
+          ),
+      )}
     </>
   )
 }

@@ -3,15 +3,15 @@ import styled from 'styled-components/macro'
 import { useInactiveListener } from '../../hooks/connector'
 
 interface ModalsContext {
-  content?: React.ReactNode,
-  isOpen?: boolean,
-  onPresent: (content: React.ReactNode, key?: string) => void,
+  content?: React.ReactNode
+  isOpen?: boolean
+  onPresent: (content: React.ReactNode, key?: string) => void
   onDismiss: () => void
 }
 
 export const Context = createContext<ModalsContext>({
-  onPresent: () => { },
-  onDismiss: () => { },
+  onPresent: () => {},
+  onDismiss: () => {},
 })
 
 const Modals: React.FC = ({ children }) => {
@@ -22,11 +22,14 @@ const Modals: React.FC = ({ children }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [modalKey, setModalKey] = useState<string>()
 
-  const handlePresent = useCallback((modalContent: React.ReactNode, key?: string) => {
-    setModalKey(key)
-    setContent(modalContent)
-    setIsOpen(true)
-  }, [setContent, setIsOpen, setModalKey])
+  const handlePresent = useCallback(
+    (modalContent: React.ReactNode, key?: string) => {
+      setModalKey(key)
+      setContent(modalContent)
+      setIsOpen(true)
+    },
+    [setContent, setIsOpen, setModalKey],
+  )
 
   const handleDismiss = useCallback(() => {
     setContent(undefined)
@@ -34,19 +37,22 @@ const Modals: React.FC = ({ children }) => {
   }, [setContent, setIsOpen])
 
   return (
-    <Context.Provider value={{
-      content,
-      isOpen,
-      onPresent: handlePresent,
-      onDismiss: handleDismiss,
-    }}>
+    <Context.Provider
+      value={{
+        content,
+        isOpen,
+        onPresent: handlePresent,
+        onDismiss: handleDismiss,
+      }}
+    >
       {children}
       {isOpen && (
         <StyledModalWrapper>
           <StyledModalBackdrop onClick={handleDismiss} />
-          {React.isValidElement(content) && React.cloneElement(content, {
-            onDismiss: handleDismiss,
-          })}
+          {React.isValidElement(content) &&
+            React.cloneElement(content, {
+              onDismiss: handleDismiss,
+            })}
         </StyledModalWrapper>
       )}
     </Context.Provider>
@@ -59,13 +65,19 @@ const StyledModalWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   position: fixed;
-  top: 0; right: 0; bottom: 0; left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 `
 
 const StyledModalBackdrop = styled.div`
-  background-color: ${props => props.theme.color.grey[600]}aa;
+  background-color: ${(props) => props.theme.color.grey[600]}aa;
   position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 `
 
 export default Modals

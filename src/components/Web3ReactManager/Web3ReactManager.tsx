@@ -28,7 +28,9 @@ const Web3ReactManager: React.FC = ({ children }) => {
   if (!active && networkError) {
     return (
       <MessageWrapper>
-        <Message>Oops! An unknown error occurred. Please refresh the page, or visit from another browser or device.</Message>
+        <Message>
+          Oops! An unknown error occurred. Please refresh the page, or visit from another browser or device.
+        </Message>
       </MessageWrapper>
     )
   }

@@ -20,7 +20,7 @@ interface ListSelectProps {
 const ListSelect: React.FC<ListSelectProps> = ({ onDismiss, onBack }) => {
   const [listUrlInput, setListUrlInput] = useState<string>('')
   const dispatch = useDispatch<AppDispatch>()
-  const lists = useSelector<AppState, AppState['lists']['byUrl']>(state => state.lists.byUrl)
+  const lists = useSelector<AppState, AppState['lists']['byUrl']>((state) => state.lists.byUrl)
   const adding = Boolean(lists[listUrlInput]?.loadingRequestId)
   const [addError, setAddError] = useState<string | null>(null)
   const fetchList = useFetchListCallback()
@@ -31,7 +31,7 @@ const ListSelect: React.FC<ListSelectProps> = ({ onDismiss, onBack }) => {
   const sortedLists = useMemo(() => {
     const listUrls = Object.keys(lists)
     return listUrls
-      .filter(listUrl => {
+      .filter((listUrl) => {
         return Boolean(lists[listUrl].current)
       })
       .sort((u1, u2) => {
@@ -50,7 +50,7 @@ const ListSelect: React.FC<ListSelectProps> = ({ onDismiss, onBack }) => {
       })
   }, [lists])
 
-  const handleSearchInput = useCallback<React.ChangeEventHandler<HTMLInputElement>>(e => {
+  const handleSearchInput = useCallback<React.ChangeEventHandler<HTMLInputElement>>((e) => {
     setListUrlInput(e.target.value)
     setAddError(null)
   }, [])
@@ -61,41 +61,41 @@ const ListSelect: React.FC<ListSelectProps> = ({ onDismiss, onBack }) => {
       .then(() => {
         setListUrlInput('')
       })
-      .catch(error => {
+      .catch((error) => {
         setAddError(error.message)
         dispatch(removeList(listUrlInput))
       })
   }, [adding, dispatch, fetchList, listUrlInput])
   const handleEnterKey = useCallback(
-    e => {
+    (e) => {
       if (validUrl && e.key === 'Enter') {
         handleAddList()
       }
     },
-    [handleAddList, validUrl]
+    [handleAddList, validUrl],
   )
 
-  const addListQuestion = 'Token lists are an open specification for lists of ERC20 tokens. You can use any token list by entering its URL below. Beware that third party token lists can contain fake or malicious ERC20 tokens.'
+  const addListQuestion =
+    'Token lists are an open specification for lists of ERC20 tokens. You can use any token list by entering its URL below. Beware that third party token lists can contain fake or malicious ERC20 tokens.'
 
   return (
     <FullColumn>
       <PaddedColumn>
-        <BackIconLink to='#' onClick={onBack} />
+        <BackIconLink to="#" onClick={onBack} />
         <ModalTitle>Manage Lists</ModalTitle>
         <CloseButton onClick={onDismiss} />
       </PaddedColumn>
       <Separator />
-      <PaddedColumn gap='14px'>
+      <PaddedColumn gap="14px">
         <Text>
-          Add a list{' '}
-          <QuestionHelper text={addListQuestion} />
+          Add a list <QuestionHelper text={addListQuestion} />
         </Text>
       </PaddedColumn>
       <Row>
         <SearchInput
-          type='text'
-          id='list-add-input'
-          placeholder='https:// or ipfs:// or ENS name'
+          type="text"
+          id="list-add-input"
+          placeholder="https:// or ipfs:// or ENS name"
           value={listUrlInput}
           onChange={handleSearchInput}
           onKeyDown={handleEnterKey}

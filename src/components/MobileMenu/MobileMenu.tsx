@@ -17,12 +17,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ onDismiss, visible }) => {
           <StyledLink exact activeClassName="active" to="/home" onClick={onDismiss}>
             Home
           </StyledLink>
-          <StyledLink
-            exact
-            activeClassName="active"
-            to="/farms"
-            onClick={onDismiss}
-          >
+          <StyledLink exact activeClassName="active" to="/farms" onClick={onDismiss}>
             Farms
           </StyledLink>
         </StyledMobileMenu>
@@ -80,8 +75,7 @@ const StyledLink = styled(NavLink)`
   color: ${(props) => props.theme.color.grey[400]};
   font-size: 24px;
   font-weight: 700;
-  padding: ${(props) => props.theme.spacing[3]}px
-    ${(props) => props.theme.spacing[4]}px;
+  padding: ${(props) => props.theme.spacing[3]}px ${(props) => props.theme.spacing[4]}px;
   text-align: center;
   text-decoration: none;
   width: 100%;

@@ -10,20 +10,23 @@ import { Farm } from './types'
 const Farms: React.FC = ({ children }) => {
   const { chainId } = useActiveWeb3React()
 
-  const farms: Array<Farm> = Pools.filter(pool => (pool.poolAddresses as any)[chainId]).map(
-    ({
-      poolAddresses,
-      name,
-      symbol,
-      tokenSymbol,
-      stakingTokenAddresses,
-      acceleratorAddresses,
-      isWBNB,
-      isLp,
-      icon,
-      nftSymbol,
-      magnification,
-    }: any, index) => ({
+  const farms: Array<Farm> = Pools.filter((pool) => (pool.poolAddresses as any)[chainId]).map(
+    (
+      {
+        poolAddresses,
+        name,
+        symbol,
+        tokenSymbol,
+        stakingTokenAddresses,
+        acceleratorAddresses,
+        isWBNB,
+        isLp,
+        icon,
+        nftSymbol,
+        magnification,
+      }: any,
+      index,
+    ) => ({
       pid: index,
       id: symbol.replace('/', '-'),
       name,
@@ -40,7 +43,7 @@ const Farms: React.FC = ({ children }) => {
       nftSymbol: nftSymbol ?? '',
       magnification,
     }),
-  );
+  )
 
   return (
     <Context.Provider

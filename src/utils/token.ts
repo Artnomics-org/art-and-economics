@@ -7,7 +7,7 @@ export function serializeToken(token: Token): SerializedToken {
     address: token.address,
     decimals: token.decimals,
     symbol: token.symbol,
-    name: token.name
+    name: token.name,
   }
 }
 
@@ -17,6 +17,6 @@ export function deserializeToken(serializedToken: SerializedToken): Token {
     serializedToken.address,
     serializedToken.decimals,
     serializedToken.symbol,
-    serializedToken.name
+    serializedToken.name,
   )
 }

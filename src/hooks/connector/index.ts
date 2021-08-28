@@ -8,7 +8,9 @@ export function useAppInactiveListener(suppress = false): void {
   const { active, error, activate, account } = useWeb3React()
   useEffect(() => {
     if (suppress) {
-      return () => { console.log('suppress') }
+      return () => {
+        console.log('suppress')
+      }
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const { ethereum } = window as any
@@ -45,7 +47,9 @@ export function useAppInactiveListener(suppress = false): void {
       }
     }
 
-    return () => { console.log('no ethereum') }
+    return () => {
+      console.log('no ethereum')
+    }
   }, [active, error, suppress, activate, account])
 }
 
@@ -63,7 +67,7 @@ export function useInactiveListener(suppress = false): void {
       const handleChainChanged = (chainId: number) => {
         console.log('chainChanged', chainId)
         // eat errors
-        activate(injected, undefined, true).catch(error => {
+        activate(injected, undefined, true).catch((error) => {
           console.error('Failed to activate after chain changed', error)
         })
       }
@@ -71,7 +75,7 @@ export function useInactiveListener(suppress = false): void {
         console.log('accountsChanged', accounts)
         if (accounts.length > 0) {
           // eat errors
-          activate(injected, undefined, true).catch(error => {
+          activate(injected, undefined, true).catch((error) => {
             console.error('Failed to activate after accounts changed', error)
           })
         }
@@ -79,7 +83,7 @@ export function useInactiveListener(suppress = false): void {
       const handleNetworkChanged = (networkId: number) => {
         console.log('networkChanged', networkId)
         // eat errors
-        activate(injected, undefined, true).catch(error => {
+        activate(injected, undefined, true).catch((error) => {
           console.error('Failed to activate after network changed', error)
         })
       }
@@ -105,7 +109,7 @@ export function useEagerConnect(): boolean {
   const [tried, setTried] = useState(false)
 
   useEffect(() => {
-    injected.isAuthorized().then(isAuthorized => {
+    injected.isAuthorized().then((isAuthorized) => {
       if (isAuthorized) {
         activate(injected, undefined, true).catch(() => {
           setTried(true)

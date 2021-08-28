@@ -1,9 +1,9 @@
 export interface NFT {
-    name: string,
-    symbol: string,
-    address: string,
+  name: string
+  symbol: string
+  address: string
 }
 
 export interface NFTsContext {
-    nfts: NFT[]
+  nfts: NFT[]
 }

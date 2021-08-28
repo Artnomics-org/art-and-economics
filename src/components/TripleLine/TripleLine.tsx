@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components/macro'
 
 interface TripleLineProps {
-  color: string | string[],
+  color: string | string[]
   height?: number
   space?: number
 }
@@ -16,7 +16,7 @@ const TripleLine: React.FC<TripleLineProps> = ({ color, height = 2, space = 4 })
   }
   return (
     <StyledTripleLine>
-      {[...Array<number>(3).keys()].map(i => (
+      {[...Array<number>(3).keys()].map((i) => (
         <StyledLine color={getColor(color, i)} height={height} space={space} key={`line-${i}`} />
       ))}
     </StyledTripleLine>

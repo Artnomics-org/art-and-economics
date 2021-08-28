@@ -4,26 +4,17 @@ import { lighten } from 'polished'
 import { Link } from 'react-router-dom'
 
 interface ButtonProps {
-  children?: React.ReactNode,
-  disabled?: boolean,
-  href?: string,
-  onClick?: () => void,
-  size?: 'sm' | 'md' | 'lg',
-  text?: string,
-  to?: string,
+  children?: React.ReactNode
+  disabled?: boolean
+  href?: string
+  onClick?: () => void
+  size?: 'sm' | 'md' | 'lg'
+  text?: string
+  to?: string
   variant?: 'default' | 'secondary' | 'tertiary'
 }
 
-const Button: React.FC<ButtonProps> = ({
-  children,
-  disabled,
-  href,
-  onClick,
-  size,
-  text,
-  to,
-  variant,
-}) => {
+const Button: React.FC<ButtonProps> = ({ children, disabled, href, onClick, size, text, to, variant }) => {
   const { spacing } = useContext(ThemeContext)
 
   let buttonColor: string
@@ -62,7 +53,11 @@ const Button: React.FC<ButtonProps> = ({
     if (to) {
       return <StyledLink to={to}>{text}</StyledLink>
     } else if (href) {
-      return <StyledExternalLink href={href} target="__blank">{text}</StyledExternalLink>
+      return (
+        <StyledExternalLink href={href} target="__blank">
+          {text}
+        </StyledExternalLink>
+      )
     } else {
       return text
     }
@@ -85,11 +80,11 @@ const Button: React.FC<ButtonProps> = ({
 }
 
 interface StyledButtonProps {
-  boxShadow: string,
-  color: string,
-  disabled?: boolean,
-  fontSize: number,
-  padding: number,
+  boxShadow: string
+  color: string
+  disabled?: boolean
+  fontSize: number
+  padding: number
   size: number
 }
 
@@ -98,21 +93,21 @@ const StyledButton = styled.button<StyledButtonProps>`
   background-color: #000000;
   border: 0;
   border-radius: 3px;
-  box-shadow: ${props => props.boxShadow};
-  color: ${props => !props.disabled ? props.color : `${props.color}55`};
+  box-shadow: ${(props) => props.boxShadow};
+  color: ${(props) => (!props.disabled ? props.color : `${props.color}55`)};
   cursor: pointer;
   display: flex;
-  font-size: ${props => props.fontSize}px;
+  font-size: ${(props) => props.fontSize}px;
   font-weight: 700;
-  height: ${props => props.size}px;
+  height: ${(props) => props.size}px;
   justify-content: center;
   outline: none;
-  padding-left: ${props => props.padding}px;
-  padding-right: ${props => props.padding}px;
-  pointer-events: ${props => !props.disabled ? undefined : 'none'};
+  padding-left: ${(props) => props.padding}px;
+  padding-right: ${(props) => props.padding}px;
+  pointer-events: ${(props) => (!props.disabled ? undefined : 'none')};
   width: 100%;
   &:hover {
-    background-color: ${props => lighten(0.05, '#000000')};
+    background-color: ${(props) => lighten(0.05, '#000000')};
   }
 `
 
@@ -123,8 +118,8 @@ const StyledLink = styled(Link)`
   flex: 1;
   height: 56px;
   justify-content: center;
-  margin: 0 ${props => -props.theme.spacing[4]}px;
-  padding: 0 ${props => props.theme.spacing[4]}px;
+  margin: 0 ${(props) => -props.theme.spacing[4]}px;
+  padding: 0 ${(props) => props.theme.spacing[4]}px;
   text-decoration: none;
 `
 
@@ -135,8 +130,8 @@ const StyledExternalLink = styled.a`
   flex: 1;
   height: 56px;
   justify-content: center;
-  margin: 0 ${props => -props.theme.spacing[4]}px;
-  padding: 0 ${props => props.theme.spacing[4]}px;
+  margin: 0 ${(props) => -props.theme.spacing[4]}px;
+  padding: 0 ${(props) => props.theme.spacing[4]}px;
   text-decoration: none;
 `
 

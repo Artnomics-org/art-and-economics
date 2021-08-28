@@ -5,13 +5,13 @@ const ETHERSCAN_PREFIXES: { [chainId: string]: string } = {
   5: 'goerli.etherscan.io',
   42: 'kovan.etherscan.io',
   56: 'bscscan.com',
-  97: 'testnet.bscscan.com'
+  97: 'testnet.bscscan.com',
 }
 
 export function getScanLink(
   chainId: number,
   data: string,
-  type: 'transaction' | 'token' | 'block' | 'address'
+  type: 'transaction' | 'token' | 'block' | 'address',
 ): string {
   const prefix = `https://${ETHERSCAN_PREFIXES[chainId] || ETHERSCAN_PREFIXES[1]}`
 

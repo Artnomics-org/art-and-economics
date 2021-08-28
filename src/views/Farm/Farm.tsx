@@ -11,15 +11,8 @@ import TokenIcon from './components/TokenIcon'
 import { useActiveWeb3React } from '../../hooks/wallet'
 
 const Farm: React.FC = () => {
-  const { farmId } = useParams<{ farmId?: string}>()
-  const {
-    pid,
-    stakingToken,
-    stakingTokenAddress,
-    earnToken,
-    isWBNB,
-    icon,
-  } = useFarm(farmId) || {
+  const { farmId } = useParams<{ farmId?: string }>()
+  const { pid, stakingToken, stakingTokenAddress, earnToken, isWBNB, icon } = useFarm(farmId) || {
     pid: 0,
     stakingToken: '',
     stakingTokenAddress: '',
@@ -28,7 +21,7 @@ const Farm: React.FC = () => {
     isWBNB: false,
   }
 
-  const [imagePath, setImagePath ] = useState('')
+  const [imagePath, setImagePath] = useState('')
   const loadTokenImage = (name: string): void => {
     setImagePath(name)
   }
@@ -68,12 +61,7 @@ const Farm: React.FC = () => {
           </StyledCardWrapper>
           <Spacer />
           <StyledCardWrapper>
-            <Stake
-              pid={pid}
-              lpContract={lpContract}
-              tokenName={stakingToken.toUpperCase()}
-              isWBNB={isWBNB}
-            />
+            <Stake pid={pid} lpContract={lpContract} tokenName={stakingToken.toUpperCase()} isWBNB={isWBNB} />
           </StyledCardWrapper>
         </StyledCardsWrapper>
         <Spacer size="lg" />

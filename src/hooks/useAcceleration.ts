@@ -13,7 +13,7 @@ const useAcceleration = (pid: number) => {
   }, [ethereum, farm.poolAddress])
 
   const fetchBalance = useCallback(async () => {
-    const balance = await contract.methods.accOf(account).call();
+    const balance = await contract.methods.accOf(account).call()
     setAcc(Number(balance))
   }, [account, contract])
 

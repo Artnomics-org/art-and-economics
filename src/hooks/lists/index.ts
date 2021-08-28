@@ -8,7 +8,7 @@ import { NETWORK_CHAIN_ID } from '../../constants'
 import { AppDispatch, AppState } from '../../state'
 import resolveENSContentHash from '../../utils/ethers'
 import { deserializeToken } from '../../utils/token'
-import { useActiveWeb3React } from "../wallet"
+import { useActiveWeb3React } from '../wallet'
 import getTokenList from '../../utils/lists'
 import { fetchTokenList } from '../../state/lists/actions'
 
@@ -45,7 +45,7 @@ const EMPTY_LIST: TokenAddressMap = {
   [ChainId.GÖRLI]: {},
   [ChainId.MAINNET]: {},
   [ChainId.BSC_MAINNET]: {},
-  [ChainId.BSC_TESTNET]: {}
+  [ChainId.BSC_TESTNET]: {},
 }
 
 const listCache: WeakMap<TokenList, TokenAddressMap> | null =
@@ -59,7 +59,7 @@ export function listToTokenMap(list: TokenList): TokenAddressMap {
     (tokenMap, tokenInfo) => {
       const tags: TagInfo[] =
         tokenInfo.tags
-          ?.map(tagId => {
+          ?.map((tagId) => {
             if (!list.tags?.[tagId]) return undefined
             return { ...list.tags[tagId], id: tagId }
           })
@@ -70,11 +70,11 @@ export function listToTokenMap(list: TokenList): TokenAddressMap {
         ...tokenMap,
         [token.chainId]: {
           ...tokenMap[token.chainId],
-          [token.address]: token
-        }
+          [token.address]: token,
+        },
       }
     },
-    { ...EMPTY_LIST }
+    { ...EMPTY_LIST },
   )
   listCache?.set(list, map)
   return map
@@ -97,7 +97,7 @@ export function useAllTokens(): { [address: string]: Token } {
           },
           // must make a copy because reduce modifies the map, and we do not
           // want to make a copy in every iteration
-          { ...allTokens[chainId] }
+          { ...allTokens[chainId] },
         )
     )
   }, [chainId, userAddedTokens, allTokens])
@@ -118,7 +118,7 @@ export function useSelectedTokenList(): TokenAddressMap {
 }
 
 export function useTokenList(url: string | undefined): TokenAddressMap {
-  const lists = useSelector<AppState, AppState['lists']['byUrl']>(state => state.lists.byUrl)
+  const lists = useSelector<AppState, AppState['lists']['byUrl']>((state) => state.lists.byUrl)
   return useMemo(() => {
     if (!url) return EMPTY_LIST
     const current = lists[url]?.current
@@ -133,17 +133,17 @@ export function useTokenList(url: string | undefined): TokenAddressMap {
 }
 
 export function useSelectedListUrl(): string | undefined {
-  return useSelector<AppState, AppState['lists']['selectedListUrl']>(state => state.lists.selectedListUrl)
+  return useSelector<AppState, AppState['lists']['selectedListUrl']>((state) => state.lists.selectedListUrl)
 }
 
 export function useSelectedListInfo(): { current: TokenList | null; pending: TokenList | null; loading: boolean } {
   const selectedUrl = useSelectedListUrl()
-  const listsByUrl = useSelector<AppState, AppState['lists']['byUrl']>(state => state.lists.byUrl)
+  const listsByUrl = useSelector<AppState, AppState['lists']['byUrl']>((state) => state.lists.byUrl)
   const list = selectedUrl ? listsByUrl[selectedUrl] : undefined
   return {
     current: list?.current ?? null,
     pending: list?.pendingUpdate ?? null,
-    loading: list?.loadingRequestId !== null
+    loading: list?.loadingRequestId !== null,
   }
 }
 
@@ -164,7 +164,7 @@ export function useFetchListCallback(): (listUrl: string) => Promise<TokenList> 
       }
       return resolveENSContentHash(ensName, library)
     },
-    [chainId, library]
+    [chainId, library],
   )
 
   return useCallback(
@@ -172,16 +172,16 @@ export function useFetchListCallback(): (listUrl: string) => Promise<TokenList> 
       const requestId = nanoid()
       dispatch(fetchTokenList.pending({ requestId, url: listUrl }))
       return getTokenList(listUrl, ensResolver)
-        .then(tokenList => {
+        .then((tokenList) => {
           dispatch(fetchTokenList.fulfilled({ url: listUrl, tokenList, requestId }))
           return tokenList
         })
-        .catch(error => {
+        .catch((error) => {
           console.debug(`Failed to get list at url ${listUrl}`, error)
           dispatch(fetchTokenList.rejected({ url: listUrl, requestId, errorMessage: error.message }))
           throw error
         })
     },
-    [dispatch, ensResolver]
+    [dispatch, ensResolver],
   )
 }

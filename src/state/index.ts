@@ -20,10 +20,10 @@ const store = configureStore({
     lists,
     transactions,
     mint,
-    swap
+    swap,
   },
   middleware: [...getDefaultMiddleware({ thunk: false }), save({ states: PERSISTED_KEYS })],
-  preloadedState: load({ states: PERSISTED_KEYS })
+  preloadedState: load({ states: PERSISTED_KEYS }),
 })
 
 store.dispatch(updateVersion())

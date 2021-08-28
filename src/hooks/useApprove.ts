@@ -10,8 +10,7 @@ const useApprove = (lpContract: Contract, pid: number) => {
 
   const handleApprove = useCallback(async () => {
     try {
-      return await lpContract.methods.approve(farm.poolAddress, ethers.constants.MaxUint256)
-        .send({ from: account })
+      return await lpContract.methods.approve(farm.poolAddress, ethers.constants.MaxUint256).send({ from: account })
     } catch (e) {
       console.error(e)
       return false

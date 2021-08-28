@@ -7,10 +7,7 @@ import { useActiveWeb3React } from './wallet'
 
 const useTokenBalance = (tokenAddress: string) => {
   const [balance, setBalance] = useState(new BigNumber(0))
-  const {
-    account,
-    library: ethereum,
-  } = useActiveWeb3React()
+  const { account, library: ethereum } = useActiveWeb3React()
   const block = useBlock()
 
   const fetchBalance = useCallback(async () => {

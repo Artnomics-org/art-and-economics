@@ -1,4 +1,15 @@
-import { ChainId, Currency, CurrencyAmount, ETHER, JSBI, Percent, Token, TokenAmount, Trade, WETH } from '@haneko/uniswap-sdk'
+import {
+  ChainId,
+  Currency,
+  CurrencyAmount,
+  ETHER,
+  JSBI,
+  Percent,
+  Token,
+  TokenAmount,
+  Trade,
+  WETH,
+} from '@haneko/uniswap-sdk'
 import { parseUnits } from '@ethersproject/units'
 import { MIN_ETH } from '../constants'
 import { Field } from '../state/swap/actions'
@@ -9,7 +20,7 @@ export function wrappedCurrency(currency: Currency | undefined, chainId: ChainId
 
 export function wrappedCurrencyAmount(
   currencyAmount: CurrencyAmount | undefined,
-  chainId: ChainId | undefined
+  chainId: ChainId | undefined,
 ): TokenAmount | undefined {
   const token = currencyAmount && chainId ? wrappedCurrency(currencyAmount.currency, chainId) : undefined
   return token && currencyAmount ? new TokenAmount(token, currencyAmount.raw) : undefined
@@ -70,11 +81,11 @@ export function basisPointsToPercent(num: number): Percent {
 // computes the minimum amount out and maximum amount in for a trade given a user specified allowed slippage in bips
 export function computeSlippageAdjustedAmounts(
   trade: Trade | undefined,
-  allowedSlippage: number
+  allowedSlippage: number,
 ): { [field in Field]?: CurrencyAmount } {
   const pct = basisPointsToPercent(allowedSlippage)
   return {
     [Field.INPUT]: trade?.maximumAmountIn(pct),
-    [Field.OUTPUT]: trade?.minimumAmountOut(pct)
+    [Field.OUTPUT]: trade?.minimumAmountOut(pct),
   }
 }

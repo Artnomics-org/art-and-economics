@@ -48,7 +48,7 @@ const LOADING_CALL_STATE: CallState = { valid: true, result: undefined, loading:
 
 // use this options object
 export const NEVER_RELOAD: ListenerOptions = {
-  blocksPerFetch: Infinity
+  blocksPerFetch: Infinity,
 }
 
 function isMethodArg(x: unknown): x is MethodArg {
@@ -233,7 +233,7 @@ export function useSingleCallResult(
   contract: Contract | null | undefined,
   methodName: string,
   inputs?: OptionalMethodInputs,
-  options?: ListenerOptions
+  options?: ListenerOptions,
 ): CallState {
   const fragment = useMemo(() => contract?.interface?.getFunction(methodName), [contract, methodName])
 
@@ -242,8 +242,8 @@ export function useSingleCallResult(
       ? [
           {
             address: contract.address,
-            callData: contract.interface.encodeFunctionData(fragment, inputs)
-          }
+            callData: contract.interface.encodeFunctionData(fragment, inputs),
+          },
         ]
       : []
   }, [contract, fragment, inputs])

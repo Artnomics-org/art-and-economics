@@ -2,11 +2,7 @@ import React from 'react'
 import styled from 'styled-components/macro'
 
 const CoinBalance: React.FC = () => {
-  return (
-    <StyledBalance>
-      0 ANE
-    </StyledBalance>
-  )
+  return <StyledBalance>0 ANE</StyledBalance>
 }
 
 const StyledBalance = styled.div`

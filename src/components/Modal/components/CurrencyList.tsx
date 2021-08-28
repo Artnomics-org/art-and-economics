@@ -20,7 +20,7 @@ const CurrencyList: React.FC<CurrencyListProps> = ({
   onCurrencySelect,
   otherCurrency,
   fixedListRef,
-  showETH
+  showETH,
 }) => {
   const itemData = useMemo(() => (showETH ? [Currency.ETHER, ...currencies] : currencies), [currencies, showETH])
 
@@ -40,7 +40,7 @@ const CurrencyList: React.FC<CurrencyListProps> = ({
         />
       )
     },
-    [onCurrencySelect, otherCurrency, selectedCurrency]
+    [onCurrencySelect, otherCurrency, selectedCurrency],
   )
 
   const itemKey = useCallback((index: number, data: Currency[]) => currencyKey(data[index]), [])

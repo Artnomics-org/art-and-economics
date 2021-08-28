@@ -3,7 +3,7 @@ import { Link as RouterLink } from 'react-router-dom'
 
 export const PoolWrapper = styled.div`
   flex: 1;
-  max-width: ${props => props.theme.siteWidth}px;
+  max-width: ${(props) => props.theme.siteWidth}px;
   padding-top: 94px;
   padding-bottom: 82px;
 `

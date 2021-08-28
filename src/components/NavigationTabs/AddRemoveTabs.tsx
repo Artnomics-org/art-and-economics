@@ -16,7 +16,7 @@ const AddRemoveTabs: React.FC<AddRemoveTabsProps> = ({ adding, creating }) => {
 
   return (
     <Tabs>
-      <BackIconLink to='/pool' />
+      <BackIconLink to="/pool" />
       <ActiveText>{creating ? 'Create A Pair' : adding ? 'Add Liquidity' : 'Remove Liquidity'}</ActiveText>
       <QuestionHelper text={adding ? addText : removeText} />
     </Tabs>

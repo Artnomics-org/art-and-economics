@@ -28,28 +28,28 @@ const partnerList: Array<PartnerLogoItem> = [
   {
     '1x': Binance1x,
     '2x': Binance2x,
-    '3x': Binance3x
+    '3x': Binance3x,
   },
   {
     '1x': Hotbit1x,
     '2x': Hotbit2x,
-    '3x': Hotbit3x
+    '3x': Hotbit3x,
   },
   {
     '1x': Cashforce1x,
     '2x': Cashforce2x,
-    '3x': Cashforce3x
+    '3x': Cashforce3x,
   },
   {
     '1x': Bcmc1x,
     '2x': Bcmc2x,
-    '3x': Bcmc3x
+    '3x': Bcmc3x,
   },
   {
     '1x': Bitribe1x,
     '2x': Bitribe2x,
-    '3x': Bitribe3x
-  }
+    '3x': Bitribe3x,
+  },
 ]
 
 const Footer: React.FC = () => {
@@ -65,7 +65,11 @@ const Footer: React.FC = () => {
               <StyledLogo src={LogoWhite} alt="logo" />
               ART&amp;ECONOMICS
             </StyledLogoLine>
-            <StyledAddress>3 Fraser Street #05-25,<br />Duo Tower, Singapore, 189352</StyledAddress>
+            <StyledAddress>
+              3 Fraser Street #05-25,
+              <br />
+              Duo Tower, Singapore, 189352
+            </StyledAddress>
             <StyledCopyright>info@artnomics.org +821038997991</StyledCopyright>
           </StyledFooterItem>
           <StyledFooterItem>

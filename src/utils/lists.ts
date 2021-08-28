@@ -15,7 +15,7 @@ const tokenListValidator = new Ajv({ allErrors: true }).compile(schema)
  */
 export default async function getTokenList(
   listUrl: string,
-  resolveENSContentHash: (ensName: string) => Promise<string>
+  resolveENSContentHash: (ensName: string) => Promise<string>,
 ): Promise<TokenList> {
   const parsedENS = parseENSAddress(listUrl)
   let urls: string[]
@@ -83,5 +83,5 @@ export function chunkArray<T>(items: T[], maxChunkSize: number): T[][] {
   const numChunks: number = Math.ceil(items.length / maxChunkSize)
   const chunkSize = Math.ceil(items.length / numChunks)
 
-  return [...Array(numChunks).keys()].map(ix => items.slice(ix * chunkSize, ix * chunkSize + chunkSize))
+  return [...Array(numChunks).keys()].map((ix) => items.slice(ix * chunkSize, ix * chunkSize + chunkSize))
 }

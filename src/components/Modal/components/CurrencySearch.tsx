@@ -167,7 +167,9 @@ const CurrencySearch: React.FC<CurrencySearchProps> = ({
               ) : null}
               <Text id="currency-search-selected-list-name">{selectedListInfo.current.name}</Text>
             </Row>
-          ) : 'No list selected.'}
+          ) : (
+            'No list selected.'
+          )}
         </RowBetween>
       </Card>
     </FullColumn>

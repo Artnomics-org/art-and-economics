@@ -16,11 +16,7 @@ export const Banner = styled.div`
   position: static;
   margin-bottom: -290px;
   background-color: ${(props) => props.theme.color.bg};
-  background-image:
-    linear-gradient(
-      rgba(233, 233, 233, 0.79),
-      rgba(233, 233, 233, 0.79)
-    ),
+  background-image: linear-gradient(rgba(233, 233, 233, 0.79), rgba(233, 233, 233, 0.79)),
     -webkit-image-set(url(${ImageNFTBg}) 1x, url(${ImageNFTBg2x}) 2x, url(${ImageNFTBg3x}) 3x);
   background-size: cover;
   background-repeat: no-repeat;
@@ -28,7 +24,7 @@ export const Banner = styled.div`
 `
 
 export const NFTsBody = styled.div`
-  max-width: ${props => props.theme.siteWidth}px;
+  max-width: ${(props) => props.theme.siteWidth}px;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 50px;
@@ -38,7 +34,7 @@ export const Title = styled.h1`
   font-family: 'Helvetica Neue LT W05_93 Blk E';
   font-size: 36px;
   text-align: center;
-  color: ${props => props.theme.color.grey[600]};
+  color: ${(props) => props.theme.color.grey[600]};
   text-transform: uppercase;
   margin-top: 104px;
   margin-bottom: 88px;

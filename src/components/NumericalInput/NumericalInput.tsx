@@ -75,7 +75,7 @@ const Input = styled.input<InputProps>`
     appearance: none;
   }
   ::placeholder {
-    color: ${({ theme, fgColor }) => fgColor ? fgColor : theme.color.white};
+    color: ${({ theme, fgColor }) => (fgColor ? fgColor : theme.color.white)};
   }
 `
 

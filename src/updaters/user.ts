@@ -1,7 +1,7 @@
-import { useEffect } from "react"
-import { useDispatch } from "react-redux"
-import { AppDispatch } from "../state"
-import { updateMatchesDarkMode } from "../state/user/actions"
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '../state'
+import { updateMatchesDarkMode } from '../state/user/actions'
 
 export function UserUpdater(): null {
   const dispatch = useDispatch<AppDispatch>()

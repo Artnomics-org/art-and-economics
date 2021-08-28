@@ -25,7 +25,8 @@ export const ContentCard = styled.div`
   width: 100%;
   background-color: ${(props) => props.theme.color.grey[400]};
   color: ${(props) => props.theme.color.grey[600]};
-  h4, p {
+  h4,
+  p {
     margin: 0;
   }
 `
