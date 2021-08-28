@@ -59,16 +59,12 @@ const WalletModalOption: React.FC<WalletModalOptionProps> = ({
 }
 
 const InfoCard = styled.button<{ active?: boolean }>`
-  background-color: ${({ theme, active }) => (active ? theme.color.bg : theme.color.grey[500])};
+  background-color: ${({ theme }) => theme.color.bg};
   padding: 1rem;
   outline: none;
-  border: 1px solid;
+  border: 1px solid ${({ theme, active }) => (active ? theme.color.grey[500] : theme.color.grey[400])};
   border-radius: 6px;
   width: 100% !important;
-  &:focus {
-    box-shadow: 0 0 0 1px ${({ theme }) => theme.primary1};
-  }
-  border-color: ${({ theme, active }) => (active ? 'transparent' : theme.color.grey[500])};
 `
 
 const OptionCard = styled(InfoCard as any)`

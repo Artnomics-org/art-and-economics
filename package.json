@@ -143,6 +143,6 @@
     "printWidth": 120
   },
   "lint-staged": {
-    "*.{ts,tsx}": "eslint src/**/*.ts src/**/*.tsx --cache --fix"
+    "*.{ts,tsx}": "eslint --cache --fix"
   }
 }

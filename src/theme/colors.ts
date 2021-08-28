@@ -14,7 +14,7 @@ export const text = {
 }
 
 export const green = {
-  500: '##00d1810',
+  500: '#00d181',
 }
 
 export const red = {
