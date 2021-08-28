@@ -73,6 +73,7 @@ const StyledDialogOverlay = styled(AnimatedDialogOverlay)`
     align-items: center;
     justify-content: center;
     background-color: transparent;
+    height: 100%;
   }
 `
 
@@ -95,6 +96,7 @@ const StyledDialogContent = styled(({ minHeight, maxHeight, mobile, isOpen, ...r
     overflow-y: ${({ mobile }) => (mobile ? 'scroll' : 'hidden')};
     overflow-x: hidden;
     align-self: ${({ mobile }) => (mobile ? 'flex-end' : 'center')};
+    height: 100%;
     max-width: 420px;
     ${({ maxHeight }) =>
       maxHeight &&

@@ -43,7 +43,7 @@ const CurrencySearchModal: React.FC<CurrencySearchModalProps> = ({
   // }, [])
 
   return (
-    <Modal isOpen={isOpen} onDismiss={onDismiss} maxHeight={60} minHeight={listView ? 40 : 60}>
+    <Modal isOpen={isOpen} onDismiss={onDismiss} maxHeight={80} minHeight={listView ? 40 : 60}>
       <CurrencySearch
         isOpen={isOpen}
         onDismiss={onDismiss}
