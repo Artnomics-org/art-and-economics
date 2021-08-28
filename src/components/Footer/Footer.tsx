@@ -23,6 +23,9 @@ import Bcmc3x from '../../assets/img/partners/logo-bcmc@3x.png'
 import Bitribe1x from '../../assets/img/partners/logo-bitribe.png'
 import Bitribe2x from '../../assets/img/partners/logo-bitribe@2x.png'
 import Bitribe3x from '../../assets/img/partners/logo-bitribe@3x.png'
+import { ExternalLink } from '../Link'
+import { getScanLink } from '../../utils/getScanLink'
+import { ANE } from '../../constants/lists'
 
 const partnerList: Array<PartnerLogoItem> = [
   {
@@ -73,7 +76,9 @@ const Footer: React.FC = () => {
             <StyledCopyright>info@artnomics.org +821038997991</StyledCopyright>
           </StyledFooterItem>
           <StyledFooterItem>
-            <StyledCoinLogo src={CoinLogo} srcSet={`${CoinLogo2x} 2x, ${CoinLogo3x} 3x`} alt="coin logo" />
+            <ExternalLink href={getScanLink(ANE.chainId, ANE.address, 'token')}>
+              <StyledCoinLogo src={CoinLogo} srcSet={`${CoinLogo2x} 2x, ${CoinLogo3x} 3x`} alt="coin logo" />
+            </ExternalLink>
           </StyledFooterItem>
           <StyledFooterItem style={{ alignItems: 'flex-end' }}>
             <StyledGallery src={LogoGallery} alt="logo gallery" />

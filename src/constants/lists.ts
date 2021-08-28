@@ -14,6 +14,7 @@ type ChainPairList = {
   readonly [chainId in ChainId]?: [Token, Token][]
 }
 
+// ETH Main
 export const DAI = new Token(ChainId.MAINNET, '0x6B175474E89094C44Da98b954EedeAC495271d0F', 18, 'DAI', 'Dai Stablecoin')
 export const CDAI = new Token(ChainId.MAINNET, '0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643', 8, 'cDAI', 'Compound Dai')
 export const CUSDC = new Token(
@@ -28,6 +29,7 @@ export const USDT = new Token(ChainId.MAINNET, '0xdAC17F958D2ee523a2206206994597
 export const COMP = new Token(ChainId.MAINNET, '0xc00e94Cb662C3520282E6f5717214004A7f26888', 18, 'COMP', 'Compound')
 export const MKR = new Token(ChainId.MAINNET, '0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2', 18, 'MKR', 'Maker')
 export const AMPL = new Token(ChainId.MAINNET, '0xD46bA6D942050d489DBd938a2C909A5d5039A161', 9, 'AMPL', 'Ampleforth')
+// BSC Main
 export const BUSD = new Token(
   ChainId.BSC_MAINNET,
   '0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
@@ -49,6 +51,8 @@ export const B_USDT = new Token(
   'USDT',
   'Tether USD',
 )
+export const ANE = new Token(ChainId.BSC_MAINNET, '0x244c22d4bB6f27D82A4240Ed8F4662f0B398A7f1', 18, 'ANE', 'Artnomics')
+// BSC Test
 export const T_BUSD = new Token(
   ChainId.BSC_TESTNET,
   '0xeD24FC36d5Ee211Ea25A80239Fb8C4Cfd80f12Ee',
@@ -93,7 +97,7 @@ const WETH_ONLY: ChainTokenList = {
 export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
   ...WETH_ONLY,
   [ChainId.MAINNET]: [...WETH_ONLY[ChainId.MAINNET], DAI, USDC, USDT],
-  [ChainId.BSC_MAINNET]: [...WETH_ONLY[ChainId.BSC_MAINNET], B_USDT, BUSD, B_DAI],
+  [ChainId.BSC_MAINNET]: [...WETH_ONLY[ChainId.BSC_MAINNET], ANE, B_USDT, BUSD, B_DAI],
   [ChainId.BSC_TESTNET]: [...WETH_ONLY[ChainId.BSC_TESTNET], T_USDT, T_BUSD, T_DAI],
 }
 
@@ -101,7 +105,7 @@ export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
 export const SUGGESTED_BASES: ChainTokenList = {
   ...WETH_ONLY,
   [ChainId.MAINNET]: [...WETH_ONLY[ChainId.MAINNET], DAI, USDC, USDT],
-  [ChainId.BSC_MAINNET]: [...WETH_ONLY[ChainId.BSC_MAINNET], B_DAI, BUSD, B_USDT],
+  [ChainId.BSC_MAINNET]: [...WETH_ONLY[ChainId.BSC_MAINNET], ANE, B_DAI, BUSD, B_USDT],
   [ChainId.BSC_TESTNET]: [...WETH_ONLY[ChainId.BSC_TESTNET], T_DAI, T_BUSD, T_USDT],
 }
 
@@ -109,7 +113,8 @@ export const SUGGESTED_BASES: ChainTokenList = {
 export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
   ...WETH_ONLY,
   [ChainId.MAINNET]: [...WETH_ONLY[ChainId.MAINNET], DAI, USDC, USDT, COMP, MKR],
-  [ChainId.BSC_MAINNET]: [...WETH_ONLY[ChainId.BSC_MAINNET], B_DAI, BUSD, B_USDT],
+  [ChainId.BSC_MAINNET]: [...WETH_ONLY[ChainId.BSC_MAINNET], ANE, B_DAI, BUSD, B_USDT],
+  [ChainId.BSC_TESTNET]: [...WETH_ONLY[ChainId.BSC_TESTNET], T_DAI, T_BUSD, T_USDT],
 }
 
 /**
