@@ -1,6 +1,7 @@
 import { parse, ParsedQs } from 'qs'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
+import copy from 'copy-to-clipboard'
 import { contenthashToUri, uriToHttp } from '../utils'
 import { parseENSAddress } from '../utils/ethers'
 import { useENSContentHash } from './ethers'
@@ -73,11 +74,11 @@ export function useIsWindowVisible(): boolean {
  */
 export function useLast<T>(
   value: T | undefined | null,
-  filterFn?: (value: T | null | undefined) => boolean
+  filterFn?: (value: T | null | undefined) => boolean,
 ): T | null | undefined {
   const [last, setLast] = useState<T | null | undefined>(filterFn && filterFn(value) ? value : undefined)
   useEffect(() => {
-    setLast(last => {
+    setLast((last) => {
       const shouldUse: boolean = filterFn ? filterFn(value) : true
       if (shouldUse) return value
       return last
@@ -123,6 +124,45 @@ export function useParsedQueryString(): ParsedQs {
   const { search } = useLocation()
   return useMemo(
     () => (search && search.length > 1 ? parse(search, { parseArrays: false, ignoreQueryPrefix: true }) : {}),
-    [search]
+    [search],
   )
+}
+
+// modified from https://usehooks.com/usePrevious/
+export function usePrevious<T>(value: T): T {
+  // The ref object is a generic container whose current property is mutable ...
+  // ... and can hold any value, similar to an instance property on a class
+  const ref = useRef<T>()
+
+  // Store current value in ref
+  useEffect(() => {
+    ref.current = value
+  }, [value]) // Only re-run if value changes
+
+  // Return previous value (happens before update in useEffect above)
+  return ref.current
+}
+
+export function useCopyClipboard(timeout = 500): [boolean, (toCopy: string) => void] {
+  const [isCopied, setIsCopied] = useState(false)
+
+  const staticCopy = useCallback((text) => {
+    const didCopy = copy(text)
+    setIsCopied(didCopy)
+  }, [])
+
+  useEffect(() => {
+    if (isCopied) {
+      const hide = setTimeout(() => {
+        setIsCopied(false)
+      }, timeout)
+
+      return () => {
+        clearTimeout(hide)
+      }
+    }
+    return undefined
+  }, [isCopied, setIsCopied, timeout])
+
+  return [isCopied, staticCopy]
 }

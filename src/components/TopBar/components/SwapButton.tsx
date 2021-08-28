@@ -2,9 +2,13 @@ import React from 'react'
 import styled from 'styled-components/macro'
 import LogoFile from '../../../assets/img/logo.svg'
 
-const SwapButton: React.FC = () => {
+interface SwapButtonProps {
+  onClick: () => void
+}
+
+const SwapButton: React.FC<SwapButtonProps> = ({ onClick }) => {
   return (
-    <StyledSwapButton>
+    <StyledSwapButton onClick={onClick}>
       <StyledLogo src={LogoFile} alt="logo" />
     </StyledSwapButton>
   )

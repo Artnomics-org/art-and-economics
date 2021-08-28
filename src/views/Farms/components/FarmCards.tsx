@@ -5,12 +5,10 @@ import styled, { keyframes } from 'styled-components/macro'
 import BlackButton from '../../../components/Button/BlackButton'
 import Card from '../../Home/components/Card'
 import CardContent from '../../../components/CardContent'
-import Loader from '../../../components/Loader'
+// import Loader from '../../../components/Loader'
 import Spacer from '../../../components/Spacer'
 import { Farm } from '../../../contexts/Farms'
-import useAllStakedValue, {
-  StakedValue,
-} from '../../../hooks/useAllStakedValue'
+import useAllStakedValue, { StakedValue } from '../../../hooks/useAllStakedValue'
 import useFarms from '../../../hooks/useFarms'
 import useSushi from '../../../hooks/useSushi'
 import useTotalSupply from '../../../hooks/useTotalSupply'
@@ -30,14 +28,10 @@ const FarmCards: React.FC = () => {
   const [farms] = useFarms()
   const stakedValue = useAllStakedValue()
 
-  const sushiIndex = farms.findIndex(
-    ({ tokenSymbol }) => tokenSymbol === 'BEST',
-  )
+  const sushiIndex = farms.findIndex(({ tokenSymbol }) => tokenSymbol === 'BEST')
 
   const sushiPrice =
-    sushiIndex >= 0 && stakedValue[sushiIndex]
-      ? stakedValue[sushiIndex].tokenPriceInWeth
-      : new BigNumber(0)
+    sushiIndex >= 0 && stakedValue[sushiIndex] ? stakedValue[sushiIndex].tokenPriceInWeth : new BigNumber(0)
 
   const BLOCKS_PER_YEAR = new BigNumber(2336000)
   const SUSHI_PER_BLOCK = new BigNumber(1000)
@@ -80,9 +74,7 @@ const FarmCards: React.FC = () => {
           </StyledRow>
         ))
       ) : (
-        <StyledLoadingWrapper>
-          <Loader text="Cooking the rice ..." />
-        </StyledLoadingWrapper>
+        <StyledLoadingWrapper>{/* <Loader text="Cooking the rice ..." /> */}</StyledLoadingWrapper>
       )}
     </StyledCards>
   )
@@ -97,7 +89,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm }) => {
   const [startTime, setStartTime] = useState(0)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [harvestable, setHarvestable] = useState(0)
-  const [imagePath, setImagePath ] = useState('')
+  const [imagePath, setImagePath] = useState('')
 
   const { account } = useActiveWeb3React()
   const { stakingTokenAddress, poolAddress, earnTokenAddress, pid, name: symbol } = farm
@@ -134,11 +126,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm }) => {
     loadTokenImage(farm.icon)
     async function fetchEarned() {
       if (sushi) return
-      const earned = await getEarned(
-        getMasterChefContract(sushi),
-        stakingTokenAddress,
-        account,
-      )
+      const earned = await getEarned(getMasterChefContract(sushi), stakingTokenAddress, account)
       setHarvestable(bnToDec(earned))
     }
     if (sushi && account) {
@@ -161,15 +149,11 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm }) => {
             <StyledDetails>
               <StyledDetail>
                 <StyledDetailSpan>Deposit</StyledDetailSpan>
-                <StyledDetailSpan>
-                  {farm.stakingToken.toUpperCase()}
-                </StyledDetailSpan>
+                <StyledDetailSpan>{farm.stakingToken.toUpperCase()}</StyledDetailSpan>
               </StyledDetail>
               <StyledDetail>
                 <StyledDetailSpan>Earn</StyledDetailSpan>
-                <StyledDetailSpan>
-                  {farm.earnToken.toUpperCase()}
-                </StyledDetailSpan>
+                <StyledDetailSpan>{farm.earnToken.toUpperCase()}</StyledDetailSpan>
               </StyledDetail>
               <StyledDetail>
                 <StyledDetailSpan>APY</StyledDetailSpan>
@@ -177,23 +161,16 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm }) => {
               </StyledDetail>
             </StyledDetails>
             <Spacer />
-            <BlackButton
-              disabled={!poolActive}
-              text={poolActive ? 'Select' : undefined}
-              to={`/farms/${farm.id}`}
-            >
-              {!poolActive && (
-                <Countdown
-                  date={new Date(startTime * 1000)}
-                  renderer={renderer}
-                />
-              )}
+            <BlackButton disabled={!poolActive} text={poolActive ? 'Select' : undefined} to={`/farms/${farm.id}`}>
+              {!poolActive && <Countdown date={new Date(startTime * 1000)} renderer={renderer} />}
             </BlackButton>
             <Spacer />
             <StyledDetails style={{ marginTop: 0 }}>
               <StyledDetail>
                 <StyledDetailSpan>Total Staked</StyledDetailSpan>
-                <StyledDetailSpan>{ getBalanceNumber(totalSupply) } {symbol}</StyledDetailSpan>
+                <StyledDetailSpan>
+                  {getBalanceNumber(totalSupply)} {symbol}
+                </StyledDetailSpan>
               </StyledDetail>
             </StyledDetails>
           </StyledContent>
@@ -279,7 +256,7 @@ const StyledCardIcon = styled.div`
   align-items: center;
   display: flex;
   justify-content: center;
-  margin: ${props => props.theme.spacing[4]}px auto ${props => props.theme.spacing[3]}px;
+  margin: ${(props) => props.theme.spacing[4]}px auto ${(props) => props.theme.spacing[3]}px;
 `
 
 const StyledIconImage = styled.img`
@@ -333,7 +310,7 @@ const StyledMagnification = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  background-color: #FEC025;
+  background-color: #fec025;
   border-radius: 3px;
   width: 52px;
   height: 24px;

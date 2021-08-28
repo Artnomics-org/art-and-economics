@@ -5,8 +5,8 @@ import { Contract } from 'web3-eth-contract'
 import Button from '../../../components/Button/BlackButton'
 import Card from '../../../components/Card/TransCard'
 import CardContent from '../../../components/CardContent'
-import IconButton from '../../../components/IconButton'
-import { AddIcon } from '../../../components/icons'
+// import IconButton from '../../../components/IconButton'
+// import { AddIcon } from '../../../components/icons'
 import Label from '../../../components/Label'
 import Value from '../../../components/Value'
 import useAllowance from '../../../hooks/useAllowance'
@@ -27,16 +27,16 @@ import { getCookie } from '../../../utils/cookie'
 import { useActiveWeb3React } from '../../../hooks/wallet'
 
 interface StakeProps {
-  lpContract: Contract | any,
-  pid: number,
-  tokenName: string,
-  isWBNB: boolean,
+  lpContract: Contract | any
+  pid: number
+  tokenName: string
+  isWBNB: boolean
 }
 
 const Stake: React.FC<StakeProps> = ({ lpContract, pid, tokenName, isWBNB }) => {
   const [requestedApproval, setRequestedApproval] = useState(false)
 
-  const { account } = useActiveWeb3React();
+  const { account } = useActiveWeb3React()
   const allowance = useAllowance(lpContract, pid)
   const { onApprove } = useApprove(lpContract, pid)
 
@@ -75,25 +75,26 @@ const Stake: React.FC<StakeProps> = ({ lpContract, pid, tokenName, isWBNB }) => 
   function GetStakeType() {
     const c = getCookie('invite_id')
     if (c.toLocaleLowerCase() === account.toLocaleLowerCase()) {
-      const cArray = document.cookie.split("; ");
-      for (const i in cArray)
-        document.cookie = /^[^=]+/.exec(cArray[i])[0] + "=; Max-Age=0";
+      const cArray = document.cookie.split('; ')
+      for (const i in cArray) document.cookie = /^[^=]+/.exec(cArray[i])[0] + '=; Max-Age=0'
     }
     if (c && c.toLocaleLowerCase() !== account.toLocaleLowerCase()) {
       return (
-        <IconButton
-          // onClick={onPresentDepositWithRef}
-        >
-          <AddIcon />
-        </IconButton>
+        // <IconButton
+        //   // onClick={onPresentDepositWithRef}
+        // >
+        //   <AddIcon />
+        // </IconButton>
+        <div></div>
       )
     } else {
       return (
-        <IconButton
-          // onClick={onPresentDeposit}
-        >
-          <AddIcon />
-        </IconButton>
+        // <IconButton
+        //   // onClick={onPresentDeposit}
+        // >
+        //   <AddIcon />
+        // </IconButton>
+        <div></div>
       )
     }
   }
@@ -126,22 +127,18 @@ const Stake: React.FC<StakeProps> = ({ lpContract, pid, tokenName, isWBNB }) => 
           </StyledCardHeader>
           <StyledCardActions>
             {!isWBNB && !allowance.toNumber() ? (
-              <Button
-                disabled={requestedApproval}
-                onClick={handleApprove}
-                text={`Approve ${tokenName}`}
-              />
+              <Button disabled={requestedApproval} onClick={handleApprove} text={`Approve ${tokenName}`} />
             ) : (
-                <>
-                  <Button
-                    disabled={stakedBalance.eq(new BigNumber(0))}
-                    text="Unstake"
-                    // onClick={onPresentWithdraw}
-                  />
-                  <StyledActionSpacer />
-                  <GetStakeType />
-                </>
-              )}
+              <>
+                <Button
+                  disabled={stakedBalance.eq(new BigNumber(0))}
+                  text="Unstake"
+                  // onClick={onPresentWithdraw}
+                />
+                <StyledActionSpacer />
+                <GetStakeType />
+              </>
+            )}
           </StyledCardActions>
         </StyledCardContentInner>
       </CardContent>

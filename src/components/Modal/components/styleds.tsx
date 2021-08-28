@@ -115,6 +115,7 @@ export const FadedSpan = styled(RowFixed)`
 export const Wrapper = styled.div`
   width: 100%;
 `
+
 export const Section = styled(AutoColumn)`
   padding: 24px;
 `

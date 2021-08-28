@@ -13,6 +13,7 @@
     "@uniswap/token-lists": "^1.0.0-beta.24",
     "@uniswap/v2-periphery": "^1.1.0-beta.0",
     "@web3-react/core": "^6.1.1",
+    "@web3-react/fortmatic-connector": "^6.1.6",
     "@web3-react/injected-connector": "^6.0.7",
     "@web3-react/walletconnect-connector": "^6.2.0",
     "axios": "^0.20.0",
@@ -20,6 +21,8 @@
     "cids": "^1.0.0",
     "debounce": "^1.2.0",
     "ethers": "^5.3.1",
+    "fortmatic": "^2.2.1",
+    "jazzicon": "^1.5.0",
     "lodash.flatmap": "^4.5.0",
     "multicodec": "^2.0.0",
     "multihashes": "^3.0.1",
@@ -64,6 +67,7 @@
     "@typescript-eslint/eslint-plugin": "^4.27.0",
     "@typescript-eslint/parser": "^4.27.0",
     "babel-plugin-macros": "^3.1.0",
+    "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-config-react-app": "^6.0.0",
     "eslint-plugin-flowtype": "^5.7.2",
@@ -72,6 +76,9 @@
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "husky": "^7.0.2",
+    "lint-staged": "^11.1.2",
     "prettier": "^2.3.1",
     "typescript": "^3.9.7"
   },
@@ -80,7 +87,8 @@
     "build": "CI= GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint src/**/*.ts src/**/*.tsx"
+    "lint": "eslint src/**/*.ts src/**/*.tsx --cache --fix",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
@@ -99,12 +107,16 @@
         "version": "detect"
       }
     },
+    "plugins": [
+      "@typescript-eslint/eslint-plugin",
+      "simple-import-sort"
+    ],
     "extends": [
       "react-app",
       "plugin:react/recommended",
       "plugin:react-hooks/recommended",
       "plugin:@typescript-eslint/recommended",
-      "prettier"
+      "plugin:prettier/recommended"
     ],
     "rules": {
       "react/prop-types": 0,
@@ -129,5 +141,8 @@
     "semi": false,
     "singleQuote": true,
     "printWidth": 120
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": "eslint src/**/*.ts src/**/*.tsx --cache --fix"
   }
 }

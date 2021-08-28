@@ -21,7 +21,7 @@ import { ListsUpdater } from './updaters/lists'
 import { MulticallUpdater } from './updaters/multicall'
 import { UserUpdater } from './updaters/user'
 
-import Farms from './views/Farms'
+// import Farms from './views/Farms'
 import Home from './views/Home'
 import NFTs from './views/NFTs'
 import Swap from './views/Swap'
@@ -30,7 +30,6 @@ import AddLiquidity from './views/AddLiquidity'
 import FindPool from './views/FindPool'
 import { RedirectDuplicateTokenIds } from './views/AddLiquidity/redirects'
 import { RedirectPathToHome } from './views/Home/redirects'
-
 
 const Web3ProviderNetwork = createWeb3ReactRoot(NetworkContextName)
 
@@ -55,7 +54,7 @@ const Routers: React.FC = () => {
           <Route exact strict path="/swap" component={Swap} />
           <Route exact strict path="/pool" component={Pool} />
           <Route exact strict path="/find" component={FindPool} />
-          <Route exact strict path="/farm" component={Farms} />
+          {/* <Route exact strict path="/farm" component={Farms} /> */}
           <Route exact strict path="/market" component={NFTs} />
           <Route exact path="/add" component={AddLiquidity} />
           <Route exact path="/add/:currencyIdA/:currencyIdB" component={RedirectDuplicateTokenIds} />

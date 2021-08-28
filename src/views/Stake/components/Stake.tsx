@@ -6,13 +6,13 @@ import Button from '../../../components/Button'
 import Card from '../../../components/Card'
 import CardContent from '../../../components/CardContent'
 import CardIcon from '../../../components/CardIcon'
-import IconButton from '../../../components/IconButton'
-import { AddIcon } from '../../../components/icons'
+// import IconButton from '../../../components/IconButton'
+// import { AddIcon } from '../../../components/icons'
 import Label from '../../../components/Label'
 import Value from '../../../components/Value'
 import useAllowance from '../../../hooks/useAllowance'
 import useApprove from '../../../hooks/useApprove'
-import useModal from '../../../hooks/useModal'
+// import useModal from '../../../hooks/useModal'
 import useStake from '../../../hooks/useStake'
 import useStakedBalance from '../../../hooks/useStakedBalance'
 import useTokenBalance from '../../../hooks/useTokenBalance'
@@ -79,11 +79,7 @@ const Stake: React.FC<StakeProps> = ({ lpContract, pid, tokenName }) => {
           </StyledCardHeader>
           <StyledCardActions>
             {!allowance.toNumber() ? (
-              <Button
-                disabled={requestedApproval}
-                onClick={handleApprove}
-                text={`Approve ${tokenName}`}
-              />
+              <Button disabled={requestedApproval} onClick={handleApprove} text={`Approve ${tokenName}`} />
             ) : (
               <>
                 <Button
@@ -92,11 +88,11 @@ const Stake: React.FC<StakeProps> = ({ lpContract, pid, tokenName }) => {
                   // onClick={onPresentWithdraw}
                 />
                 <StyledActionSpacer />
-                <IconButton
+                {/* <IconButton
                   // onClick={onPresentDeposit}
                 >
                   <AddIcon />
-                </IconButton>
+                </IconButton> */}
               </>
             )}
           </StyledCardActions>

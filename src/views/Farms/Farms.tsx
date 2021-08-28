@@ -3,9 +3,9 @@ import { Route, Switch, useRouteMatch } from 'react-router-dom'
 import Button from '../../components/Button'
 import Page from '../../components/Page'
 import PageHeader from './components/PageHeader'
-import WalletProviderModal from '../../components/WalletProviderModal'
+// import WalletProviderModal from '../../components/WalletProviderModal'
 
-import useModal from '../../hooks/useModal'
+// import useModal from '../../hooks/useModal'
 
 import Farm from '../Farm'
 

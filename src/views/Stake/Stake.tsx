@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
-import chef from '../../assets/img/chef.png'
+// import chef from '../../assets/img/chef.png'
 
 import Page from '../../components/Page'
 import Button from '../../components/Button'
 // import PageHeader from '../../components/PageHeader'
-import WalletProviderModal from '../../components/WalletProviderModal'
+// import WalletProviderModal from '../../components/WalletProviderModal'
 
-import useModal from '../../hooks/useModal'
+// import useModal from '../../hooks/useModal'
 import { useActiveWeb3React } from '../../hooks/wallet'
 
 const Farm: React.FC = () => {

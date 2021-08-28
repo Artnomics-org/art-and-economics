@@ -11,9 +11,9 @@ const Nav: React.FC = () => {
       <StyledLink exact activeClassName="active" to="/pool">
         Pool
       </StyledLink>
-      <StyledLink exact activeClassName="active" to="/farm">
+      {/* <StyledLink exact activeClassName="active" to="/farm">
         Farm
-      </StyledLink>
+      </StyledLink> */}
       <StyledLink exact activeClassName="active" to="/market">
         NFT Market
       </StyledLink>
@@ -36,7 +36,8 @@ const StyledLink = styled(NavLink)`
   padding-right: ${(props) => props.theme.spacing[3]}px;
   text-decoration: none;
   text-transform: uppercase;
-  &:hover, &.active {
+  &:hover,
+  &.active {
     color: ${(props) => props.theme.color.nav.hov};
   }
   @media (max-width: 400px) {
