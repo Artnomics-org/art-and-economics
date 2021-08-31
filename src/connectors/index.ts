@@ -1,11 +1,14 @@
 import { Web3Provider } from '@ethersproject/providers'
+import { ChainId } from '@haneko/uniswap-sdk'
 import { InjectedConnector } from '@web3-react/injected-connector'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { FortmaticConnector } from './FortmaticConnector'
 import { NetworkConnector } from './NetworkConnector'
 
 export const injected = new InjectedConnector({
-  supportedChainIds: [1, 3, 4, 5, 42, 56, 97],
+  supportedChainIds: Object.values(ChainId)
+    .map((x) => parseInt(x as string))
+    .filter((x) => !isNaN(x)),
 })
 
 // mainnet only

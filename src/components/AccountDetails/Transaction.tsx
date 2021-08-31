@@ -4,7 +4,7 @@ import { CheckCircle, ExternalLink, Loader, Triangle } from 'react-feather'
 import { useAllTransactions } from '../../hooks/transaction'
 import { useActiveWeb3React } from '../../hooks/wallet'
 import { RowFixed } from '../Row'
-import { getScanLink } from '../../utils/getScanLink'
+import { getScanLink } from '../../utils'
 
 interface TransactionProps {
   hash: string

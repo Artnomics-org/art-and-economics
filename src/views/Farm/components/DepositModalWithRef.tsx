@@ -6,7 +6,7 @@ import ModalActions from '../../../components/ModalActions'
 import ModalTitle from '../../../components/ModalTitle'
 // import TokenInput from '../../../components/TokenInput'
 import { getCookie } from '../../../utils/cookie'
-import { getFullDisplayBalance } from '../../../utils/formatBalance'
+import { getFullDisplayBalance } from '../../../utils'
 import { useActiveWeb3React } from '../../../hooks/wallet'
 
 interface DepositModalProps extends ModalProps {

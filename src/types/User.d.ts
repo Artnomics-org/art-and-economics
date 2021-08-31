@@ -1,9 +1,14 @@
 import type { MediaToScreen } from './MediaToScreen'
-import { UserRole } from '../constants/nft'
 import { Tag } from './Tag'
 import { Gallery } from './Gallery'
 import { GalleryJoinRequest } from './GalleryJoinRequest'
 import { Media } from './Media'
+
+export enum UserRole {
+  Collector = 'COLLECTOR',
+  Artist = 'ARTIST',
+  SuperAdmin = 'SUPER_ADMIN',
+}
 
 export type MatatakiUserStat = {
   id: number

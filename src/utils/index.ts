@@ -1,10 +1,29 @@
 import BigNumber from 'bignumber.js'
-import { Web3Provider } from '@ethersproject/providers'
 import CID from 'cids'
 import { getCodec, rmPrefix } from 'multicodec'
 import { decode, toB58String } from 'multihashes'
 
-export { default as formatAddress } from './formatAddress'
+export const formatAddress = (address: string) => {
+  return address.slice(0, 6) + '...' + address.slice(-6)
+}
+
+export const getBalanceNumber = (balance: BigNumber, decimals = 18) => {
+  const displayBalance = balance.dividedBy(new BigNumber(10).pow(decimals))
+  return displayBalance.toNumber()
+}
+
+export const getDisplayBalance = (balance: BigNumber, decimals = 18) => {
+  const displayBalance = balance.dividedBy(new BigNumber(10).pow(decimals))
+  if (displayBalance.lt(1)) {
+    return displayBalance.toPrecision(4)
+  } else {
+    return displayBalance.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  }
+}
+
+export const getFullDisplayBalance = (balance: BigNumber, decimals = 18) => {
+  return balance.dividedBy(new BigNumber(10).pow(decimals)).toFixed()
+}
 
 export const bnToDec = (bn: BigNumber, decimals = 18): number => {
   return bn.dividedBy(new BigNumber(10).pow(decimals)).toNumber()
@@ -16,12 +35,6 @@ export const decToBn = (dec: number, decimals = 18): BigNumber => {
 
 export function escapeRegExp(string: string): string {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') // $& means the whole matched string
-}
-
-export function getLibrary(provider: unknown): Web3Provider {
-  const library = new Web3Provider(provider, 'any')
-  library.pollingInterval = 15000
-  return library
 }
 
 /**
@@ -83,5 +96,39 @@ export function contenthashToUri(contenthash: string): string {
     }
     default:
       throw new Error(`Unrecognized codec: ${codec}`)
+  }
+}
+
+const ETHERSCAN_PREFIXES: { [chainId: string]: string } = {
+  1: 'etherscan.io',
+  3: 'ropsten.etherscan.io',
+  4: 'rinkeby.etherscan.io',
+  5: 'goerli.etherscan.io',
+  42: 'kovan.etherscan.io',
+  56: 'bscscan.com',
+  97: 'testnet.bscscan.com',
+}
+
+export function getScanLink(
+  chainId: number,
+  data: string,
+  type: 'transaction' | 'token' | 'block' | 'address',
+): string {
+  const prefix = `https://${ETHERSCAN_PREFIXES[chainId] || ETHERSCAN_PREFIXES[1]}`
+
+  switch (type) {
+    case 'transaction': {
+      return `${prefix}/tx/${data}`
+    }
+    case 'token': {
+      return `${prefix}/token/${data}`
+    }
+    case 'block': {
+      return `${prefix}/block/${data}`
+    }
+    case 'address':
+    default: {
+      return `${prefix}/address/${data}`
+    }
   }
 }

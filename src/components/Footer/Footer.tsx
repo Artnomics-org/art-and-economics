@@ -24,7 +24,7 @@ import Bitribe1x from '../../assets/img/partners/logo-bitribe.png'
 import Bitribe2x from '../../assets/img/partners/logo-bitribe@2x.png'
 import Bitribe3x from '../../assets/img/partners/logo-bitribe@3x.png'
 import { ExternalLink } from '../Link'
-import { getScanLink } from '../../utils/getScanLink'
+import { getScanLink } from '../../utils'
 import { ANE } from '../../constants/lists'
 
 const partnerList: Array<PartnerLogoItem> = [

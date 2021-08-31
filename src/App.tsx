@@ -9,7 +9,7 @@ import TransactionProvider from './contexts/Transactions'
 import NFTsProvider from './contexts/NFTs'
 import AcceleratorsProvider from './contexts/Accelerators'
 
-import { getLibrary } from './utils'
+import { getLibrary } from './utils/ethers'
 import { NetworkContextName } from './constants'
 import store from './state'
 import theme from './theme'

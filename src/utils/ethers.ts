@@ -1,4 +1,5 @@
 import { getAddress } from '@ethersproject/address'
+import { BigNumber } from '@ethersproject/bignumber'
 import { Contract, ContractInterface } from '@ethersproject/contracts'
 import { AddressZero } from '@ethersproject/constants'
 import { JsonRpcSigner, Web3Provider } from '@ethersproject/providers'
@@ -6,6 +7,8 @@ import { Provider } from '@ethersproject/abstract-provider'
 import { namehash } from 'ethers/lib/utils'
 import { ERC20_INTERFACE, REGISTRAR_ABI, RESOLVER_ABI } from '../constants/ethers'
 import { REGISTRAR_ADDRESS } from '../constants/address'
+import { BaseErc20 } from '../constants/nfts/BaseErc20'
+import { useStaticMulticall } from '../hooks/nfts'
 
 // returns the checksummed address if the address is valid, otherwise returns false
 export function isAddress(value: unknown): string | false {
@@ -18,7 +21,11 @@ export function isAddress(value: unknown): string | false {
 
 // account is not optional
 export function getSigner(library: Web3Provider, account: string): JsonRpcSigner {
-  return library.getSigner(account).connectUnchecked()
+  return library.getSigner(account)
+}
+
+export function getUncheckedSigner(library: Web3Provider, account: string): JsonRpcSigner {
+  return getSigner(library, account).connectUnchecked()
 }
 
 // account is optional
@@ -103,7 +110,7 @@ function resolverContract(resolverAddress: string, provider: Provider): Contract
  * @param ensName to resolve
  * @param provider provider to use to fetch the data
  */
-export default async function resolveENSContentHash(ensName: string, provider: Provider): Promise<string> {
+export async function resolveENSContentHash(ensName: string, provider: Provider): Promise<string> {
   const ensRegistrarContract = new Contract(REGISTRAR_ADDRESS, REGISTRAR_ABI, provider)
   const hash = namehash(ensName)
   const resolverAddress = await ensRegistrarContract.resolver(hash)
@@ -117,4 +124,52 @@ export function shortenAddress(address: string, chars = 4): string {
     throw Error(`Invalid 'address' parameter '${address}'.`)
   }
   return `${parsed.substring(0, chars + 2)}...${parsed.substring(42 - chars)}`
+}
+
+export function getLibrary(provider: unknown): Web3Provider {
+  const library = new Web3Provider(provider, 'any')
+  library.pollingInterval = 15000
+  return library
+}
+
+// NFTs
+export type ERC20Profile = {
+  tokenAddress: string
+  name: string
+  symbol: string
+  decimals: number
+  balance: BigNumber
+  updatedAtBlock: number
+}
+
+export async function getProfileOfERC20(token: BaseErc20, holder: string | null): Promise<ERC20Profile> {
+  const tokenAddress = token.address
+  console.info('getProfileOfERC20;:tokenAddress', tokenAddress)
+  const frag = [
+    token.interface.encodeFunctionData('name'),
+    token.interface.encodeFunctionData('symbol'),
+    token.interface.encodeFunctionData('decimals'),
+  ]
+  if (holder) frag.push(token.interface.encodeFunctionData('balanceOf', [holder]))
+  const calls = frag.map((callData) => ({
+    target: tokenAddress,
+    callData,
+  }))
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const staticMulticall = useStaticMulticall()
+  const { returnData, blockNumber } = await staticMulticall.callStatic.aggregate(calls)
+  const [name] = token.interface.decodeFunctionResult('name', returnData[0])
+  const [symbol] = token.interface.decodeFunctionResult('symbol', returnData[1])
+  const [decimals] = token.interface.decodeFunctionResult('decimals', returnData[2])
+  let balance = BigNumber.from(0)
+  if (returnData[3]) [balance] = token.interface.decodeFunctionResult('balanceOf', returnData[3])
+
+  return {
+    updatedAtBlock: blockNumber.toNumber(),
+    name,
+    symbol,
+    decimals,
+    balance,
+    tokenAddress,
+  }
 }

@@ -7,6 +7,7 @@ import { GeneralResponse } from '../types/Backend'
 import { MintAndTransferParameters } from '../types/MintAndTransfer'
 
 export const backendSWRFetcher = (url: string): Promise<any> => backendClient.get(url).then((res) => res.data)
+export const axiosFetcher = (url: string) => axios.get(url).then((res) => res.data)
 
 /**
  * 主要是为了 SSG 预先渲染

@@ -8,7 +8,7 @@ import Label from '../../../components/Label'
 import Value from '../../../components/Value'
 import useEarnings from '../../../hooks/useEarnings'
 import useReward from '../../../hooks/useReward'
-import { getBalanceNumber } from '../../../utils/formatBalance'
+import { getBalanceNumber } from '../../../utils'
 
 interface HarvestProps {
   pid: number

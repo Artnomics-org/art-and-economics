@@ -5,7 +5,7 @@ import Modal, { ModalProps } from '../../../components/Modal'
 import ModalActions from '../../../components/ModalActions'
 import ModalTitle from '../../../components/ModalTitle'
 // import TokenInput from '../../../components/TokenInput'
-import { getFullDisplayBalance } from '../../../utils/formatBalance'
+import { getFullDisplayBalance } from '../../../utils'
 
 interface WithdrawModalProps extends ModalProps {
   max: BigNumber

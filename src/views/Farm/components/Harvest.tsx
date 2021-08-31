@@ -9,7 +9,7 @@ import useAcceleration from '../../../hooks/useAcceleration'
 import useEarnings from '../../../hooks/useEarnings'
 import useFarm from '../../../hooks/useFarm'
 import useReward from '../../../hooks/useReward'
-import { getBalanceNumber } from '../../../utils/formatBalance'
+import { getBalanceNumber } from '../../../utils'
 import CardIcon from './CardIcon'
 import FarmIcon from '../../../assets/img/farm-icon.png'
 

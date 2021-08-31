@@ -37,8 +37,9 @@ export async function checkIsWalletRegistered(wallet: string): Promise<{
  * @returns 用户访问令牌
  */
 export async function registerUser(
-  profile: { nickname: string; bio: string; username: string; avatar: string },
-  permit: { signature: string; message: string },
+  // profile: { nickname: string; bio: string; username: string; avatar: string },
+  profile: Pick<User, 'username' | 'nickname' | 'avatar' | 'bio'>,
+  permit: SignInPermit,
 ): Promise<string> {
   const payload = {
     nickname: profile.nickname,
