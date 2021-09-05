@@ -1,7 +1,5 @@
 import React from 'react'
 import styled from 'styled-components/macro'
-import { useTokenContract } from '../../../hooks/contract'
-import { useENSName } from '../../../hooks/ethers'
 import { useToken } from '../../../hooks/token'
 import { getBalanceNumber } from '../../../utils'
 
