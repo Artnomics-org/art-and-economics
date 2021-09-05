@@ -18,12 +18,14 @@ import { FunctionFragment } from '@ethersproject/abi'
 import { MULTICALL_NETWORKS } from '../../constants/multicall'
 import { Multicall__factory } from '../../constants/nfts/MulticallFactory'
 import { MediaFactory } from '../../constants/nfts/MediaFactory'
-import { axiosFetcher, backendSWRFetcher } from '../../backend/media'
+import { axiosFetcher, backendSWRFetcher, getMediaMetadata } from '../../backend/media'
 import { Decimal } from '../../utils/decimal'
 import { Bid, DecimalValue } from '../../types/ContractTypes'
+import { BidLog } from '../../types/Bid'
 import { constructBid } from '../../utils/zdk'
 import { WETH9__factory } from '../../constants/nfts/WETH9__factory'
 import { WETH } from '@haneko/uniswap-sdk'
+import { Media, MediaMetadata } from '../../types/Media'
 
 export function useAllowance(token: BaseErc20, spender: string) {
   const { account } = useActiveWeb3React()
@@ -235,9 +237,9 @@ export function useLogin() {
       const data = await loginWithPermit(signedLoginPermit)
       if (data) updateAccessToken(data)
       return data
-    } catch (error) {
-      updateError(error)
-      console.log(error)
+    } catch (err) {
+      updateError(err as Error)
+      console.log(err)
       return false
     }
   }, [requestToSign])
@@ -336,26 +338,38 @@ export function useMedia() {
   return media
 }
 
-export function useMediaData(post?: {
-  id: number
-  backendData: unknown
-  metadata: {
-    description: string
-    name: string
-    mimeType: string
-  }
-}) {
-  const { data: backendData, error: backendError } = useSWR(
+enum SortBy {
+  ASC = 'ASC',
+  DESC = 'DESC',
+}
+type MediaData = {
+  askIds: number[]
+  bidLogIds: number[]
+  tokenLogsIds: number[]
+} & Media
+type MediaList = {
+  items: MediaData[]
+}
+export function useMediaList(page = 1, limit = 6, sort = SortBy.DESC) {
+  const { data: mediaList, error } = useSWR<MediaList, Error>(
+    `/media?page=${page}&limit=${limit}&order=${sort}`,
+    backendSWRFetcher,
+  )
+  console.log('useMediaList:mediaList:', mediaList)
+  if (error) console.log('useMediaList:error:', error)
+  return { mediaList, isError: Boolean(error), isLoading: !Boolean(mediaList), error }
+}
+
+export function useMediaData(post?: { id: number; backendData: Media; metadata: MediaMetadata }) {
+  const { data: backendData, error: backendError } = useSWR<Media>(
     post ? `/media/${post.id}` : null,
     backendSWRFetcher,
-    // @ts-ignore
-    { initialData: post?.backendData },
+    { fallbackData: post?.backendData },
   )
-  const { data: metadata, error: metadataError } = useSWR(
+  const { data: metadata, error: metadataError } = useSWR<MediaMetadata>(
     post && backendData ? backendData.metadataURI : null,
     axiosFetcher,
-    // @ts-ignore
-    { initialData: post?.metadata },
+    { fallbackData: post?.metadata },
   )
   return {
     backendData,
@@ -365,6 +379,24 @@ export function useMediaData(post?: {
     backendError,
     metadataError,
   }
+}
+
+export type MediaWithMetadata = Media & { metadata: MediaMetadata }
+export function useMediaListWithMeta(page = 1, limit = 6, sort = SortBy.DESC) {
+  const { mediaList, isError, isLoading } = useMediaList(page, limit, sort)
+  const mediaData = useMemo(async () => {
+    const getData = mediaList?.items.map(async (item) => {
+      const metadata = await getMediaMetadata(item.metadataURI)
+      return {
+        ...item,
+        metadata,
+      }
+    })
+    const mediaListWithMeta: MediaWithMetadata[] = await Promise.all(getData)
+    return mediaListWithMeta
+  }, [mediaList])
+  console.log('useMediaListWithMeta:mediaData:', mediaData)
+  return { mediaList, mediaData, isError, isLoading }
 }
 
 export function useMediaToken(id: BigNumberish) {
@@ -496,6 +528,15 @@ export function useMediaToken(id: BigNumberish) {
   }, [mediaContract, id])
 
   return { isOwnerOrApproved, isMeTheOwner, profile, removeAsk, isAskExist }
+}
+
+export function useMediaBids(id: number) {
+  const { data: mediaBids, error } = useSWR<BidLog[], Error>(`/media/${id}/bids`, backendSWRFetcher)
+
+  console.log('useMediaBids:mediaBids:', mediaBids)
+  if (error) console.log('useMediaBids:error:', error)
+
+  return { mediaBids, isError: Boolean(error), error }
 }
 
 export function useStaticMulticall() {

@@ -3,7 +3,7 @@ import { utils } from 'ethers'
 import { getSwapRouter } from '../utils/swapRouter'
 import { getTotalLiquidityInBNB } from './useLiquidity'
 import { address } from '../constants/swap'
-import { ADDRESS_ZERO, WBNB, BUSD } from '../constants/address'
+import { ZERO_ADDRESS } from '../constants/address'
 import { useActiveWeb3React } from './wallet'
 
 /**
@@ -24,14 +24,14 @@ export function useTokenPriceInBNB(tokenAddress: string, decimals: number | stri
   const oneUnitOfToken = utils.parseUnits('1', decimals)
 
   const fetchPrice = useCallback(async () => {
-    if (tokenAddress === ADDRESS_ZERO) {
+    if (tokenAddress === ZERO_ADDRESS) {
       // 零号地址，当 BNB 处理，1 BNB = 1 BNB 没毛病
       updatePriceInBNB(oneUnitOfToken.toString())
       return
     }
     if (isLp) {
       // LP 做特殊处理
-      const fresult = await getTotalLiquidityInBNB(ethereum, tokenAddress, WBNB[56])
+      const fresult = await getTotalLiquidityInBNB(ethereum, tokenAddress, ZERO_ADDRESS)
       updatePriceInBNB(fresult)
       return
     }
@@ -39,7 +39,7 @@ export function useTokenPriceInBNB(tokenAddress: string, decimals: number | stri
       const [, outputWBNB] = await contract.methods
         .getAmountsOut(oneUnitOfToken, [
           tokenAddress, // the token address
-          WBNB[networkId], // WBNB
+          ZERO_ADDRESS, // WBNB
         ])
         .call()
       updatePriceInBNB(outputWBNB)
@@ -75,13 +75,13 @@ export function useTokenPriceInBUSD(tokenAddress: string, decimals: number | str
   const oneUnitOfToken = utils.parseUnits('1', decimals)
 
   const fetchPrice = useCallback(async () => {
-    if (tokenAddress.toLowerCase() === BUSD[networkId]) {
+    if (tokenAddress.toLowerCase() === ZERO_ADDRESS) {
       // 1 BUSD = 1 BUSD 没毛病
       updatePriceInBUSD(oneUnitOfToken.toString())
       return
     }
     if (isLp) {
-      const fresult = await getTotalLiquidityInBNB(ethereum, tokenAddress, BUSD[56])
+      const fresult = await getTotalLiquidityInBNB(ethereum, tokenAddress, ZERO_ADDRESS)
       updatePriceInBUSD(fresult)
       return
     }
@@ -89,7 +89,7 @@ export function useTokenPriceInBUSD(tokenAddress: string, decimals: number | str
       const [, outputBUSD] = await contract.methods
         .getAmountsOut(oneUnitOfToken, [
           tokenAddress, // the token address
-          BUSD[networkId], // WBNB
+          ZERO_ADDRESS, // WBNB
         ])
         .call()
       updatePriceInBUSD(outputBUSD)

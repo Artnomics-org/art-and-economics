@@ -183,6 +183,8 @@ export function useToken(tokenAddress?: string): Token | undefined | null {
   const symbolBytes32 = useSingleCallResult(token ? undefined : tokenContractBytes32, 'symbol', undefined, NEVER_RELOAD)
   const decimals = useSingleCallResult(token ? undefined : tokenContract, 'decimals', undefined, NEVER_RELOAD)
 
+  console.log('useToken:', token, tokenName, symbol, decimals)
+
   return useMemo(() => {
     if (token) return token
     if (!chainId || !address) return undefined

@@ -5,6 +5,7 @@ import client, { backendClient } from './client'
 import { PaginationResult } from '../types/PaginationResult'
 import { GeneralResponse } from '../types/Backend'
 import { MintAndTransferParameters } from '../types/MintAndTransfer'
+import { BidLog } from '../types/Bid'
 
 export const backendSWRFetcher = (url: string): Promise<any> => backendClient.get(url).then((res) => res.data)
 export const axiosFetcher = (url: string) => axios.get(url).then((res) => res.data)
@@ -39,6 +40,12 @@ export async function getMediaMetadata(url: string): Promise<MediaMetadata> {
   const { data } = await axios.get<MediaMetadata>(url)
   return data
 }
+
+export async function getMediaBids(id: string | number): Promise<BidLog[]> {
+  const { data } = await backendClient.get<BidLog[]>(`/media/${id}/bids`)
+  return data
+}
+
 // 提交 media
 export async function PostMedia({
   txHash,

@@ -65,10 +65,15 @@ export function useENSName(address?: string): { ENSName: string | null; loading:
   const name = useSingleCallResult(resolverContract, 'name', ensNodeArgument)
 
   const changed = debouncedAddress !== address
-  return {
+
+  const res = {
     ENSName: changed ? null : name.result?.[0] ?? null,
     loading: changed || resolverAddress.loading || name.loading,
   }
+
+  console.log('useENSName:result:', res)
+
+  return res
 }
 
 /**

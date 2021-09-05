@@ -7,12 +7,14 @@ export const formatAddress = (address: string) => {
   return address.slice(0, 6) + '...' + address.slice(-6)
 }
 
-export const getBalanceNumber = (balance: BigNumber, decimals = 18) => {
+export const getBalanceNumber = (balance: BigNumber | string, decimals = 18) => {
+  if (typeof balance === 'string') balance = new BigNumber(balance)
   const displayBalance = balance.dividedBy(new BigNumber(10).pow(decimals))
   return displayBalance.toNumber()
 }
 
-export const getDisplayBalance = (balance: BigNumber, decimals = 18) => {
+export const getDisplayBalance = (balance: BigNumber | string, decimals = 18) => {
+  if (typeof balance === 'string') balance = new BigNumber(balance)
   const displayBalance = balance.dividedBy(new BigNumber(10).pow(decimals))
   if (displayBalance.lt(1)) {
     return displayBalance.toPrecision(4)
@@ -21,7 +23,8 @@ export const getDisplayBalance = (balance: BigNumber, decimals = 18) => {
   }
 }
 
-export const getFullDisplayBalance = (balance: BigNumber, decimals = 18) => {
+export const getFullDisplayBalance = (balance: BigNumber | string, decimals = 18) => {
+  if (typeof balance === 'string') balance = new BigNumber(balance)
   return balance.dividedBy(new BigNumber(10).pow(decimals)).toFixed()
 }
 

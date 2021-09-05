@@ -1,5 +1,9 @@
 import React from 'react'
 import styled from 'styled-components/macro'
+import { useTokenContract } from '../../../hooks/contract'
+import { useENSName } from '../../../hooks/ethers'
+import { useToken } from '../../../hooks/token'
+import { getBalanceNumber } from '../../../utils'
 
 export interface NFTCardProps {
   img: {
@@ -10,14 +14,17 @@ export interface NFTCardProps {
   title: string
   creator: string
   price: string | number
+  currency?: string
 }
 
-const NFTCard: React.FC<NFTCardProps> = ({ img, title, creator, price }) => {
+const NFTCard: React.FC<NFTCardProps> = ({ img, title, creator, price, currency }) => {
+  const token = useToken(currency)
   const _buy = price ? 'Place Bid' : 'Place Offer'
-  const _price = price || 'No Price'
+  const _price = price ? getBalanceNumber(String(price)).toFixed(2) : 'No Price'
+  const _currency = token ? token.symbol : ''
   return (
     <StyledCard>
-      <img src={img.low} srcSet={`${img.medium} 2x, ${img.high} 3x`} alt="NFT Cover" />
+      <StyledImg src={img.low} srcSet={`${img.medium} 2x, ${img.high} 3x`} alt="NFT Cover" />
       <StyledContentWrapper>
         <StyledContent>
           <StyledTitle>{title}</StyledTitle>
@@ -25,7 +32,10 @@ const NFTCard: React.FC<NFTCardProps> = ({ img, title, creator, price }) => {
         </StyledContent>
         <StyledFooter>
           <StyledBuy>{_buy}</StyledBuy>
-          <StyledPrice>{_price}</StyledPrice>
+          <StyledPrice>
+            {_price}
+            {_currency}
+          </StyledPrice>
         </StyledFooter>
       </StyledContentWrapper>
     </StyledCard>
@@ -41,6 +51,13 @@ const StyledCard = styled.div`
   max-height: 198px;
   background-color: ${(props) => props.theme.color.bg};
   box-shadow: 0 6px 31px 2px rgba(0, 0, 0, 0.1);
+`
+
+const StyledImg = styled.img`
+  display: block;
+  object-fit: cover;
+  width: 198px;
+  height: 198px;
 `
 
 const StyledContentWrapper = styled.div`
@@ -94,6 +111,7 @@ const StyledBuy = styled.div`
 const StyledPrice = styled.div`
   color: ${(props) => props.theme.color.grey[600]};
   font-family: 'Helvetica Neue LT W05_53 Ext', sans-serif;
+  line-height: 1.5;
   text-transform: uppercase;
   font-size: 16px;
 `
