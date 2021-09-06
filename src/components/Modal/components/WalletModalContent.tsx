@@ -42,9 +42,29 @@ const WalletModalContent: React.FC<WalletModalContentProps> = ({
   setPendingError,
 }) => {
   const wrongNetwork = 'You are on the wrong network'
+  const unlockWallet = 'Please unlock Wallet'
   const errorConnecting = 'Error connecting'
   const ethereumNetwork = 'Please connect to the appropriate Ethereum network.'
+  const metamaskLocked = 'Metamask is locked, please open the extension before continuing.'
   const tryRefreshing = 'Error connecting. Try refreshing the page.'
+
+  let errHeader = ''
+  if (error instanceof UnsupportedChainIdError) {
+    errHeader = wrongNetwork
+  } else if (error?.message.includes('eth_requestAccounts')) {
+    errHeader = unlockWallet
+  } else if (error instanceof Error) {
+    errHeader = errorConnecting
+  }
+
+  let errBody = ''
+  if (error instanceof UnsupportedChainIdError) {
+    errBody = ethereumNetwork
+  } else if (error?.message.includes('eth_requestAccounts')) {
+    errBody = metamaskLocked
+  } else if (error instanceof Error) {
+    errBody = tryRefreshing
+  }
 
   const handleClick = useCallback(() => {
     setPendingError(false)
@@ -57,10 +77,8 @@ const WalletModalContent: React.FC<WalletModalContentProps> = ({
         <CloseIcon onClick={toggleWalletModal}>
           <CloseColor />
         </CloseIcon>
-        <HeaderRow>{error instanceof UnsupportedChainIdError ? wrongNetwork : errorConnecting}</HeaderRow>
-        <ContentWrapper>
-          {error instanceof UnsupportedChainIdError ? <h5>{ethereumNetwork}</h5> : tryRefreshing}
-        </ContentWrapper>
+        <HeaderRow>{errHeader}</HeaderRow>
+        <ContentWrapper>{errBody}</ContentWrapper>
       </UpperSection>
     )
   }
@@ -96,6 +114,7 @@ const WalletModalContent: React.FC<WalletModalContentProps> = ({
           <WalletModalPendingView
             connector={pendingWallet}
             error={pendingError}
+            errorMessage={errorConnecting}
             setPendingError={setPendingError}
             tryActivation={tryActivation}
           />

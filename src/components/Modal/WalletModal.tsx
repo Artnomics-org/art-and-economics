@@ -31,6 +31,7 @@ const WalletModal: React.FC<WalletModalProps> = ({ pendingTransactions, confirme
   const [walletView, setWalletView] = useState(WALLET_VIEWS.ACCOUNT)
   const [pendingWallet, setPendingWallet] = useState<AbstractConnector | undefined>()
   const [pendingError, setPendingError] = useState<boolean>()
+  const [connectError, setConnectError] = useState<Error>(error)
   const walletModalOpen = useModalOpen(ApplicationModal.WALLET)
   const toggleWalletModal = useWalletModalToggle()
   const previousAccount = usePrevious(account)
@@ -49,6 +50,8 @@ const WalletModal: React.FC<WalletModalProps> = ({ pendingTransactions, confirme
 
     connector &&
       activate(connector, undefined, true).catch((error) => {
+        console.log('WalletModal:activate:error:', error)
+        setConnectError(error)
         if (error instanceof UnsupportedChainIdError) {
           activate(connector) // a little janky...can't use setError because the connector isn't set
         } else {
@@ -100,7 +103,7 @@ const WalletModal: React.FC<WalletModalProps> = ({ pendingTransactions, confirme
           connector={connector}
           confirmedTransactions={confirmedTransactions}
           ENSName={ENSName}
-          error={error}
+          error={connectError}
           tryActivation={tryActivation}
           toggleWalletModal={toggleWalletModal}
           setWalletView={setWalletView}

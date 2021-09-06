@@ -9,6 +9,7 @@ import { darken } from 'polished'
 interface WalletModalPendingViewProps {
   connector?: AbstractConnector
   error?: boolean
+  errorMessage?: string
   setPendingError: (error: boolean) => void
   tryActivation: (connector: AbstractConnector) => void
 }
@@ -16,6 +17,7 @@ interface WalletModalPendingViewProps {
 const WalletModalPendingView: React.FC<WalletModalPendingViewProps> = ({
   connector,
   error = false,
+  errorMessage = 'Error connecting',
   setPendingError,
   tryActivation,
 }) => {
@@ -26,7 +28,7 @@ const WalletModalPendingView: React.FC<WalletModalPendingViewProps> = ({
         <LoadingWrapper>
           {error ? (
             <ErrorGroup>
-              <div>Error connecting.</div>
+              <div>{errorMessage}</div>
               <ErrorButton
                 onClick={() => {
                   setPendingError(false)
@@ -119,6 +121,7 @@ const ErrorButton = styled.div`
 
   &:hover {
     cursor: pointer;
+    color: ${({ theme }) => theme.color.white};
     background-color: ${({ theme }) => darken(0.1, theme.color.text[400])};
   }
 `
