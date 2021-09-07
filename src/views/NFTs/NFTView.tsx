@@ -6,8 +6,7 @@ import Page from '../../components/Page'
 import { UserLink } from '../../components/UserLink'
 import { useMediaData, useMediaOwner, useMediaToken, useNFTScanLink } from '../../hooks/nfts'
 import { useToken } from '../../hooks/token'
-import { useActiveWeb3React } from '../../hooks/wallet'
-import { getBalanceNumber, getScanLink } from '../../utils'
+import { getBalanceNumber } from '../../utils'
 import NFTContentCard from './components/NFTContentCard'
 import NFTLabelInfo from './components/NFTLabelInfo'
 import {
@@ -33,7 +32,6 @@ const NFTView: React.FC<RouteComponentProps<NFTViewProps>> = ({
     params: { id },
   },
 }) => {
-  const { chainId } = useActiveWeb3React()
   const { backendData, metadata, isLoading, isError } = useMediaData({
     id: Number(id),
     backendData: null,

@@ -13,6 +13,7 @@ import {
   WETH_ABI,
 } from '../../constants/ethers'
 import { ROUTER_ADDRESS } from '../../constants/address'
+import { isZeroHex } from '../ethers'
 
 // returns null on errors
 function useContract(
@@ -23,7 +24,7 @@ function useContract(
   const { library, account } = useActiveWeb3React()
 
   return useMemo(() => {
-    if (!address || !ABI || !library) return null
+    if (!address || isZeroHex(address) || !ABI || !library) return null
     try {
       const contract = getContractWithAbi(address, ABI, library, withSignerIfPossible && account ? account : undefined)
       console.log('useContract:address:', address, contract)

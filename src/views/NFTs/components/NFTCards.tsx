@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
+import { useHistory } from 'react-router'
 import styled from 'styled-components/macro'
 import { getMediaBids, getMediaMetadata } from '../../../backend/media'
 import { useMediaList } from '../../../hooks/nfts'
@@ -7,6 +8,7 @@ import NFTCard, { NFTCardProps } from './NFTCard'
 const NFTCards: React.FC = () => {
   const [nftList, setNftList] = useState<NFTCardProps[]>([])
   const { mediaList, isLoading, isError, error } = useMediaList()
+  const history = useHistory()
 
   const fetchData = useCallback(async () => {
     if (mediaList) {
@@ -22,6 +24,7 @@ const NFTCards: React.FC = () => {
       const data = await Promise.all(getData)
       const nftList: NFTCardProps[] = data.map((media) => {
         return {
+          id: media.id,
           title: media.metadata.name,
           creator: media.creator.username,
           price: media.bidLogs[0].amount || 0,
@@ -41,6 +44,13 @@ const NFTCards: React.FC = () => {
     fetchData()
   }, [fetchData])
 
+  const handleCardClick = useCallback(
+    (id: string | number) => {
+      history.push(`/market/${id}`)
+    },
+    [history],
+  )
+
   return (
     <StyledCardWrapper>
       {isLoading && !isError && <StyledLoading>Loading...</StyledLoading>}
@@ -59,6 +69,7 @@ const NFTCards: React.FC = () => {
           price={item.price}
           currency={item.currency}
           key={`${item.title}-${item.price}-${index}`}
+          onClick={() => handleCardClick(item.id)}
         />
       ))}
     </StyledCardWrapper>

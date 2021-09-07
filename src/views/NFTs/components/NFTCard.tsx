@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components/macro'
 import { useToken } from '../../../hooks/token'
 import { getBalanceNumber } from '../../../utils'
@@ -13,15 +13,20 @@ export interface NFTCardProps {
   creator: string
   price: string | number
   currency?: string
+  id?: string | number
+  onClick?: () => void
 }
 
-const NFTCard: React.FC<NFTCardProps> = ({ img, title, creator, price, currency }) => {
+const NFTCard: React.FC<NFTCardProps> = ({ img, title, creator, price, currency, onClick }) => {
   const token = useToken(currency)
   const _buy = price ? 'Place Bid' : 'Place Offer'
   const _price = price ? getBalanceNumber(String(price)).toFixed(2) : 'No Price'
   const _currency = token ? token.symbol : ''
+  const handleCardClick = useCallback(() => {
+    if (onClick) onClick()
+  }, [onClick])
   return (
-    <StyledCard>
+    <StyledCard onClick={handleCardClick}>
       <StyledImg src={img.low} srcSet={`${img.medium} 2x, ${img.high} 3x`} alt="NFT Cover" />
       <StyledContentWrapper>
         <StyledContent>
@@ -49,6 +54,7 @@ const StyledCard = styled.div`
   max-height: 198px;
   background-color: ${(props) => props.theme.color.bg};
   box-shadow: 0 6px 31px 2px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 `
 
 const StyledImg = styled.img`
