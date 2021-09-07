@@ -20,7 +20,9 @@ export const green = {
 export const red = {
   100: '#FFFDFE',
   200: '#ffc2a8',
-  500: '#d16c00',
+  300: '#ff8e7f',
+  400: '#d16c00',
+  500: '#FF4A54',
 }
 
 export const grey = {

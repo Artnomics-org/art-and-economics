@@ -47,3 +47,112 @@ export const IconArrow = styled.img`
   right: 30px;
   bottom: 100px;
 `
+
+export const NFTImageView = styled.div`
+  min-width: 0px;
+  background-color: ${(props) => props.theme.color.grey[400]};
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  width: 100%;
+  padding: 40px 75px;
+`
+
+export const NFTImage = styled.img`
+  object-fit: contain;
+  max-width: 100%;
+  max-height: 100%;
+  min-width: 0px;
+  filter: drop-shadow(rgba(0, 0, 0, 0.33) 0px 10px 10px);
+  transition: transform 0.2s cubic-bezier(0.65, 0, 0.35, 1) 0s;
+  &:hover {
+    transform: scale(1.1);
+  }
+`
+
+export const NFTBodyWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  max-width: 1000px;
+  margin: 0 auto;
+  margin-top: 30px;
+  margin-bottom: 60px;
+`
+
+export const NFTBodyLeft = styled.div`
+  flex: 1;
+`
+
+export const NFTBodyRight = styled.div`
+  width: 370px;
+`
+
+export const NFTTitle = styled.h2`
+  font-family: 'Helvetica Neue LT W05_93 Blk E';
+  font-size: 36px;
+  font-weight: 500;
+  word-break: break-word;
+  color: ${(props) => props.theme.color.text[500]};
+  margin: 0;
+  margin-bottom: 30px;
+`
+
+export const NFTDescription = styled.p`
+  line-height: 1.5;
+  font-weight: 400;
+  font-size: 16px;
+  color: ${(props) => props.theme.color.text[500]};
+  width: 100%;
+  max-width: 100%;
+  word-break: break-word;
+  white-space: pre-wrap;
+  margin: 0;
+  margin-bottom: 30px;
+`
+
+export const StyledLoadingWrapper = styled.div`
+  margin: 200px auto;
+  width: 500px;
+`
+
+export const LoadingTitle = styled.h1<{ error?: boolean }>`
+  font-weight: 500;
+  color: ${({ error, theme }) => (error ? theme.color.red[500] : theme.color.text[500])};
+`
+
+export const LinkContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: flex-start; */
+  /* align-items: center; */
+`
+
+export const LinkButton = styled.a`
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 14px 20px;
+  /* margin: 0px 20px; */
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  appearance: none;
+  color: ${(props) => props.theme.color.text[600]};
+  background-color: ${(props) => props.theme.color.bg};
+  border: 2px solid ${(props) => props.theme.color.grey[500]};
+  flex: 1 0 auto;
+  &:first-child {
+    margin-bottom: 10px;
+  }
+  &:hover {
+    border-color: ${(props) => props.theme.color.text[600]};
+  }
+`

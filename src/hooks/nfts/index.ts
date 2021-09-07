@@ -26,6 +26,7 @@ import { constructBid } from '../../utils/zdk'
 import { WETH9__factory } from '../../constants/nfts/WETH9__factory'
 import { WETH } from '@haneko/uniswap-sdk'
 import { Media, MediaMetadata } from '../../types/Media'
+import { getScanLink } from '../../utils'
 
 export function useAllowance(token: BaseErc20, spender: string) {
   const { account } = useActiveWeb3React()
@@ -347,8 +348,16 @@ type MediaData = {
   bidLogIds: number[]
   tokenLogsIds: number[]
 } & Media
+type PageMeta = {
+  totalItems: number
+  itemCount: number
+  itemsPerPage: number
+  totalPages: number
+  currentPage: number
+}
 type MediaList = {
   items: MediaData[]
+  meta: PageMeta
 }
 export function useMediaList(page = 1, limit = 6, sort = SortBy.DESC) {
   const { data: mediaList, error } = useSWR<MediaList, Error>(
@@ -458,7 +467,7 @@ export function useMediaToken(id: BigNumberish) {
         data: [id],
       },
     ])
-    console.info('re', returns)
+    console.info('useMediaToken:aggerateQuery:returns:', returns)
     const [[owner], [approvedOperator], [creator], [bidsShares], [currentAsk]] = returns as unknown as [
       [string],
       [string],
@@ -537,6 +546,13 @@ export function useMediaBids(id: number) {
   if (error) console.log('useMediaBids:error:', error)
 
   return { mediaBids, isError: Boolean(error), error }
+}
+
+export function useMediaOwner(media: Media) {
+  const { mediaBids } = useMediaBids(media?.id)
+  const bid = mediaBids?.find((bid) => bid.bidder === media.owner.address && bid.status === 'BidFinalized')
+
+  return { bidInfo: bid, ownerInfo: media?.owner }
 }
 
 export function useStaticMulticall() {
@@ -683,4 +699,10 @@ export function useWETH() {
   )
 
   return { weth, deposit, withdraw }
+}
+
+export function useNFTScanLink(tokenId: number) {
+  const { chainId } = useActiveWeb3React()
+  const baseLink = getScanLink(chainId, MEDIA_ADDRESS[chainId], 'token')
+  return `${baseLink}?a=${tokenId}`
 }
