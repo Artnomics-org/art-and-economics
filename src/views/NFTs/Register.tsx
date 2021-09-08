@@ -1,4 +1,4 @@
-import React, { useContext, useCallback, useState } from 'react'
+import React, { useContext, useCallback, useState, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { ThemeContext } from 'styled-components/macro'
 import { Input, useToast } from '@chakra-ui/react'
@@ -90,6 +90,12 @@ const Register: React.FC = () => {
       })
     }
   }, [inputBio, inputNickname, inputUsername, register, router, toast])
+
+  useEffect(() => {
+    if (isRegistered) {
+      router.push('/market')
+    }
+  }, [isRegistered, router])
 
   return (
     <Page>
