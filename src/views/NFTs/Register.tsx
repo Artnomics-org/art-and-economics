@@ -27,6 +27,7 @@ const Register: React.FC = () => {
   const [inputUsername, setInputUsername] = useState('')
   const [inputNickname, setInputNickname] = useState('')
   const [inputBio, setInputBio] = useState('')
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false)
 
   const usernameError = `Only numbers, characters a-z(lower case) '-' and the length is 5-20 are acceptable.`
   const nicknameError = `Nickname is required`
@@ -61,6 +62,7 @@ const Register: React.FC = () => {
     }
 
     try {
+      setIsButtonDisabled(true)
       const token = await register({ username: inputUsername, nickname: inputNickname, bio: inputBio })
       if (token) {
         toast({
@@ -77,6 +79,7 @@ const Register: React.FC = () => {
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
+      setIsButtonDisabled(false)
       toast({
         title: 'Error',
         description: error?.message || 'Please try again',
@@ -128,7 +131,9 @@ const Register: React.FC = () => {
             <Input id="bio" placeholder="Bio is required" isInvalid={isWrongBio} onChange={handleBioChange} />
             {isWrongBio && <RegisterErrorText>{bioError}</RegisterErrorText>}
             <RegisterSpacer />
-            <BlackButton onClick={handleRegisterClick}>Register</BlackButton>
+            <BlackButton disabled={isButtonDisabled} onClick={handleRegisterClick}>
+              Register
+            </BlackButton>
           </RegisterBody>
         )}
       </RegisterWrapper>
