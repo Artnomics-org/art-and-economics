@@ -208,7 +208,7 @@ export function useLogin() {
       throw new Error('Please connect to wallet')
     }
 
-    const AppName = 'ArtEconomics NFT'
+    const AppName = 'Artnomics NFT'
     const MessageForLogin = `${AppName} uses this cryptographic signature in place of a password, verifying that you are the owner of this Ethereum address`
     const msgAboutToSign = `${MessageForLogin} — ${Date.now()}`
     const signature: string = await library.provider.request({
@@ -222,7 +222,7 @@ export function useLogin() {
     }
   }, [account, active, library])
 
-  async function register(profile: Pick<User, 'username' | 'nickname' | 'avatar' | 'bio'>) {
+  async function register(profile: Partial<Pick<User, 'username' | 'nickname' | 'avatar' | 'bio'>>) {
     const signedLoginPermit = await requestToSign()
     const token = await registerUser(profile, signedLoginPermit)
     updateAccessToken(token)

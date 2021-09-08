@@ -38,14 +38,14 @@ export async function checkIsWalletRegistered(wallet: string): Promise<{
  */
 export async function registerUser(
   // profile: { nickname: string; bio: string; username: string; avatar: string },
-  profile: Pick<User, 'username' | 'nickname' | 'avatar' | 'bio'>,
+  profile: Partial<Pick<User, 'username' | 'nickname' | 'avatar' | 'bio'>>,
   permit: SignInPermit,
 ): Promise<string> {
   const payload = {
-    nickname: profile.nickname,
-    bio: profile.bio,
-    username: profile.username,
-    avatar: profile.avatar,
+    nickname: profile?.nickname,
+    bio: profile?.bio,
+    username: profile?.username,
+    avatar: profile?.avatar,
     signature: permit.signature,
     signingMessage: permit.message,
   }

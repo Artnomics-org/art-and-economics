@@ -274,3 +274,41 @@ export const CreateNumberInputButton = styled.button`
     pointer-events: none;
   }
 `
+
+export const RegisterWrapper = styled.div`
+  margin: 100px auto;
+  max-width: ${(props) => props.theme.siteWidth}px;
+`
+export const RegisterTitle = styled.h1<{ size?: number }>`
+  font-size: ${(props) => props.size || 40}px;
+  font-weight: 500;
+  margin-bottom: 20px;
+`
+
+export const RegisterSubtitle = styled.h2<{ size?: number }>`
+  font-size: ${(props) => props.size || 24}px;
+  font-weight: 500;
+  margin-bottom: 20px;
+`
+
+export const RegisterWarnText = styled.h2`
+  font-size: 24px;
+  font-weight: 500;
+`
+
+export const RegisterErrorText = styled.span`
+  color: ${(props) => props.theme.color.red[500]};
+  font-size: 10px;
+`
+
+export const RegisterBody = styled.div`
+  padding: 30px 40px 40px;
+  border: 2px solid ${(props) => props.theme.color.grey[500]};
+  border-radius: 16px;
+  width: 500px;
+`
+
+export const RegisterSpacer = styled.div`
+  width: 100%;
+  height: 20px;
+`

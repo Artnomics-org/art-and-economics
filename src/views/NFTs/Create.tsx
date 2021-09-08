@@ -25,7 +25,6 @@ import {
 } from './components/styleds'
 import NFTContentCard from './components/NFTContentCard'
 import NFTLabelInfo from './components/NFTLabelInfo'
-import { useTimeout } from 'ahooks'
 
 type FileWithPreview = {
   preview: string
