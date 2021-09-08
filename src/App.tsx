@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
+import { ChakraProvider } from '@chakra-ui/react'
 import { ThemeProvider } from 'styled-components/macro'
 import { createWeb3ReactRoot, Web3ReactProvider } from '@web3-react/core'
 import { Provider as ReduxProvider } from 'react-redux'
@@ -82,21 +83,23 @@ const Updaters: React.FC = () => {
 
 const Providers: React.FC = ({ children }) => {
   return (
-    <ThemeProvider theme={theme}>
-      <Web3ReactProvider getLibrary={getLibrary}>
-        <Web3ProviderNetwork getLibrary={getLibrary}>
-          <ReduxProvider store={store}>
-            <TransactionProvider>
-              <FarmsProvider>
-                <NFTsProvider>
-                  <AcceleratorsProvider>{children}</AcceleratorsProvider>
-                </NFTsProvider>
-              </FarmsProvider>
-            </TransactionProvider>
-          </ReduxProvider>
-        </Web3ProviderNetwork>
-      </Web3ReactProvider>
-    </ThemeProvider>
+    <ChakraProvider>
+      <ThemeProvider theme={theme}>
+        <Web3ReactProvider getLibrary={getLibrary}>
+          <Web3ProviderNetwork getLibrary={getLibrary}>
+            <ReduxProvider store={store}>
+              <TransactionProvider>
+                <FarmsProvider>
+                  <NFTsProvider>
+                    <AcceleratorsProvider>{children}</AcceleratorsProvider>
+                  </NFTsProvider>
+                </FarmsProvider>
+              </TransactionProvider>
+            </ReduxProvider>
+          </Web3ProviderNetwork>
+        </Web3ReactProvider>
+      </ThemeProvider>
+    </ChakraProvider>
   )
 }
 
