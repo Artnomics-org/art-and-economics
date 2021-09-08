@@ -95,3 +95,30 @@ export const ButtonOutlined = styled(BaseButton)`
     cursor: auto;
   }
 `
+
+export const BlackButton = styled.button`
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 14px 20px;
+  text-align: center;
+  cursor: pointer;
+  white-space: nowrap;
+  appearance: none;
+  color: ${(props) => props.theme.color.white};
+  background-color: ${(props) => props.theme.color.grey[600]};
+  border: 2px solid ${(props) => props.theme.color.grey[600]};
+  &:hover {
+    background-color: ${(props) => props.theme.color.black};
+    border: 2px solid ${(props) => props.theme.color.black};
+  }
+  &:disabled {
+    background-color: ${(props) => props.theme.color.grey[500]};
+    border: 2px solid ${(props) => props.theme.color.grey[500]};
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+`

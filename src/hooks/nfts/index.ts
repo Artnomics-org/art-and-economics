@@ -189,7 +189,7 @@ export function useLogin() {
           }
         } else updateUserData(null)
       } catch (e) {
-        console.error('e', e)
+        console.error('useLogin:useEffect:checkIsWalletRegistered:error:', e)
         updateUserData(null)
       } finally {
         setRegisteredLoading(false)
@@ -198,7 +198,7 @@ export function useLogin() {
 
     // 有钱包地址就查是不是已经注册过
     fetchData()
-    console.log('wallet.account', account)
+    console.log('useLogin:useEffect:account:', account)
   }, [account])
 
   const isRegistered = useMemo(() => Boolean(userDataByWallet), [userDataByWallet])

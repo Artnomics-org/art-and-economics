@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { getAddress } from '@ethersproject/address'
 import warning from 'tiny-warning'
 import invariant from 'tiny-invariant'
@@ -114,19 +115,19 @@ export function constructBid(
 
   try {
     parsedCurrency = validateAndParseAddress(currency)
-  } catch (err) {
+  } catch (err: any) {
     throw new Error(`Currency address is invalid: ${err.message}`)
   }
 
   try {
     parsedBidder = validateAndParseAddress(bidder)
-  } catch (err) {
+  } catch (err: any) {
     throw new Error(`Bidder address is invalid: ${err.message}`)
   }
 
   try {
     parsedRecipient = validateAndParseAddress(recipient)
-  } catch (err) {
+  } catch (err: any) {
     throw new Error(`Recipient address is invalid: ${err.message}`)
   }
 

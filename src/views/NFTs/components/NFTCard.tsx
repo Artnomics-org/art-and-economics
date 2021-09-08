@@ -27,7 +27,8 @@ const NFTCard: React.FC<NFTCardProps> = ({ img, title, creator, price, currency,
   }, [onClick])
   return (
     <StyledCard onClick={handleCardClick}>
-      <StyledImg src={img.low} srcSet={`${img.medium} 2x, ${img.high} 3x`} alt="NFT Cover" />
+      {!img?.low && <StyledImgHolder />}
+      {img?.low && <StyledImg src={img.low} srcSet={`${img.medium} 2x, ${img.high} 3x`} alt="NFT Cover" />}
       <StyledContentWrapper>
         <StyledContent>
           <StyledTitle>{title}</StyledTitle>
@@ -62,6 +63,13 @@ const StyledImg = styled.img`
   object-fit: cover;
   width: 198px;
   height: 198px;
+  background-color: ${(props) => props.theme.color.grey[400]};
+`
+
+const StyledImgHolder = styled.div`
+  width: 198px;
+  height: 198px;
+  background-color: ${(props) => props.theme.color.grey[400]};
 `
 
 const StyledContentWrapper = styled.div`

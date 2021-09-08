@@ -114,13 +114,19 @@ export const NFTDescription = styled.p`
 `
 
 export const StyledLoadingWrapper = styled.div`
-  margin: 200px auto;
-  width: 500px;
+  margin: 160px auto;
+  max-width: 500px;
 `
 
 export const LoadingTitle = styled.h1<{ error?: boolean }>`
+  font-size: 32px;
   font-weight: 500;
   color: ${({ error, theme }) => (error ? theme.color.red[500] : theme.color.text[500])};
+`
+
+export const LoadingText = styled.p`
+  font-size: 20px;
+  margin-bottom: 30px;
 `
 
 export const LinkContainer = styled.div`
@@ -155,4 +161,53 @@ export const LinkButton = styled.a`
   &:hover {
     border-color: ${(props) => props.theme.color.text[600]};
   }
+`
+
+export const CreateWrapper = styled.div`
+  margin: 100px auto;
+`
+
+export const CreateBody = styled.div`
+  max-width: ${(props) => props.theme.siteWidth}px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`
+
+export const CreateLeft = styled.div`
+  flex: 1;
+  min-width: 600px;
+`
+
+export const CreateRight = styled.div`
+  min-width: 498px;
+  margin-left: 80px;
+`
+
+export const CreateTitle = styled.h2`
+  color: ${(props) => props.theme.color.text[500]};
+  font-weight: 500;
+  font-size: 32px;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+`
+
+export const CreateDrag = styled.div<{ error?: boolean }>`
+  padding: 40px 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: ${({ error, theme }) => (error ? theme.color.red[500] : theme.color.text[500])};
+  border: 2px solid ${({ theme, error }) => (error ? theme.color.red[500] : theme.color.grey[400])};
+  margin-bottom: 30px;
+  cursor: pointer;
+`
+
+export const CreateButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 30px;
 `

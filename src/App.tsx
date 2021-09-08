@@ -32,6 +32,7 @@ import FindPool from './views/FindPool'
 import { RedirectDuplicateTokenIds } from './views/AddLiquidity/redirects'
 import { RedirectPathToHome } from './views/Home/redirects'
 import NFTView from './views/NFTs/NFTView'
+import Create from './views/NFTs/Create'
 
 const Web3ProviderNetwork = createWeb3ReactRoot(NetworkContextName)
 
@@ -58,6 +59,8 @@ const Routers: React.FC = () => {
           <Route exact strict path="/find" component={FindPool} />
           {/* <Route exact strict path="/farm" component={Farms} /> */}
           <Route exact strict path="/market" component={NFTs} />
+          <Route exact strict path="/market/new" component={Create} />
+
           <Route exact path="/add" component={AddLiquidity} />
           <Route exact path="/add/:currencyIdA/:currencyIdB" component={RedirectDuplicateTokenIds} />
           <Route exact path="/create" component={AddLiquidity} />

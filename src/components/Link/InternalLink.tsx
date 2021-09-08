@@ -12,3 +12,12 @@ export const InternalLink = styled(RouterLink)`
   color: ${(props) => props.theme.color.grey[600]};
   text-decoration: underline;
 `
+
+export const BlackInternalLink = styled(InternalLink)`
+  font-family: inherit;
+  align-self: center;
+  color: ${(props) => props.theme.color.white};
+  background-color: ${(props) => props.theme.color.grey[600]};
+  text-decoration: none;
+  padding: 10px 16px;
+`
