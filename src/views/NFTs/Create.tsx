@@ -1,6 +1,7 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState, useCallback, useEffect, ChangeEvent } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { useHistory } from 'react-router'
+import { Input, useNumberInput } from '@chakra-ui/react'
 import { BlackButton } from '../../components/Button'
 import { BlackInternalLink } from '../../components/Link'
 import Page from '../../components/Page'
@@ -17,7 +18,14 @@ import {
   CreateTitle,
   CreateDrag,
   CreateButtonWrapper,
+  CreateInputWrapper,
+  CreateInputLabel,
+  CreateNumberInputWrapper,
+  CreateNumberInputButton,
 } from './components/styleds'
+import NFTContentCard from './components/NFTContentCard'
+import NFTLabelInfo from './components/NFTLabelInfo'
+import { useTimeout } from 'ahooks'
 
 type FileWithPreview = {
   preview: string
@@ -38,6 +46,19 @@ const Create: React.FC = () => {
   })
   const router = useHistory()
 
+  const [inputDesc, setInputDesc] = useState('')
+  const [inputTitle, setInputTitle] = useState('')
+
+  const { getInputProps, getIncrementButtonProps, getDecrementButtonProps, valueAsNumber } = useNumberInput({
+    step: 1,
+    defaultValue: 0,
+    min: 0,
+    max: 100,
+  })
+  const handleIncrement = getIncrementButtonProps()
+  const handleDecrement = getDecrementButtonProps()
+  const handleNumberInput = getInputProps()
+
   const [imageFiles, setImageFiles] = useState<FileWithPreview[]>([])
   const [imageOversize, setImageOversize] = useState(false)
   const onDrop = useCallback(
@@ -56,11 +77,39 @@ const Create: React.FC = () => {
     },
     [nftPreview],
   )
-  const { getRootProps, getInputProps } = useDropzone({
+  const { getRootProps, getInputProps: getDragProps } = useDropzone({
     maxFiles: 1,
     accept: 'image/jpeg, image/png, image/gif, image/webp',
     onDrop,
   })
+
+  const isCanCreate = !!imageFiles.length && !!inputTitle && !!inputDesc
+
+  const handleTitleChange = useCallback(
+    (ev: ChangeEvent<HTMLInputElement>) => {
+      console.log('handleTitleChange:value:', ev.target.value)
+      setInputTitle(ev.target.value)
+      setNftPreview({ ...nftPreview, title: ev.target.value })
+    },
+    [nftPreview],
+  )
+  const handleDescChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
+    console.log('handleDescChange:value:', ev.target.value)
+    setInputDesc(ev.target.value)
+  }, [])
+
+  const handleCreateClick = useCallback(() => {
+    console.log(
+      'handleCreateClick:images:',
+      imageFiles,
+      'title:',
+      inputTitle,
+      'desc:',
+      inputDesc,
+      'royalty:',
+      valueAsNumber,
+    )
+  }, [imageFiles, inputDesc, inputTitle, valueAsNumber])
 
   useEffect(
     () => () => {
@@ -74,19 +123,19 @@ const Create: React.FC = () => {
     <Page>
       <CreateWrapper>
         <CreateBody>
-          {!needReg && ( // TODO: remove bang!
+          {needReg && (
             <StyledLoadingWrapper>
               <LoadingTitle error>Sorry</LoadingTitle>
               <LoadingText>You need to register to create NFTs</LoadingText>
               <BlackInternalLink to="/register">Go To Register</BlackInternalLink>
             </StyledLoadingWrapper>
           )}
-          {true && ( // TODO: change to !needReg
+          {!needReg && (
             <>
               <CreateLeft>
                 <CreateTitle>NFT Information</CreateTitle>
                 <CreateDrag {...getRootProps()} error={imageOversize}>
-                  <input {...getInputProps()} />
+                  <input {...getDragProps()} />
                   {imageOversize && (
                     <>
                       <p>Image is too big</p>
@@ -106,12 +155,54 @@ const Create: React.FC = () => {
                     </>
                   )}
                 </CreateDrag>
+                <CreateInputWrapper>
+                  <CreateInputLabel htmlFor="title">Title</CreateInputLabel>
+                  <Input
+                    id="title"
+                    isRequired
+                    borderRadius={0}
+                    colorScheme="blackAlpha"
+                    placeholder="Please enter NFT title"
+                    onChange={handleTitleChange}
+                  />
+                </CreateInputWrapper>
+                <CreateInputWrapper>
+                  <CreateInputLabel htmlFor="description">Description</CreateInputLabel>
+                  <Input
+                    id="description"
+                    isRequired
+                    borderRadius={0}
+                    colorScheme="blackAlpha"
+                    placeholder="Please enter NFT description"
+                    onChange={handleDescChange}
+                  />
+                </CreateInputWrapper>
+                <CreateInputWrapper>
+                  <CreateInputLabel htmlFor="royalty">Resale royalty</CreateInputLabel>
+                  <CreateNumberInputWrapper>
+                    <CreateNumberInputButton {...handleIncrement}>+</CreateNumberInputButton>
+                    <Input
+                      {...handleNumberInput}
+                      id="royalty"
+                      isRequired
+                      borderRadius={0}
+                      colorScheme="blackAlpha"
+                      placeholder="Please enter NFT resale royalty"
+                    />
+                    <CreateNumberInputButton {...handleDecrement}>-</CreateNumberInputButton>
+                  </CreateNumberInputWrapper>
+                </CreateInputWrapper>
               </CreateLeft>
               <CreateRight>
                 <CreateTitle>Preview NFT</CreateTitle>
                 <NFTCard {...nftPreview} />
+                <NFTContentCard title="RESALE ROYALTY">
+                  <NFTLabelInfo title="Creator">{valueAsNumber}%</NFTLabelInfo>
+                </NFTContentCard>
                 <CreateButtonWrapper>
-                  <BlackButton>Create</BlackButton>
+                  <BlackButton disabled={!isCanCreate} onClick={handleCreateClick}>
+                    Create
+                  </BlackButton>
                   <BlackButton onClick={() => router.goBack()}>Back</BlackButton>
                 </CreateButtonWrapper>
               </CreateRight>

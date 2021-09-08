@@ -115,6 +115,10 @@ export const BlackButton = styled.button`
     background-color: ${(props) => props.theme.color.black};
     border: 2px solid ${(props) => props.theme.color.black};
   }
+  &:active {
+    background-color: ${(props) => props.theme.color.grey[600]};
+    border: 2px solid ${(props) => props.theme.color.grey[600]};
+  }
   &:disabled {
     background-color: ${(props) => props.theme.color.grey[500]};
     border: 2px solid ${(props) => props.theme.color.grey[500]};

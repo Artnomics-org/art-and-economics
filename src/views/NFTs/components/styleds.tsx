@@ -211,3 +211,66 @@ export const CreateButtonWrapper = styled.div`
   justify-content: space-between;
   margin-bottom: 30px;
 `
+
+export const CreateInputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+  .chakra-input {
+    border-color: ${(props) => props.theme.color.grey[500]};
+    border-width: 2px;
+    &:hover,
+    &:focus {
+      border-color: ${(props) => props.theme.color.text[500]};
+    }
+    &:focus {
+      box-shadow: 0 0 0 1px ${(props) => props.theme.color.text[500]};
+    }
+  }
+`
+
+export const CreateInputLabel = styled.label`
+  font-size: 16px;
+  color: ${(props) => props.theme.color.text[500]};
+  text-transform: uppercase;
+  margin-bottom: 10px;
+`
+
+export const CreateNumberInputWrapper = styled.div`
+  display: grid;
+  column-gap: 20px;
+  grid-template-columns: auto 1fr auto;
+  flex-direction: row;
+  justify-content: space-around;
+`
+
+export const CreateNumberInputButton = styled.button`
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  appearance: none;
+  color: ${(props) => props.theme.color.white};
+  background-color: ${(props) => props.theme.color.grey[600]};
+  border: 2px solid ${(props) => props.theme.color.grey[600]};
+  width: 40px;
+  height: 40px;
+  &:hover {
+    background-color: ${(props) => props.theme.color.black};
+    border: 2px solid ${(props) => props.theme.color.black};
+  }
+  &:active {
+    background-color: ${(props) => props.theme.color.grey[600]};
+    border: 2px solid ${(props) => props.theme.color.grey[600]};
+  }
+  &:disabled {
+    background-color: ${(props) => props.theme.color.grey[500]};
+    border: 2px solid ${(props) => props.theme.color.grey[500]};
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+`
