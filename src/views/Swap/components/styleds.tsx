@@ -10,9 +10,11 @@ export const SwapWrapper = styled.div<SwapWrapperProps>`
   height: 100%;
   background-color: ${(props) => props.theme.color.grey[500]};
   background-image: url(${(props) => props.bg});
-  background-size: 100% auto;
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: bottom center;
+  padding-top: 60px;
+  padding-bottom: 40px;
   margin-bottom: -18px;
 `
 

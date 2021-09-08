@@ -159,6 +159,7 @@ const Swap: React.FC = () => {
     swapCallback()
       .then((hash) => {
         setSwapState({ attemptingTxn: false, tradeToConfirm, showConfirm, swapErrorMessage: undefined, txHash: hash })
+        console.log('handleSwap:swapCallback:txHash:', hash)
       })
       .catch((error) => {
         setSwapState({
@@ -282,7 +283,9 @@ const Swap: React.FC = () => {
         </SwapBody>
       </SwapWrapper>
       <AdvancedInfoCard isShow={isMoreInfoShow}>
-        {showWrap ? null : (
+        {showWrap ? (
+          <div>Warp Mode</div>
+        ) : (
           <AdvancedCard>
             <AutoColumn gap="4px">
               {Boolean(trade) && (

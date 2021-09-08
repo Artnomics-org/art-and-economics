@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components/macro'
-import { CheckCircle, ExternalLink, Loader, Triangle } from 'react-feather'
+import { CheckCircle, Loader, Triangle } from 'react-feather'
+import { ExternalLink } from '../Link'
 import { useAllTransactions } from '../../hooks/transaction'
 import { useActiveWeb3React } from '../../hooks/wallet'
 import { RowFixed } from '../Row'
@@ -13,7 +14,6 @@ interface TransactionProps {
 const Transaction: React.FC<TransactionProps> = ({ hash }) => {
   const { chainId } = useActiveWeb3React()
   const allTransactions = useAllTransactions()
-
   const tx = allTransactions?.[hash]
   const summary = tx?.summary
   const pending = !tx?.receipt
@@ -23,12 +23,12 @@ const Transaction: React.FC<TransactionProps> = ({ hash }) => {
 
   return (
     <TransactionWrapper>
-      <TransactionState href={getScanLink(chainId, hash, 'transaction')} pending={pending} success={success}>
+      <TransactionState href={getScanLink(chainId, hash, 'transaction')}>
         <RowFixed>
           <TransactionStatusText>{summary ?? hash}</TransactionStatusText>
         </RowFixed>
         <IconWrapper pending={pending} success={success}>
-          {pending ? <Loader /> : success ? <CheckCircle size="16" /> : <Triangle size="16" />}
+          {pending ? <Loader size="16" /> : success ? <CheckCircle size="16" /> : <Triangle size="16" />}
         </IconWrapper>
       </TransactionState>
     </TransactionWrapper>
@@ -46,7 +46,7 @@ const TransactionStatusText = styled.div`
   }
 `
 
-const TransactionState = styled(ExternalLink)<{ pending: boolean; success?: boolean }>`
+const TransactionState = styled(ExternalLink)`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -54,7 +54,8 @@ const TransactionState = styled(ExternalLink)<{ pending: boolean; success?: bool
   border-radius: 6px;
   padding: 0.25rem 0rem;
   font-weight: 500;
-  font-size: 0.825rem;
+  font-size: 16px;
+  line-height: 1;
   color: ${({ theme }) => theme.color.text[500]};
 `
 
