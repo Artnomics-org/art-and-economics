@@ -175,32 +175,6 @@ export function useLogin() {
   const [userDataByWallet, updateUserData] = useState<User | null>(null)
   const [registeredLoading, setRegisteredLoading] = useState<boolean>(false) // 查询注册 Loading
 
-  useEffect(() => {
-    async function fetchData() {
-      if (!account) return
-      setRegisteredLoading(true)
-      try {
-        const { isUserExist, user } = await checkIsWalletRegistered(account)
-        if (isUserExist) {
-          updateUserData(user)
-          const token = getCookie('token')
-          if (token) {
-            updateAccessToken(token)
-          }
-        } else updateUserData(null)
-      } catch (e) {
-        console.error('useLogin:useEffect:checkIsWalletRegistered:error:', e)
-        updateUserData(null)
-      } finally {
-        setRegisteredLoading(false)
-      }
-    }
-
-    // 有钱包地址就查是不是已经注册过
-    fetchData()
-    console.log('useLogin:useEffect:account:', account)
-  }, [account])
-
   const isRegistered = useMemo(() => Boolean(userDataByWallet), [userDataByWallet])
 
   const requestToSign = useCallback<() => Promise<SignInPermit>>(async () => {
@@ -244,6 +218,34 @@ export function useLogin() {
       return false
     }
   }, [requestToSign])
+
+  useEffect(() => {
+    async function fetchData() {
+      if (!account) return
+      setRegisteredLoading(true)
+      try {
+        const { isUserExist, user } = await checkIsWalletRegistered(account)
+        if (isUserExist) {
+          updateUserData(user)
+          const token = getCookie('token')
+          if (token) {
+            updateAccessToken(token)
+          } else {
+            await loginWithSignature()
+          }
+        } else updateUserData(null)
+      } catch (e) {
+        console.error('useLogin:useEffect:checkIsWalletRegistered:error:', e)
+        updateUserData(null)
+      } finally {
+        setRegisteredLoading(false)
+      }
+    }
+
+    // 有钱包地址就查是不是已经注册过
+    fetchData()
+    console.log('useLogin:useEffect:account:', account)
+  }, [account, loginWithSignature])
 
   return {
     requestToSign,
