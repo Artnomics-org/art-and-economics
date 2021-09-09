@@ -34,6 +34,7 @@ import { RedirectPathToHome } from './views/Home/redirects'
 import NFTView from './views/NFTs/NFTView'
 import Create from './views/NFTs/Create'
 import Register from './views/NFTs/Register'
+import UserEdit from './views/NFTs/UserEdit'
 
 const Web3ProviderNetwork = createWeb3ReactRoot(NetworkContextName)
 
@@ -62,6 +63,7 @@ const Routers: React.FC = () => {
           <Route exact strict path="/market" component={NFTs} />
           <Route exact strict path="/market/new" component={Create} />
           <Route exact strict path="/register" component={Register} />
+          <Route exact strict path="/user/edit" component={UserEdit} />
 
           <Route exact path="/add" component={AddLiquidity} />
           <Route exact path="/add/:currencyIdA/:currencyIdB" component={RedirectDuplicateTokenIds} />

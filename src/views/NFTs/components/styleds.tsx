@@ -279,6 +279,7 @@ export const RegisterWrapper = styled.div`
   margin: 100px auto;
   max-width: ${(props) => props.theme.siteWidth}px;
 `
+
 export const RegisterTitle = styled.h1<{ size?: number }>`
   font-size: ${(props) => props.size || 40}px;
   font-weight: 500;
@@ -311,4 +312,84 @@ export const RegisterBody = styled.div`
 export const RegisterSpacer = styled.div`
   width: 100%;
   height: 20px;
+`
+
+export const UserEditWrapper = styled.div`
+  max-width: ${(props) => props.theme.siteWidth}px;
+  padding-top: 100px;
+  padding-bottom: 100px;
+`
+
+export const UserEditBody = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`
+
+export const UserEditLeft = styled.div`
+  flex: 1;
+  width: 460px;
+  margin-right: 40px;
+`
+
+export const UserEditRight = styled.div`
+  width: 300px;
+`
+
+export const UserEditTitle = styled.h1`
+  color: ${(props) => props.theme.color.text[500]};
+  font-size: 32px;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 30px;
+`
+
+export const UserEditCardWrapper = styled.div`
+  margin: 0;
+  min-width: 0;
+  padding: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid ${(props) => props.theme.color.grey[400]};
+  margin-bottom: 30px;
+`
+
+export const UserEditCardTitle = styled.h2`
+  color: ${(props) => props.theme.color.text[400]};
+  font-size: 20px;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin: 0;
+  margin-bottom: 20px;
+`
+
+export const UserEditAvatarWrapper = styled.div<{ error?: boolean }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 256px;
+  height: 256px;
+  border-radius: 50%;
+  color: ${({ error, theme }) => (error ? theme.color.red[500] : theme.color.text[500])};
+  border: 1px solid ${({ error, theme }) => (error ? theme.color.red[500] : theme.color.grey[400])};
+  cursor: pointer;
+  position: relative;
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+`
+
+export const UserEditAvatarUploading = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.25);
+  border-radius: 50%;
 `

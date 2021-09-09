@@ -60,12 +60,7 @@ export async function registerUser(
  */
 export async function updateUser(
   id: number,
-  payload: {
-    nickname?: string
-    bio?: string
-    username?: string
-    avatar?: string
-  },
+  payload: Partial<Omit<User, 'username'>>,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): Promise<AxiosResponse<any>> {
   return await BACKEND_CLIENT({
