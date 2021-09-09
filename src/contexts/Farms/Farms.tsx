@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react'
 import { Pools } from '../../constants/pools'
 import { useActiveWeb3React } from '../../hooks/wallet'

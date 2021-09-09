@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useMemo } from 'react'
 import { Interface, FunctionFragment } from '@ethersproject/abi'
 import { Contract } from '@ethersproject/contracts'
