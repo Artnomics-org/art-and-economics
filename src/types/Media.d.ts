@@ -23,3 +23,10 @@ export type MediaMetadata = {
   name: string
   version: string
 }
+
+export type MediaData = {
+  contentHash: string
+  metadataHash: string
+  metadataURI: string
+  tokenURI: string
+}

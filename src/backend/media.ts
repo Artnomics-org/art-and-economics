@@ -47,19 +47,26 @@ export async function getMediaBids(id: string | number): Promise<BidLog[]> {
 }
 
 // 提交 media
+type PostMediaParams = {
+  txHash: string
+  tags: string[]
+  gallery?: number
+  id?: number
+}
+type PostMediaResponse = {
+  code: number
+  data?: {
+    tokenId: number
+  }
+}
 export async function PostMedia({
   txHash,
   tags,
   gallery,
   id,
-}: {
-  txHash: string
-  tags: string[]
-  gallery?: number
-  id?: number
-}): Promise<any> {
+}: PostMediaParams): Promise<AxiosResponse<PostMediaResponse>> {
   // bad habit to `any` bro
-  return await backendClient.post('/media', {
+  return await backendClient.post<PostMediaResponse>('/media', {
     txHash,
     tags,
     gallery,
@@ -87,22 +94,10 @@ export function sendToPublisherForPreview(
   return backendClient.post<GeneralResponse<{ msg: string }>>(`/media/gasfreeCreate/${GalleryId}`, data)
 }
 
-export async function isMediaContentExisted(params: { contentHash: string }): Promise<
-  AxiosResponse<
-    GeneralResponse<{
-      data: {
-        isExist: boolean
-      }
-      code: number
-    }>
-  >
-> {
-  return await client.get<
-    GeneralResponse<{
-      data: { isExist: boolean }
-      code: number
-    }>
-  >(`/media/utils/isContentExisted`, { params })
+export async function isMediaContentExisted(params: {
+  contentHash: string
+}): Promise<AxiosResponse<GeneralResponse<{ isExist: boolean }>>> {
+  return await client.get<GeneralResponse<{ isExist: boolean }>>(`/media/utils/isContentExisted`, { params })
 }
 
 export function mediaGasfreeCreateForPublisher(params: { gid: number }): Promise<AxiosResponse<GeneralResponse<any>>> {

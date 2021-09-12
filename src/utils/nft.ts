@@ -55,6 +55,7 @@ export async function mintMediaToken(
         .catch((callError) => {
           // if ()
           console.debug('Mint Call threw error', callError)
+          if (callError?.data?.message) reject(callError?.data?.message)
           let errorMessage: string
           switch (callError.reason) {
             case 'Media: a token has already been created with this content hash':

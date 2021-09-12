@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { AxiosResponse } from 'axios'
+import { MediaData } from '../types/Media'
 import client from './client'
 
 // 上传媒体
@@ -17,6 +18,28 @@ export function uploadFile(file: File): Promise<AxiosResponse<UploadFileResponse
   const formData = new FormData()
   formData.append('file', file)
   return client.put<UploadFileResponse>('storage/uploadFile', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  })
+}
+
+type UploadFileToIpfsResponse = {
+  data?: {
+    MediaData: MediaData
+  }
+  code: number
+}
+export type UploadFileToIpfsParams = {
+  file: File
+  name: string
+  description: string
+}
+export function uploadFileToIpfs(param: UploadFileToIpfsParams): Promise<AxiosResponse<UploadFileToIpfsResponse>> {
+  const { file, name, description } = param
+  const formData = new FormData()
+  formData.append('file', file)
+  formData.append('name', name)
+  formData.append('description', description)
+  return client.put<UploadFileToIpfsResponse>('storage/uploadToIpfs', formData, {
     headers: { 'Content-Type': 'multipart/form-data' },
   })
 }
