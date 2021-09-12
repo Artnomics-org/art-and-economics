@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import styled from 'styled-components/macro'
 import ImageNFTBg from '../../../assets/img/image-nft-bg.png'
 import ImageNFTBg2x from '../../../assets/img/image-nft-bg@2x.png'
@@ -392,4 +393,139 @@ export const UserEditAvatarUploading = styled.div`
   height: 100%;
   background-color: rgba(0, 0, 0, 0.25);
   border-radius: 50%;
+`
+
+export const UserWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`
+
+export const UserBanner = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-color: ${(props) => props.theme.color.grey[500]};
+  padding-top: 60px;
+  padding-bottom: 60px;
+`
+
+export const UserBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+`
+
+export const UserInfoWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  max-width: ${(props) => (props.theme.siteWidth / 3) * 2}px;
+  width: 100%;
+`
+
+export const UserInfoLeft = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
+export const UserInfoRight = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+`
+
+export const UserInfoContainer = styled.div<{ mb: number }>`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: ${(props) => props.mb}px;
+`
+
+export const UserAvatar = styled.img`
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  pointer-events: none;
+  border: 2px solid ${(props) => props.theme.color.white};
+  margin-right: 20px;
+`
+
+export const UserInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+`
+
+export const UserSocial = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 20px;
+`
+
+export const UserNick = styled.h4`
+  font-size: 24px;
+  font-weight: 500;
+  color: ${(props) => props.theme.color.white};
+  margin-bottom: 10px;
+`
+
+export const UserName = styled.h3`
+  font-size: 16px;
+  font-weight: 500;
+  color: ${(props) => props.theme.color.white};
+  margin-bottom: 20px;
+`
+
+export const UserBio = styled.p`
+  font-size: 16px;
+  font-weight: 400;
+  color: ${(props) => props.theme.color.white};
+`
+
+export const UserSocialItem = styled.a`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  border: 2px solid ${(props) => props.theme.color.white};
+  text-decoration: none;
+  cursor: pointer;
+`
+
+export const UserEditButton = styled(Link)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  color: ${(props) => props.theme.color.white};
+  border: 2px solid ${(props) => props.theme.color.white};
+  text-decoration: none;
+  cursor: pointer;
+  &:hover,
+  &:active {
+    color: ${(props) => props.theme.color.text[500]};
+    background-color: ${(props) => props.theme.color.white};
+  }
+`
+
+export const MediaSelectWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`
+
+export const UserNftWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-evenly;
+  max-width: ${(props) => props.theme.siteWidth}px;
 `

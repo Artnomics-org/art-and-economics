@@ -35,6 +35,7 @@ import NFTView from './views/NFTs/NFTView'
 import Create from './views/NFTs/Create'
 import Register from './views/NFTs/Register'
 import UserEdit from './views/NFTs/UserEdit'
+import UserView from './views/NFTs/User'
 
 const Web3ProviderNetwork = createWeb3ReactRoot(NetworkContextName)
 
@@ -70,6 +71,7 @@ const Routers: React.FC = () => {
           <Route exact path="/create" component={AddLiquidity} />
           <Route exact path="/create/:currencyIdA/:currencyIdB" component={RedirectDuplicateTokenIds} />
           <Route exact path="/market/:id" component={NFTView} />
+          <Route exact path="/user/:name" component={UserView} />
           <Route component={RedirectPathToHome} />
         </Switch>
       </Router>

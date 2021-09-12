@@ -135,3 +135,23 @@ export function getScanLink(
     }
   }
 }
+
+export function getSocialLink(name: string, type: 'twitter' | 'tetegram' | 'facebook' | 'medium'): string {
+  switch (type) {
+    case 'twitter':
+      return `https://twitter.com/${name}`
+    case 'tetegram':
+      return `https://t.me/${name}`
+    case 'facebook':
+      return `https://facebook.com/${name}`
+    case 'medium': {
+      if (name.startsWith('http')) {
+        return name
+      } else {
+        return `https://medium.com/${name}`
+      }
+    }
+    default:
+      return ''
+  }
+}
