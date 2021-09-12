@@ -96,7 +96,6 @@ const UserView: React.FC<RouteComponentProps<UserViewProps>> = ({
     try {
       const userInfo = await getUser(name)
       setUserInfo(userInfo)
-      setIsMe(false)
     } catch (error) {
       console.log('UserView:useEffect:fetchUserData:error:', error)
       router.push('/')
@@ -145,6 +144,7 @@ const UserView: React.FC<RouteComponentProps<UserViewProps>> = ({
   useEffect(() => {
     if (!userInfo) {
       if (userDataByWallet && userDataByWallet.username === name) {
+        console.log('UserView:useEffect:userDataByWallet:', userDataByWallet, userDataByWallet.username === name)
         setUserInfo(userDataByWallet)
         setIsMe(true)
       } else {
