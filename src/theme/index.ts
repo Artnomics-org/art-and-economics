@@ -3,7 +3,10 @@ import { black, green, grey, red, white, yellow, nav, footer, bg, text } from '.
 const theme = {
   borderRadius: 12,
   breakpoints: {
-    mobile: 400,
+    sm: 576,
+    md: 768,
+    lg: 992,
+    xl: 1200,
   },
   color: {
     nav,

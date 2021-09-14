@@ -37,7 +37,7 @@ const NFTView: React.FC<RouteComponentProps<NFTViewProps>> = ({
     backendData: null,
     metadata: null,
   })
-  const { profile, isMeTheOwner, isAskExist } = useMediaToken(Number(id))
+  const { profile, isAskExist } = useMediaToken(Number(id))
   const { bidInfo, ownerInfo } = useMediaOwner(backendData)
   const bidShare = getBalanceNumber(String(profile?.bidsShares?.creator?.value))
   const bidToken = useToken(bidInfo?.currency)

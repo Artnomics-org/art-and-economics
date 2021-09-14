@@ -98,7 +98,7 @@ const UserView: React.FC<RouteComponentProps<UserViewProps>> = ({
       setUserInfo(userInfo)
     } catch (error) {
       console.log('UserView:useEffect:fetchUserData:error:', error)
-      router.push('/')
+      router.push('/market')
     }
   }, [name, router])
   const fetchMediaData = useCallback(async () => {
@@ -136,7 +136,7 @@ const UserView: React.FC<RouteComponentProps<UserViewProps>> = ({
 
   useEffect(() => {
     if (caughtError) {
-      router.push('/')
+      router.push('/market')
       return
     }
   }, [caughtError, router])

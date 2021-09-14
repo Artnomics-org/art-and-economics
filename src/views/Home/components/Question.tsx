@@ -31,10 +31,19 @@ const StyledQuestion = styled.div`
   &:not(:last-child) {
     margin-bottom: 72px;
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    flex-direction: column;
+    &:not(:last-child) {
+      margin-bottom: 30px;
+    }
+  }
 `
 
 const StyledLeftWrapper = styled.div`
   display: flex;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    align-self: flex-start;
+  }
 `
 
 const StyledQuestionIcon = styled.div`

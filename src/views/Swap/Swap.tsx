@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, useContext } from 'react'
 import Page from '../../components/Page'
 import {
   SwapWrapper,
@@ -37,12 +37,16 @@ import { AutoColumn } from '../../components/Column'
 import ProgressCircles from './components/ProgressCircles'
 import SwapCallbackError from './components/SwapCallbackError'
 import TradePrice from './components/TradePrice'
+import { useMediaQuery } from '@chakra-ui/media-query'
+import { ThemeContext } from 'styled-components/macro'
+import { useToast } from '@chakra-ui/toast'
 
 const Swap: React.FC = () => {
   useDefaultsFromURLSearch()
   const { account } = useActiveWeb3React()
   // toggle wallet when disconnected
   const toggleWalletModal = useWalletModalToggle()
+  const toast = useToast()
   // check if user has gone through approval process, used to show two step buttons, reset on token change
   const [approvalSubmitted, setApprovalSubmitted] = useState<boolean>(false)
   // modal and loading
@@ -53,7 +57,7 @@ const Swap: React.FC = () => {
     swapErrorMessage: string | undefined
     txHash: string | undefined
   }
-  const [{ showConfirm, tradeToConfirm, swapErrorMessage, attemptingTxn, txHash }, setSwapState] = useState<SwapState>({
+  const [{ showConfirm, tradeToConfirm, swapErrorMessage }, setSwapState] = useState<SwapState>({
     showConfirm: false,
     tradeToConfirm: undefined,
     attemptingTxn: false,
@@ -159,6 +163,15 @@ const Swap: React.FC = () => {
     swapCallback()
       .then((hash) => {
         setSwapState({ attemptingTxn: false, tradeToConfirm, showConfirm, swapErrorMessage: undefined, txHash: hash })
+        handleTypeInput('')
+        toast({
+          title: 'Transaction submitted',
+          description: 'Your transaction has been submitted to the network.',
+          status: 'success',
+          position: 'top',
+          duration: 5000,
+          isClosable: true,
+        })
         console.log('handleSwap:swapCallback:txHash:', hash)
       })
       .catch((error) => {
@@ -170,7 +183,7 @@ const Swap: React.FC = () => {
           txHash: undefined,
         })
       })
-  }, [tradeToConfirm, priceImpactWithoutFee, showConfirm, swapCallback])
+  }, [priceImpactWithoutFee, swapCallback, tradeToConfirm, showConfirm, handleTypeInput, toast])
   const handleSwapButtonClick = useCallback(() => {
     if (isExpertMode) {
       handleSwap()
@@ -212,6 +225,9 @@ const Swap: React.FC = () => {
 
   const isMoreInfoShow = !!trade || showApproveFlow || (isExpertMode && !!swapErrorMessage) || showWrap
 
+  const theme = useContext(ThemeContext)
+  const media = useMediaQuery(`(max-width:${theme.breakpoints.md}px)`)
+
   return (
     <Page>
       <SwapWrapper bg={IconSwapBg}>
@@ -219,7 +235,7 @@ const Swap: React.FC = () => {
         <SwapBody>
           <Title>nft art market</Title>
           <InputBody>
-            <AutoColumn gap="100px">
+            <AutoColumn gap={media[0] ? '40px' : '100px'}>
               <CurrencyInputPanel
                 id="swap-currency-input"
                 label={independentField === Field.OUTPUT && !showWrap && trade ? 'From (estimated)' : 'From'}

@@ -56,6 +56,11 @@ const StyledCard = styled.div`
   background-color: ${(props) => props.theme.color.bg};
   box-shadow: 0 6px 31px 2px rgba(0, 0, 0, 0.1);
   cursor: pointer;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    width: 100%;
+    height: 100px;
+    margin-bottom: 0;
+  }
 `
 
 const StyledImg = styled.img`
@@ -64,12 +69,20 @@ const StyledImg = styled.img`
   width: 198px;
   height: 198px;
   background-color: ${(props) => props.theme.color.grey[400]};
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    width: 100px;
+    height: 100px;
+  }
 `
 
 const StyledImgHolder = styled.div`
   width: 198px;
   height: 198px;
   background-color: ${(props) => props.theme.color.grey[400]};
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    width: 100px;
+    height: 100px;
+  }
 `
 
 const StyledContentWrapper = styled.div`
@@ -79,6 +92,9 @@ const StyledContentWrapper = styled.div`
   flex-wrap: wrap;
   width: 100%;
   position: relative;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    padding: 10px;
+  }
 `
 const StyledContent = styled.div`
   display: flex;
@@ -93,6 +109,11 @@ const StyledTitle = styled.h4`
   font-size: 16px;
   font-family: 'Helvetica Neue LT W05_93 Blk E', sans-serif;
   margin: ${(props) => props.theme.spacing[1]}px 0 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    font-size: 16px;
+    margin: 0;
+    line-height: 1;
+  }
 `
 
 const StyledDetails = styled.div`
@@ -100,6 +121,10 @@ const StyledDetails = styled.div`
   flex: 100%;
   font-family: 'Noto Sans KR', sans-serif;
   text-align: center;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    font-size: 14px;
+    line-height: 1;
+  }
 `
 
 const StyledFooter = styled.div`
@@ -118,6 +143,10 @@ const StyledBuy = styled.div`
   font-size: 16px;
   font-weight: 700;
   margin-right: auto;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    font-size: 14px;
+    line-height: 1;
+  }
 `
 
 const StyledPrice = styled.div`
@@ -126,6 +155,10 @@ const StyledPrice = styled.div`
   line-height: 1.5;
   text-transform: uppercase;
   font-size: 16px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    font-size: 14px;
+    line-height: 1;
+  }
 `
 
 export default NFTCard

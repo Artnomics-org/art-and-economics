@@ -45,6 +45,10 @@ const AdvancedInfoCardWrapper = styled(animated.div)<{ mobile?: boolean }>`
   align-self: ${({ mobile }) => (mobile ? 'flex-end' : 'center')};
   max-width: 420px;
   max-height: 60vh;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    left: unset !important;
+    top: 80%;
+  }
 `
 
 export default AdvancedInfoCard

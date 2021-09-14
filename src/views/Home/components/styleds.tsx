@@ -13,6 +13,12 @@ export const SectionBanner = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    padding-top: 40px;
+    padding-bottom: 110px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 `
 
 export const SectionPaper = styled.section`
@@ -21,6 +27,9 @@ export const SectionPaper = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    padding-bottom: 20px;
+  }
 `
 
 export const SectionIntro = styled.section`
@@ -33,6 +42,10 @@ export const SectionIntro = styled.section`
     ${(props) => props.theme.color.grey[300]}
   );
   background-repeat: no-repeat;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
 `
 
 export const SectionWhy = styled.section`
@@ -46,6 +59,10 @@ export const SectionWhy = styled.section`
   );
   background-repeat: no-repeat;
   background-color: ${(props) => props.theme.color.white};
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
 `
 
 export const Title = styled.h2`
@@ -57,6 +74,10 @@ export const Title = styled.h2`
   color: ${(props) => props.theme.color.grey[600]};
   text-transform: uppercase;
   margin-top: 0;
+  margin-bottom: 100;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    margin-bottom: 30px;
+  }
 `
 
 export const SubTitle = styled.h3`
@@ -74,11 +95,22 @@ export const BannerTitle = styled.img`
   object-fit: contain;
   height: 380px;
   margin-bottom: 36px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    width: 100%;
+    height: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 20px;
+  }
 `
 
 export const BannerSubTitle = styled.img`
   object-fit: contain;
   height: 44px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    width: 100%;
+    height: auto;
+  }
 `
 
 export const PaperImg = styled.img`
@@ -86,12 +118,20 @@ export const PaperImg = styled.img`
   width: 730px;
   margin-top: -64px;
   margin-bottom: 60px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    width: 100%;
+    margin-bottom: 20px;
+  }
 `
 
 export const PaperLinks = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   width: 730px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    width: 100%;
+    padding: 20px;
+  }
 `
 
 export const PaperLink = styled.a`
@@ -114,6 +154,9 @@ export const IconArrow = styled.img`
   position: absolute;
   right: 30px;
   top: 70px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    display: none;
+  }
 `
 
 export const IntroContentTitle = styled.h5`
@@ -123,6 +166,11 @@ export const IntroContentTitle = styled.h5`
   letter-spacing: 1px;
   text-align: center;
   color: ${(props) => props.theme.color.text[500]};
+  margin-top: 70px;
+  margin-bottom: 16px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    margin-top: 40px;
+  }
 `
 
 export const IntroContentText = styled.h5`
@@ -133,6 +181,11 @@ export const IntroContentText = styled.h5`
   letter-spacing: 0.6px;
   text-align: center;
   color: ${(props) => props.theme.color.text[400]};
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    padding-left: 20px;
+    padding-right: 20px;
+    text-align: left;
+  }
 `
 
 export const IntroContent = styled.div`
@@ -140,6 +193,11 @@ export const IntroContent = styled.div`
   justify-content: center;
   align-items: flex-end;
   margin-bottom: 70px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+  }
 `
 
 export const IntroImg = styled.img`
@@ -147,11 +205,20 @@ export const IntroImg = styled.img`
   width: 660px;
   margin-right: 42px;
   margin-bottom: -8px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    width: 90%;
+    margin-right: 0;
+    margin-bottom: 0;
+  }
 `
 
 export const IntroImgContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    width: 90%;
+    text-align: right;
+  }
 `
 
 export const IntroImgContentTitle = styled.h6`
@@ -171,6 +238,9 @@ export const IntroImgContentAuthor = styled.p`
   letter-spacing: 1px;
   color: ${(props) => props.theme.color.text[400]};
   margin-bottom: 22px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    margin-bottom: 10px;
+  }
 `
 
 export const IntroImgContentText = styled.p`
@@ -188,4 +258,9 @@ export const ContentWrapperWhy = styled.div`
   margin-right: auto;
   display: flex;
   flex-direction: column;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 `

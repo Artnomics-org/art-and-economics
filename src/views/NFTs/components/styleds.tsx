@@ -22,6 +22,10 @@ export const Banner = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    height: 180px;
+    margin-bottom: -180px;
+  }
 `
 
 export const NFTsBody = styled.div`
@@ -39,6 +43,11 @@ export const Title = styled.h1`
   text-transform: uppercase;
   margin-top: 104px;
   margin-bottom: 88px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    font-size: 24px;
+    margin-top: calc(180px / 2 - 36px / 2);
+    margin-bottom: calc(180px / 2 - 36px / 2);
+  }
 `
 
 export const IconArrow = styled.img`
@@ -47,6 +56,9 @@ export const IconArrow = styled.img`
   position: absolute;
   right: 30px;
   bottom: 100px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    display: none;
+  }
 `
 
 export const NFTImageView = styled.div`
@@ -59,6 +71,11 @@ export const NFTImageView = styled.div`
   height: 60vh;
   width: 100%;
   padding: 40px 75px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    width: 100vw;
+    height: 100vw;
+    padding: 20px;
+  }
 `
 
 export const NFTImage = styled.img`
@@ -81,6 +98,14 @@ export const NFTBodyWrapper = styled.div`
   margin: 0 auto;
   margin-top: 30px;
   margin-bottom: 60px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    width: 100%;
+    flex-direction: column;
+    justify-content: unset;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 40px;
+  }
 `
 
 export const NFTBodyLeft = styled.div`
@@ -89,6 +114,9 @@ export const NFTBodyLeft = styled.div`
 
 export const NFTBodyRight = styled.div`
   width: 370px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    width: 100%;
+  }
 `
 
 export const NFTTitle = styled.h2`
@@ -99,6 +127,10 @@ export const NFTTitle = styled.h2`
   color: ${(props) => props.theme.color.text[500]};
   margin: 0;
   margin-bottom: 30px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
 `
 
 export const NFTDescription = styled.p`
@@ -117,6 +149,10 @@ export const NFTDescription = styled.p`
 export const StyledLoadingWrapper = styled.div`
   margin: 160px auto;
   max-width: 500px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 `
 
 export const LoadingTitle = styled.h1<{ error?: boolean }>`
@@ -166,6 +202,12 @@ export const LinkButton = styled.a`
 
 export const CreateWrapper = styled.div`
   margin: 100px auto;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    margin-top: 20px;
+    margin-bottom: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 `
 
 export const CreateBody = styled.div`
@@ -173,16 +215,29 @@ export const CreateBody = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    flex-direction: column;
+    justify-content: unset;
+  }
 `
 
 export const CreateLeft = styled.div`
   flex: 1;
   min-width: 600px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    width: 100%;
+    min-width: 0;
+  }
 `
 
 export const CreateRight = styled.div`
   min-width: 498px;
   margin-left: 80px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    width: 100%;
+    min-width: 0;
+    margin-left: 0px;
+  }
 `
 
 export const CreateTitle = styled.h2`
@@ -204,6 +259,11 @@ export const CreateDrag = styled.div<{ error?: boolean }>`
   border: 2px solid ${({ theme, error }) => (error ? theme.color.red[500] : theme.color.grey[400])};
   margin-bottom: 30px;
   cursor: pointer;
+  word-wrap: break-word;
+  word-break: break-word;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    align-items: flex-start;
+  }
 `
 
 export const CreateButtonWrapper = styled.div`
@@ -279,6 +339,10 @@ export const CreateNumberInputButton = styled.button`
 export const RegisterWrapper = styled.div`
   margin: 100px auto;
   max-width: ${(props) => props.theme.siteWidth}px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    margin: 40px auto;
+    max-width: 100%;
+  }
 `
 
 export const RegisterTitle = styled.h1<{ size?: number }>`
@@ -308,6 +372,13 @@ export const RegisterBody = styled.div`
   border: 2px solid ${(props) => props.theme.color.grey[500]};
   border-radius: 16px;
   width: 500px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    padding: 0;
+    padding-left: 20px;
+    padding-right: 20px;
+    border: none;
+    width: 100%;
+  }
 `
 
 export const RegisterSpacer = styled.div`
@@ -319,22 +390,37 @@ export const UserEditWrapper = styled.div`
   max-width: ${(props) => props.theme.siteWidth}px;
   padding-top: 100px;
   padding-bottom: 100px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    width: 100%;
+    padding: 40px 20px;
+  }
 `
 
 export const UserEditBody = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    flex-direction: column-reverse;
+    justify-content: unset;
+  }
 `
 
 export const UserEditLeft = styled.div`
   flex: 1;
   width: 460px;
   margin-right: 40px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    width: 100%;
+    mrgin-right: 0;
+  }
 `
 
 export const UserEditRight = styled.div`
   width: 300px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    width: 100%;
+  }
 `
 
 export const UserEditTitle = styled.h1`
@@ -342,7 +428,11 @@ export const UserEditTitle = styled.h1`
   font-size: 32px;
   font-weight: 500;
   text-align: center;
+  text-transform: uppercase;
   margin-bottom: 30px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    text-align: left;
+  }
 `
 
 export const UserEditCardWrapper = styled.div`
@@ -382,6 +472,9 @@ export const UserEditAvatarWrapper = styled.div<{ error?: boolean }>`
     border-radius: 50%;
     object-fit: cover;
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    margin: 0 auto;
+  }
 `
 
 export const UserEditAvatarUploading = styled.div`
@@ -410,6 +503,9 @@ export const UserBanner = styled.div`
   background-color: ${(props) => props.theme.color.grey[500]};
   padding-top: 60px;
   padding-bottom: 60px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    padding: 20px;
+  }
 `
 
 export const UserBody = styled.div`
@@ -418,6 +514,10 @@ export const UserBody = styled.div`
   align-items: center;
   padding-top: 40px;
   padding-bottom: 40px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
 `
 
 export const UserInfoWrapper = styled.div`
@@ -427,17 +527,28 @@ export const UserInfoWrapper = styled.div`
   align-items: center;
   max-width: ${(props) => (props.theme.siteWidth / 3) * 2}px;
   width: 100%;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    flex-direction: column;
+    justify-content: unset;
+  }
 `
 
 export const UserInfoLeft = styled.div`
   display: flex;
   flex-direction: column;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    width: 100%;
+    margin-bottom: 20px;
+  }
 `
 
 export const UserInfoRight = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    width: 100%;
+  }
 `
 
 export const UserInfoContainer = styled.div<{ mb: number }>`
@@ -445,6 +556,9 @@ export const UserInfoContainer = styled.div<{ mb: number }>`
   flex-direction: row;
   align-items: center;
   margin-bottom: ${(props) => props.mb}px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    margin-bottom: 20px;
+  }
 `
 
 export const UserAvatar = styled.img`
@@ -455,6 +569,10 @@ export const UserAvatar = styled.img`
   pointer-events: none;
   border: 2px solid ${(props) => props.theme.color.white};
   margin-right: 20px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    width: 80px;
+    height: 80px;
+  }
 `
 
 export const UserInfo = styled.div`
@@ -467,6 +585,9 @@ export const UserSocial = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 20px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    grid-template-columns: repeat(4, 40px);
+  }
 `
 
 export const UserNick = styled.h4`
@@ -474,6 +595,10 @@ export const UserNick = styled.h4`
   font-weight: 500;
   color: ${(props) => props.theme.color.white};
   margin-bottom: 10px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
 `
 
 export const UserName = styled.h3`
@@ -481,12 +606,19 @@ export const UserName = styled.h3`
   font-weight: 500;
   color: ${(props) => props.theme.color.white};
   margin-bottom: 20px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
 `
 
 export const UserBio = styled.p`
   font-size: 16px;
   font-weight: 400;
   color: ${(props) => props.theme.color.white};
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    font-size: 10px;
+  }
 `
 
 export const UserSocialItem = styled.a`
@@ -497,6 +629,13 @@ export const UserSocialItem = styled.a`
   border: 2px solid ${(props) => props.theme.color.white};
   text-decoration: none;
   cursor: pointer;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    padding: 10px;
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
 `
 
 export const UserEditButton = styled(Link)`
@@ -513,6 +652,10 @@ export const UserEditButton = styled(Link)`
     color: ${(props) => props.theme.color.text[500]};
     background-color: ${(props) => props.theme.color.white};
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    padding: 10px;
+    font-size: 14px;
+  }
 `
 
 export const MediaSelectWrapper = styled.div`
@@ -528,4 +671,10 @@ export const UserNftWrapper = styled.div`
   flex-direction: row;
   justify-content: space-evenly;
   max-width: ${(props) => props.theme.siteWidth}px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    flex-direction: column;
+    justify-content: unset;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 `

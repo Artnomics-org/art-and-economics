@@ -77,6 +77,9 @@ const Input = styled.input<InputProps>`
   ::placeholder {
     color: ${({ theme, fgColor }) => (fgColor ? fgColor : theme.color.white)};
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    font-size: 32px;
+  }
 `
 
 export default NumericalInput

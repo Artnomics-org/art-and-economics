@@ -12,6 +12,13 @@ export const PageCard = styled.div`
   background-color: ${(props) => props.theme.color.bg};
   position: relative;
   overflow: hidden;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 0;
+  }
 `
 
 export const Wrapper = styled.div`
@@ -38,6 +45,13 @@ export const PositionCard = styled(AutoColumn)`
   margin-bottom: 80px;
   position: relative;
   overflow: hidden;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    width: 100%;
+    margin-top: 0px;
+    margin-bottom: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 `
 
 export const SmallText = styled.p`

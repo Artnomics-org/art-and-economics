@@ -44,7 +44,6 @@ const TopBar: React.FC<TopBarProps> = ({ onPresentMobileMenu }) => {
           <Nav />
           <StyledQuickActionWrapper>
             <CoinBalance />
-            <Spacer size="lg" style={{ height: '20px' }} />
             <SwapButton onClick={toggleWalletModal} />
           </StyledQuickActionWrapper>
         </StyledTopBarInner>
@@ -66,9 +65,17 @@ const StyledTopBarInner = styled.div`
   padding: 0px 40px;
   height: ${(props) => props.theme.topBarSize}px;
   max-width: ${(props) => props.theme.siteWidth}px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    flex-direction: column;
+    padding: 20px;
+  }
 `
 
-const StyledLogoWrapper = styled.div``
+const StyledLogoWrapper = styled.div`
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    display: none;
+  }
+`
 
 const StyledQuickActionWrapper = styled.div`
   align-items: center;
@@ -76,6 +83,9 @@ const StyledQuickActionWrapper = styled.div`
   justify-content: flex-end;
   align-self: flex-end;
   margin-bottom: 28px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    margin-bottom: 0;
+  }
 `
 
 export default TopBar

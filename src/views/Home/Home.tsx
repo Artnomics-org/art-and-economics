@@ -74,7 +74,7 @@ const Home: React.FC = () => {
       <SectionWrapper>
         <TripleLine color={theme.color.grey[400]} />
         <SectionIntro>
-          <Title style={{ marginBottom: '100px' }}>
+          <Title>
             The best luxury of the 21st
             <br />
             century is art
@@ -95,9 +95,7 @@ const Home: React.FC = () => {
               </IntroImgContentText>
             </IntroImgContentWrapper>
           </IntroContent>
-          <IntroContentTitle style={{ marginTop: '70px', marginBottom: '16px' }}>
-            21세기 최고의 명품은 미술품
-          </IntroContentTitle>
+          <IntroContentTitle>21세기 최고의 명품은 미술품</IntroContentTitle>
           <IntroContentText>
             미술 시장에서 가장 비싼 그림은 피카소의 &lt;알제리의 여인들&gt; 입니다. 이 작품은 무려 1억 7,955만 달러로
             한화를
@@ -114,7 +112,7 @@ const Home: React.FC = () => {
       <SectionWrapper>
         <TripleLine color={theme.color.grey[400]} />
         <SectionWhy>
-          <Title style={{ marginBottom: '110px' }}>
+          <Title>
             Why do they keep
             <br />
             the art?

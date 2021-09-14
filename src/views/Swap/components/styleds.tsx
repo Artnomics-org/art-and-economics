@@ -16,6 +16,10 @@ export const SwapWrapper = styled.div<SwapWrapperProps>`
   padding-top: 60px;
   padding-bottom: 40px;
   margin-bottom: -18px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    background-image: none;
+    border-bottom: 2px solid ${(props) => props.theme.color.grey[400]};
+  }
 `
 
 export const SwapBody = styled.div`
@@ -36,6 +40,11 @@ export const Title = styled.h1`
   text-transform: uppercase;
   margin-top: -56px;
   margin-bottom: 88px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    font-size: 24px;
+    margin-top: -20px;
+    margin-bottom: 40px;
+  }
 `
 
 export const IconArrow = styled.img`
@@ -44,12 +53,20 @@ export const IconArrow = styled.img`
   position: absolute;
   right: 30px;
   bottom: 320px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    display: none;
+  }
 `
 
 export const InputBody = styled.div`
   width: 566px;
   margin-left: auto;
   margin-right: auto;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 `
 
 export const ErrorText = styled.p<{ severity?: 0 | 1 | 2 | 3 | 4 }>`

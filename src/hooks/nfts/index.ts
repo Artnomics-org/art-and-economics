@@ -552,9 +552,12 @@ export function useMediaBids(id: number) {
 
 export function useMediaOwner(media: Media) {
   const { mediaBids } = useMediaBids(media?.id)
-  const bid = mediaBids?.find((bid) => bid.bidder === media.owner.address && bid.status === 'BidFinalized')
-
-  return { bidInfo: bid, ownerInfo: media?.owner }
+  if (mediaBids) {
+    const bid = mediaBids?.find((bid) => bid.bidder === media.owner.address && bid.status === 'BidFinalized', [])
+    return { bidInfo: bid, ownerInfo: media?.owner }
+  }
+  // @ts-ignore
+  return { bidInfo: {} as BidLog, ownerInfo: media?.owner }
 }
 
 export function useStaticMulticall() {

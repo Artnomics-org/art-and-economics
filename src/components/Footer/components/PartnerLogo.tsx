@@ -21,6 +21,9 @@ const StyledLogo = styled.img`
   &:first-child {
     margin-bottom: 10px;
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    height: 12px;
+  }
 `
 
 export default PartnerLogoComp

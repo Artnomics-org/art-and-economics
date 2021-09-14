@@ -156,6 +156,9 @@ export const Button = styled.button`
   padding: 0 16px;
   margin: 0;
   min-width: 160px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    min-width: 100px;
+  }
 `
 
 export default FullPositionCard

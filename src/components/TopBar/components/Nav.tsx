@@ -26,6 +26,10 @@ const StyledNav = styled.nav`
   align-items: center;
   display: flex;
   margin-bottom: 28px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    align-self: center;
+    margin-bottom: 0;
+  }
 `
 
 const StyledLink = styled(NavLink)`

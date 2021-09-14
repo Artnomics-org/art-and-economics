@@ -105,13 +105,19 @@ const StyledFooterWrapper = styled.div`
 `
 
 const StyledFooterInner = styled.div`
-  align-items: center;
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   margin: 0 auto;
   padding: 48px 165px;
   max-width: ${(props) => props.theme.siteWidth}px;
   box-sizing: border-box;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    flex-direction: column;
+    padding: 20px;
+    max-width: 100%;
+  }
 `
 
 const StyledFooterItem = styled.section`
@@ -119,11 +125,26 @@ const StyledFooterItem = styled.section`
   flex-direction: column;
   justify-content: space-between;
   min-height: 164px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    min-height: 100px;
+    margin-bottom: 20px;
+    &:nth-child(2) {
+      align-self: flex-start;
+    }
+    &:nth-child(3) {
+      margin-top: -120px;
+      width: calc(100% - 120px);
+      align-self: flex-end;
+    }
+  }
 `
 
 const StyledCoinLogo = styled.img`
   object-fit: contain;
   height: 164px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    height: 100px;
+  }
 `
 
 const StyledLogoLine = styled.div`
@@ -134,6 +155,9 @@ const StyledLogoLine = styled.div`
   font-size: 30px;
   line-height: 1;
   color: ${(props) => props.theme.color.white};
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    font-size: 24px;
+  }
 `
 
 const StyledLogo = styled.img`
@@ -174,6 +198,9 @@ const StyledPartners = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   width: 340px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    width: 100%;
+  }
 `
 
 export default Footer

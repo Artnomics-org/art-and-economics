@@ -28,6 +28,13 @@ const StyledBalance = styled.div`
   text-transform: uppercase;
   text-align: right;
   padding-right: 16px;
+  margin-right: 48px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    font-size: 16px;
+    border-width: 1px;
+    min-width: 100px;
+    margin-right: 24px;
+  }
 `
 
 const StyledConnectButton = styled.button`
@@ -41,6 +48,11 @@ const StyledConnectButton = styled.button`
   text-transform: uppercase;
   outline: none;
   cursor: pointer;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    font-size: 16px;
+    border-width: 1px;
+    min-width: 100px;
+  }
 `
 
 export default CoinBalance

@@ -25,14 +25,14 @@ const NFTCards: React.FC = () => {
       const nftList: NFTCardProps[] = data.map((media) => {
         return {
           id: media.id,
-          title: media.metadata.name,
-          creator: media.creator.username,
-          price: media.bidLogs[0].amount || 0,
-          currency: media.bidLogs[0].currency,
+          title: media?.metadata?.name,
+          creator: media?.creator?.username,
+          price: media?.bidLogs[0]?.amount || 0,
+          currency: media?.bidLogs[0]?.currency,
           img: {
-            low: media.tokenURI,
-            medium: media.tokenURI,
-            high: media.tokenURI,
+            low: media?.tokenURI,
+            medium: media?.tokenURI,
+            high: media?.tokenURI,
           },
         }
       })
@@ -82,6 +82,12 @@ const StyledCardWrapper = styled.div`
   width: 100%;
   position: relative;
   justify-content: space-evenly;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    flex-direction: column;
+    justify-content: unset;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 `
 
 const StyledLoading = styled.div`
