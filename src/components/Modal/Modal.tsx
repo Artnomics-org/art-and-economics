@@ -124,6 +124,7 @@ const StyledDialogContent = styled(({ minHeight, maxHeight, contentHeight, mobil
       `}
     @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
       width: 100%;
+      align-self: center;
     }
   }
 `

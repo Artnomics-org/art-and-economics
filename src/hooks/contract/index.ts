@@ -5,14 +5,16 @@ import { useActiveWeb3React } from '../wallet'
 import { getContractWithAbi } from '../../utils/ethers'
 import { MULTICALL_ABI, MULTICALL_NETWORKS } from '../../constants/multicall'
 import {
+  ARGENT_WALLET_DETECTOR_ABI,
   ENS_ABI,
   ENS_PUBLIC_RESOLVER_ABI,
   ERC20_ABI,
   ERC20_BYTES32_ABI,
+  IUniswapV2PairABI,
   IUniswapV2Router02ABI,
   WETH_ABI,
 } from '../../constants/ethers'
-import { ROUTER_ADDRESS } from '../../constants/address'
+import { ARGENT_WALLET_DETECTOR_ADDRESS, ROUTER_ADDRESS } from '../../constants/address'
 import { isZeroHex } from '../ethers'
 
 // returns null on errors
@@ -77,4 +79,13 @@ export function useWETHContract(withSignerIfPossible?: boolean): Contract | null
 export function useRouterContract(withSignerIfPossible?: boolean): Contract | null {
   const { chainId } = useActiveWeb3React()
   return useContract(chainId ? ROUTER_ADDRESS : undefined, IUniswapV2Router02ABI, withSignerIfPossible)
+}
+
+export function usePairContract(pairAddress?: string, withSignerIfPossible?: boolean): Contract | null {
+  return useContract(pairAddress, IUniswapV2PairABI, withSignerIfPossible)
+}
+
+export function useArgentWalletDetectorContract(): Contract | null {
+  const { chainId } = useActiveWeb3React()
+  return useContract(ARGENT_WALLET_DETECTOR_ADDRESS[chainId], ARGENT_WALLET_DETECTOR_ABI, false)
 }
