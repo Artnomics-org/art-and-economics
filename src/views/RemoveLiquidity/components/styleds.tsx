@@ -1,5 +1,13 @@
 import styled from 'styled-components/macro'
 
+export const Wrapper = styled.div`
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    .currency-input-max {
+      display: none;
+    }
+  }
+`
+
 export const Text = styled.p`
   margin: 0;
   font-size: 16px;
@@ -37,4 +45,14 @@ export const MaxButton = styled.button<{ width: string }>`
     border: 1px solid ${({ theme }) => theme.color.grey[600]};
     outline: none;
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    font-size: 10px;
+  }
+`
+
+export const InputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px;
+  padding-right: 20px;
 `

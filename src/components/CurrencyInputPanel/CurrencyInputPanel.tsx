@@ -91,7 +91,7 @@ const CurrencyInputPanel: React.FC<CurrencyInputPanelProps> = ({
           )}
           <CurrencySelectWrapper>
             {isMaxDisplay && (
-              <BalanceMax fgColor={fgColor} onClick={onMax}>
+              <BalanceMax className="currency-input-max" fgColor={fgColor} onClick={onMax}>
                 max
               </BalanceMax>
             )}

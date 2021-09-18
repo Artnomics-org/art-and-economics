@@ -16,4 +16,7 @@ export const ActiveText = styled.div`
   font-size: 20px;
   text-transform: uppercase;
   color: ${({ theme }) => theme.color.text[500]};
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    font-size: 16px;
+  }
 `
