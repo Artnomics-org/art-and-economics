@@ -27,6 +27,8 @@ import { WETH9__factory } from '../../constants/nfts/WETH9__factory'
 import { WETH } from '@haneko/uniswap-sdk'
 import { Media, MediaMetadata } from '../../types/Media'
 import { getScanLink } from '../../utils'
+import { BidLogWithUser, MediaLogWithUser } from '../../types/TokenLog'
+import { Ask } from '../../types/Ask'
 
 export function useAllowance(token: BaseErc20, spender: string) {
   const { account } = useActiveWeb3React()
@@ -737,4 +739,15 @@ export function useNFTScanLink(tokenId: number) {
   const { chainId } = useActiveWeb3React()
   const baseLink = getScanLink(chainId, MEDIA_ADDRESS[chainId], 'token')
   return `${baseLink}?a=${tokenId}`
+}
+
+export function useMediaLogs(tokenId: number | string) {
+  const { data: mediaLogs, error } = useSWR<Array<Ask | MediaLogWithUser | BidLogWithUser>, Error>(
+    `/media/${tokenId}/logs`,
+    backendSWRFetcher,
+  )
+  console.log('useMediaLogs:mediaLogs:', mediaLogs)
+  if (error) console.log('useMediaLogs:error:', error)
+
+  return { mediaLogs: mediaLogs || [], isError: Boolean(error), error }
 }

@@ -1,10 +1,11 @@
 import React from 'react'
 import { ArrowUpRight } from 'react-feather'
 import { RouteComponentProps } from 'react-router'
+import { BlackInternalLink } from '../../components/Link'
 import { MediaOwnershipInfo } from '../../components/MediaOwnershipInfo'
 import Page from '../../components/Page'
 import { UserLink } from '../../components/UserLink'
-import { useMediaData, useMediaOwner, useMediaToken, useNFTScanLink } from '../../hooks/nfts'
+import { useMediaData, useMediaLogs, useMediaOwner, useMediaToken, useNFTScanLink } from '../../hooks/nfts'
 import { useToken } from '../../hooks/token'
 import { getBalanceNumber } from '../../utils'
 import NFTContentCard from './components/NFTContentCard'
@@ -21,6 +22,7 @@ import {
   NFTImageView,
   NFTsWrapper,
   NFTTitle,
+  NFTViewBuyWrapper,
   StyledLoadingWrapper,
 } from './components/styleds'
 
@@ -37,7 +39,7 @@ const NFTView: React.FC<RouteComponentProps<NFTViewProps>> = ({
     backendData: null,
     metadata: null,
   })
-  const { profile, isAskExist } = useMediaToken(Number(id))
+  const { profile, isMeTheOwner, isAskExist } = useMediaToken(Number(id))
   const { bidInfo, ownerInfo } = useMediaOwner(backendData)
   const bidShare = getBalanceNumber(String(profile?.bidsShares?.creator?.value))
   const bidToken = useToken(bidInfo?.currency)
@@ -46,7 +48,7 @@ const NFTView: React.FC<RouteComponentProps<NFTViewProps>> = ({
   let bidPrice = '0.00'
   if (ownerInfo) {
     bidTitle = 'Sold For'
-    bidPrice = getBalanceNumber(String(bidInfo?.amount)).toFixed(2)
+    bidPrice = getBalanceNumber(String(bidInfo?.amount || 0)).toFixed(2)
   }
   if (isAskExist && !ownerInfo) {
     bidTitle = 'Current Bid'
@@ -54,6 +56,7 @@ const NFTView: React.FC<RouteComponentProps<NFTViewProps>> = ({
   }
   const scanLink = useNFTScanLink(backendData?.id)
   const ipfsLink = backendData?.tokenURI
+  const { mediaLogs } = useMediaLogs(backendData?.id)
 
   return (
     <Page>
@@ -79,6 +82,20 @@ const NFTView: React.FC<RouteComponentProps<NFTViewProps>> = ({
                 <NFTTitle>{backendData?.title}</NFTTitle>
                 <NFTDescription>{backendData?.description}</NFTDescription>
                 <MediaOwnershipInfo info={backendData} />
+                <NFTViewBuyWrapper>
+                  <BlackInternalLink to={`/market/${id}/bids`}>See Bids</BlackInternalLink>
+                  {!isMeTheOwner && <BlackInternalLink to={`/market/${id}/bid`}>Place a bid</BlackInternalLink>}
+                  {isMeTheOwner && (
+                    <BlackInternalLink to={`/market/${id}/ask`}>
+                      {isAskExist ? 'Edit Price' : 'Add Price'}
+                    </BlackInternalLink>
+                  )}
+                </NFTViewBuyWrapper>
+                {mediaLogs && (
+                  <NFTContentCard title="Provenance">
+                    <></>
+                  </NFTContentCard>
+                )}
               </NFTBodyLeft>
               <NFTBodyRight>
                 <NFTContentCard title={bidTitle}>

@@ -110,6 +110,10 @@ export const NFTBodyWrapper = styled.div`
 
 export const NFTBodyLeft = styled.div`
   flex: 1;
+  margin-right: 40px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    margin-right: 0px;
+  }
 `
 
 export const NFTBodyRight = styled.div`
@@ -706,5 +710,16 @@ export const BidTitle = styled.h3`
   margin-bottom: 20px;
   @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
     font-size: 24px;
+  }
+`
+
+export const NFTViewBuyWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-right: 180px;
+  margin-bottom: 20px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    margin-right: 0px;
   }
 `

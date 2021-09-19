@@ -77,14 +77,13 @@ const NFTCards: React.FC = () => {
 }
 
 const StyledCardWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-items: center;
   width: 100%;
   position: relative;
-  justify-content: space-evenly;
   @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
-    flex-direction: column;
-    justify-content: unset;
+    grid-template-columns: 1fr;
     padding-left: 20px;
     padding-right: 20px;
   }

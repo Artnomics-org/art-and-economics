@@ -4,7 +4,7 @@ import { Table, Thead, Tbody, Tr, Th, Td, useToast } from '@chakra-ui/react'
 import { AutoColumn } from '../../components/Column'
 import Page from '../../components/Page'
 import { useBidderList, useBidsDetail, useMedia, useMediaBids, useMediaToken } from '../../hooks/nfts'
-import { BidsWrapper, BidTitle, LoadingText, StyledLoadingWrapper, TableWrapper } from './components/styleds'
+import { BidsWrapper, BidTitle, TableWrapper } from './components/styleds'
 import { formatAddress, getBalanceNumber } from '../../utils'
 import { Bid } from '../../types/ContractTypes'
 import { BlackButton } from '../../components/Button'
@@ -27,7 +27,7 @@ const Bids: React.FC<RouteComponentProps<BidsProps>> = ({
   const bidderList = useBidderList(mediaBids)
   const bidsDetail = useBidsDetail(id, bidderList)
 
-  const isNoBids = !mediaBids || mediaBids.length === 0
+  // const isNoBids = !mediaBids || mediaBids.length === 0
 
   const activeBidsList = useMemo(() => {
     const list = Object.values(bidsDetail).filter((bid) => bid !== null)
@@ -125,78 +125,69 @@ const Bids: React.FC<RouteComponentProps<BidsProps>> = ({
   return (
     <Page>
       <BidsWrapper>
-        {isNoBids && (
-          <StyledLoadingWrapper>
-            <LoadingText>Loading Bids...</LoadingText>
-          </StyledLoadingWrapper>
-        )}
-        {!isNoBids && (
-          <AutoColumn gap="40px">
-            <AutoColumn>
-              <BidTitle>Current bid history</BidTitle>
-              <TableWrapper>
-                <Table variant="striped">
-                  <Thead>
-                    <Tr>
-                      <Th>Bidder</Th>
-                      <Th isNumeric>Price</Th>
-                      <Th isNumeric>Sell On Share(%)</Th>
-                      <Th>Action</Th>
-                    </Tr>
-                  </Thead>
-                  <Tbody>
-                    {activeBidsList &&
-                      activeBidsList.map((bid, index) => {
-                        return (
-                          <Tr key={`bid-active-${index}`}>
-                            <Td>{bid.bidder}</Td>
-                            <Td isNumeric>{bid.price}</Td>
-                            <Td isNumeric>{bid.sellOnShare}</Td>
-                            <Td>
-                              {isMeTheOwner && (
-                                <BlackButton onClick={() => handleAcceptBid(bid.bid)}>
-                                  Accept Bid and Transfer
-                                </BlackButton>
-                              )}
-                              {bid.bidder === account && (
-                                <BlackButton onClick={handleRemoveBid}>Remove Bid</BlackButton>
-                              )}
-                            </Td>
-                          </Tr>
-                        )
-                      })}
-                  </Tbody>
-                </Table>
-              </TableWrapper>
-            </AutoColumn>
-            <AutoColumn>
-              <BidTitle>Historical bid log</BidTitle>
-              <TableWrapper>
-                <Table variant="striped">
-                  <Thead>
-                    <Tr>
-                      <Th>Bidder</Th>
-                      <Th isNumeric>Price</Th>
-                      <Th>Status</Th>
-                      <Th>Date</Th>
-                    </Tr>
-                  </Thead>
-                  <Tbody>
-                    {historyBidData &&
-                      historyBidData.map((bid, index) => (
-                        <Tr key={`bid-history-${index}`}>
+        <AutoColumn gap="40px">
+          <AutoColumn>
+            <BidTitle>Current bid history</BidTitle>
+            <TableWrapper>
+              <Table variant="striped">
+                <Thead>
+                  <Tr>
+                    <Th>Bidder</Th>
+                    <Th isNumeric>Price</Th>
+                    <Th isNumeric>Sell On Share(%)</Th>
+                    <Th>Action</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {activeBidsList &&
+                    activeBidsList.map((bid, index) => {
+                      return (
+                        <Tr key={`bid-active-${index}`}>
                           <Td>{bid.bidder}</Td>
                           <Td isNumeric>{bid.price}</Td>
-                          <Td>{bid.status}</Td>
-                          <Td>{bid.date}</Td>
+                          <Td isNumeric>{bid.sellOnShare}</Td>
+                          <Td>
+                            {isMeTheOwner && (
+                              <BlackButton onClick={() => handleAcceptBid(bid.bid)}>
+                                Accept Bid and Transfer
+                              </BlackButton>
+                            )}
+                            {bid.bidder === account && <BlackButton onClick={handleRemoveBid}>Remove Bid</BlackButton>}
+                          </Td>
                         </Tr>
-                      ))}
-                  </Tbody>
-                </Table>
-              </TableWrapper>
-            </AutoColumn>
+                      )
+                    })}
+                </Tbody>
+              </Table>
+            </TableWrapper>
           </AutoColumn>
-        )}
+          <AutoColumn>
+            <BidTitle>Historical bid log</BidTitle>
+            <TableWrapper>
+              <Table variant="striped">
+                <Thead>
+                  <Tr>
+                    <Th>Bidder</Th>
+                    <Th isNumeric>Price</Th>
+                    <Th>Status</Th>
+                    <Th>Date</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {historyBidData &&
+                    historyBidData.map((bid, index) => (
+                      <Tr key={`bid-history-${index}`}>
+                        <Td>{bid.bidder}</Td>
+                        <Td isNumeric>{bid.price}</Td>
+                        <Td>{bid.status}</Td>
+                        <Td>{bid.date}</Td>
+                      </Tr>
+                    ))}
+                </Tbody>
+              </Table>
+            </TableWrapper>
+          </AutoColumn>
+        </AutoColumn>
       </BidsWrapper>
     </Page>
   )
