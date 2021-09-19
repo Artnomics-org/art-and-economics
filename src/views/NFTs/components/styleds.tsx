@@ -678,3 +678,33 @@ export const UserNftWrapper = styled.div`
     padding-right: 20px;
   }
 `
+
+export const BidsWrapper = styled.div`
+  width: 100%;
+  max-width: ${(props) => props.theme.siteWidth / 2}px;
+  padding-top: 60px;
+  padding-bottom: 60px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+`
+
+export const TableWrapper = styled.div`
+  width: 100%;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    overflow-x: scroll;
+  }
+`
+
+export const BidTitle = styled.h3`
+  font-size: 32px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: ${(props) => props.theme.color.text[500]};
+  margin-bottom: 20px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    font-size: 24px;
+  }
+`

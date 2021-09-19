@@ -38,6 +38,9 @@ import UserEdit from './views/NFTs/UserEdit'
 import UserView from './views/NFTs/User'
 import RedirectOldRemoveLiquidityPathStructure from './views/RemoveLiquidity/redirects'
 import { RemoveLiquidity } from './views/RemoveLiquidity'
+import Ask from './views/NFTs/Ask'
+import Bid from './views/NFTs/Bid'
+import Bids from './views/NFTs/Bids'
 
 const Web3ProviderNetwork = createWeb3ReactRoot(NetworkContextName)
 
@@ -75,6 +78,9 @@ const Routers: React.FC = () => {
           <Route exact strict path="/remove/:tokens" component={RedirectOldRemoveLiquidityPathStructure} />
           <Route exact strict path="/remove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} />
           <Route exact path="/market/:id" component={NFTView} />
+          <Route exact path="/market/:id/bids" component={Bids} />
+          <Route exact path="/market/:id/bid" component={Bid} />
+          <Route exact path="/market/:id/ask" component={Ask} />
           <Route exact path="/user/:name" component={UserView} />
           <Route component={RedirectPathToHome} />
         </Switch>

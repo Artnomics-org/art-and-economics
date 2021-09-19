@@ -83,7 +83,7 @@ const NFTView: React.FC<RouteComponentProps<NFTViewProps>> = ({
               <NFTBodyRight>
                 <NFTContentCard title={bidTitle}>
                   {isAskExist && !ownerInfo && (
-                    <NFTLabelInfo title="Price">
+                    <NFTLabelInfo title="Current Price">
                       {bidPrice}
                       {bidToken && ' ' + askToken.symbol}
                     </NFTLabelInfo>

@@ -32,7 +32,7 @@ import { uploadFileToIpfs, UploadFileToIpfsParams } from '../../backend/storage'
 import { MediaData } from '../../types/Media'
 import { useActiveWeb3React } from '../../hooks/wallet'
 import { mintMediaToken } from '../../utils/nft'
-import { Signer, ContractTransaction } from 'ethers'
+import { Signer } from 'ethers'
 import { ChainId } from '@haneko/uniswap-sdk'
 import { ThemeContext } from 'styled-components/macro'
 
@@ -235,7 +235,7 @@ const Create: React.FC = () => {
                 position: 'top-right',
                 isClosable: true,
               })
-              setTimeout(() => router.push('/'), 3500)
+              setTimeout(() => router.push('/market'), 3500)
             }
           }
         }

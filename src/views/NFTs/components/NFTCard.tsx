@@ -20,7 +20,7 @@ export interface NFTCardProps {
 const NFTCard: React.FC<NFTCardProps> = ({ img, title, creator, price, currency, onClick }) => {
   const token = useToken(currency)
   const _buy = price ? 'Place Bid' : 'Place Offer'
-  const _price = price ? getBalanceNumber(String(price)).toFixed(2) : 'No Price'
+  const _price = price ? getBalanceNumber(String(price), token?.decimals || 18).toFixed(2) : 'No Price'
   const _currency = token ? token.symbol : ''
   const handleCardClick = useCallback(() => {
     if (onClick) onClick()

@@ -2,7 +2,7 @@ import { useBoolean } from 'ahooks'
 import { ethers, BigNumber, BigNumberish, BytesLike, utils } from 'ethers'
 import { MaxUint256 } from '@ethersproject/constants'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import useSWR from 'swr'
+import useSWR, { mutate } from 'swr'
 import { BaseErc20 } from '../../constants/nfts/BaseErc20'
 import { MEDIA_ADDRESS, ZERO_ADDRESS } from '../../constants/address'
 import { useActiveWeb3React } from '../wallet'
@@ -516,9 +516,12 @@ export function useMediaToken(id: BigNumberish) {
   ])
 
   useEffect(() => {
-    if (id) {
-      getDetailOf()
-    }
+    if (!id) return
+    getDetailOf()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
     const refreshInterval = setInterval(getDetailOf, 1000 * 10)
     return () => clearInterval(refreshInterval)
   }, [id, getDetailOf])
@@ -541,13 +544,37 @@ export function useMediaToken(id: BigNumberish) {
   return { isOwnerOrApproved, isMeTheOwner, profile, removeAsk, isAskExist }
 }
 
-export function useMediaBids(id: number) {
+export function useMediaBids(id: number | string) {
   const { data: mediaBids, error } = useSWR<BidLog[], Error>(`/media/${id}/bids`, backendSWRFetcher)
+
+  const reloadBids = useCallback(() => mutate(`/media/${id}/bids`), [id])
 
   console.log('useMediaBids:mediaBids:', mediaBids)
   if (error) console.log('useMediaBids:error:', error)
 
-  return { mediaBids, isError: Boolean(error), error }
+  return { mediaBids: mediaBids || [], isError: Boolean(error), error, reloadBids }
+}
+
+export function useBidderList(bids: BidLog[]) {
+  if (!bids || bids.length === 0) return []
+  const bidToBidders = bids.map((b) => b.bidder)
+  const bidderList = bidToBidders.filter((addr, idx) => bidToBidders.indexOf(addr) === idx)
+  console.log('useBidderList:bids:', bids, 'bidderList:', bidderList)
+  return bidderList
+}
+
+export function useBidsDetail(id: number | string, bidderList: string[]) {
+  const [activeList, setActiveList] = useState<Record<string, Bid>>({})
+  const getList = useGetBidFor(String(id), bidderList)
+  const fetchList = useCallback(async () => {
+    const list = await getList
+    setActiveList(list)
+  }, [getList])
+  useEffect(() => {
+    fetchList()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  return activeList || {}
 }
 
 export function useMediaOwner(media: Media) {
