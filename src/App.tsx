@@ -5,10 +5,6 @@ import { ChakraProvider } from '@chakra-ui/react'
 import { ThemeProvider } from 'styled-components/macro'
 import { createWeb3ReactRoot, Web3ReactProvider } from '@web3-react/core'
 import { Provider as ReduxProvider } from 'react-redux'
-import FarmsProvider from './contexts/Farms'
-import TransactionProvider from './contexts/Transactions'
-import NFTsProvider from './contexts/NFTs'
-import AcceleratorsProvider from './contexts/Accelerators'
 
 import { getLibrary } from './utils/ethers'
 import { NetworkContextName } from './constants'
@@ -106,15 +102,7 @@ const Providers: React.FC = ({ children }) => {
       <ThemeProvider theme={theme}>
         <Web3ReactProvider getLibrary={getLibrary}>
           <Web3ProviderNetwork getLibrary={getLibrary}>
-            <ReduxProvider store={store}>
-              <TransactionProvider>
-                <FarmsProvider>
-                  <NFTsProvider>
-                    <AcceleratorsProvider>{children}</AcceleratorsProvider>
-                  </NFTsProvider>
-                </FarmsProvider>
-              </TransactionProvider>
-            </ReduxProvider>
+            <ReduxProvider store={store}>{children}</ReduxProvider>
           </Web3ProviderNetwork>
         </Web3ReactProvider>
       </ThemeProvider>
