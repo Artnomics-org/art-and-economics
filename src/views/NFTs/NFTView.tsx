@@ -51,12 +51,12 @@ const NFTView: React.FC<RouteComponentProps<NFTViewProps>> = ({
   const askToken = useToken(profile?.currentAsk?.currency)
   let bidTitle = 'Reserve Price'
   let bidPrice = '0.00'
-  if (ownerInfo) {
+  if (!isAskExist && ownerInfo) {
     bidTitle = 'Sold For'
     bidPrice = getBalanceNumber(String(bidInfo?.amount || 0), bidToken?.decimals || 18).toFixed(2)
   }
-  if (isAskExist && !ownerInfo) {
-    bidTitle = 'Current Bid'
+  if (isAskExist) {
+    bidTitle = 'Current Ask'
     bidPrice = getBalanceNumber(String(profile?.currentAsk?.amount), askToken?.decimals || 18).toFixed(2)
   }
   const scanLink = useNFTScanLink(backendData?.id)
@@ -121,17 +121,17 @@ const NFTView: React.FC<RouteComponentProps<NFTViewProps>> = ({
               </NFTBodyLeft>
               <NFTBodyRight>
                 <NFTContentCard title={bidTitle}>
-                  {isAskExist && !ownerInfo && (
-                    <NFTLabelInfo title="Current Price">
+                  {isAskExist && (
+                    <NFTLabelInfo title="Price">
                       {bidPrice}
-                      {bidToken && ' ' + askToken.symbol}
+                      {askToken && ` ${askToken.symbol}`}
                     </NFTLabelInfo>
                   )}
-                  {ownerInfo && (
+                  {!isAskExist && ownerInfo && (
                     <>
                       <NFTLabelInfo title="Price">
                         {bidPrice}
-                        {bidToken && ' ' + bidToken.symbol}
+                        {bidToken && ` ${bidToken.symbol}`}
                       </NFTLabelInfo>
                       <NFTLabelInfo title="Bidder">
                         <UserLink label="" {...ownerInfo} />
