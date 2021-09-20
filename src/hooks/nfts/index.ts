@@ -373,7 +373,7 @@ export function useMediaList(page = 1, limit = 6, sort = SortBy.DESC) {
   return { mediaList, isError: Boolean(error), isLoading: !Boolean(mediaList), error }
 }
 
-export function useMediaData(post?: { id: number; backendData: Media; metadata: MediaMetadata }) {
+export function useMediaData(post?: { id: number; backendData?: Media; metadata?: MediaMetadata }) {
   const { data: backendData, error: backendError } = useSWR<Media>(
     post ? `/media/${post.id}` : null,
     backendSWRFetcher,
@@ -684,6 +684,11 @@ export function useMyBid(tokenId: BigNumberish) {
     if (account && tokenId) {
       getBidsDetail()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [account, tokenId])
+
+  useEffect(() => {
+    if (!account || !tokenId) return
     const refreshInterval = setInterval(getBidsDetail, 1000 * 10)
     return () => clearInterval(refreshInterval)
   }, [tokenId, account, getBidsDetail])

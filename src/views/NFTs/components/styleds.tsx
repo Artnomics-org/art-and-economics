@@ -737,3 +737,46 @@ export const NFTViewBuyWrapper = styled.div`
     margin-right: 0px;
   }
 `
+
+export const BidMeWarningWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
+  padding-top: 60px;
+  padding-bottom: 60px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+`
+
+export const BidMeWarningButtons = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`
+
+export const BidResaleText = styled.p`
+  font-size: 14px;
+  font-weight: 400;
+  color: ${(props) => props.theme.color.grey[500]};
+  margin-bottom: 20px;
+`
+
+export const BidSpacer = styled.div`
+  width: 20px;
+  height: 20px;
+`
+
+export const BidButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-bottom: 20px;
+  button {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+`

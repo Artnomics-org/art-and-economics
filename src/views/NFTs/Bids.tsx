@@ -1,6 +1,6 @@
-import React, { useMemo, useCallback } from 'react'
+import React, { useMemo, useCallback, useState, useContext } from 'react'
 import { RouteComponentProps } from 'react-router'
-import { Table, Thead, Tbody, Tr, Th, Td, useToast } from '@chakra-ui/react'
+import { Table, Thead, Tbody, Tr, Th, Td, useToast, Spinner } from '@chakra-ui/react'
 import { AutoColumn } from '../../components/Column'
 import Page from '../../components/Page'
 import { useBidderList, useBidsDetail, useMedia, useMediaBids, useMediaToken } from '../../hooks/nfts'
@@ -9,6 +9,7 @@ import { formatAddress, getBalanceNumber } from '../../utils'
 import { Bid } from '../../types/ContractTypes'
 import { BlackButton } from '../../components/Button'
 import { useActiveWeb3React } from '../../hooks/wallet'
+import { ThemeContext } from 'styled-components/macro'
 
 type BidsProps = {
   id: string
@@ -20,6 +21,7 @@ const Bids: React.FC<RouteComponentProps<BidsProps>> = ({
   },
 }) => {
   const toast = useToast()
+  const theme = useContext(ThemeContext)
   const { account } = useActiveWeb3React()
   const media = useMedia()
   const { isMeTheOwner } = useMediaToken(id)
@@ -27,7 +29,7 @@ const Bids: React.FC<RouteComponentProps<BidsProps>> = ({
   const bidderList = useBidderList(mediaBids)
   const bidsDetail = useBidsDetail(id, bidderList)
 
-  // const isNoBids = !mediaBids || mediaBids.length === 0
+  const [isProcessing, setIsProcessing] = useState(false)
 
   const activeBidsList = useMemo(() => {
     const list = Object.values(bidsDetail).filter((bid) => bid !== null)
@@ -53,6 +55,7 @@ const Bids: React.FC<RouteComponentProps<BidsProps>> = ({
   const handleAcceptBid = useCallback(
     async (bid: Bid) => {
       try {
+        setIsProcessing(true)
         const tx = await media.acceptBid(id, {
           ...bid,
           sellOnShare: bid.sellOnShare,
@@ -75,6 +78,7 @@ const Bids: React.FC<RouteComponentProps<BidsProps>> = ({
           position: 'top-right',
           isClosable: true,
         })
+        setIsProcessing(false)
       } catch (error) {
         toast({
           title: 'Accept bid error',
@@ -84,6 +88,8 @@ const Bids: React.FC<RouteComponentProps<BidsProps>> = ({
           position: 'top-right',
           isClosable: true,
         })
+      } finally {
+        setIsProcessing(false)
       }
     },
     [id, media, reloadBids, toast],
@@ -91,6 +97,7 @@ const Bids: React.FC<RouteComponentProps<BidsProps>> = ({
 
   const handleRemoveBid = useCallback(async () => {
     try {
+      setIsProcessing(true)
       const tx = await media.removeBid(id)
       toast({
         title: 'Removing bid...',
@@ -110,6 +117,7 @@ const Bids: React.FC<RouteComponentProps<BidsProps>> = ({
         position: 'top-right',
         isClosable: true,
       })
+      setIsProcessing(false)
     } catch (error) {
       toast({
         title: 'Remove bid error',
@@ -119,6 +127,8 @@ const Bids: React.FC<RouteComponentProps<BidsProps>> = ({
         position: 'top-right',
         isClosable: true,
       })
+    } finally {
+      setIsProcessing(false)
     }
   }, [id, media, reloadBids, toast])
 
@@ -141,6 +151,7 @@ const Bids: React.FC<RouteComponentProps<BidsProps>> = ({
                 <Tbody>
                   {activeBidsList &&
                     activeBidsList.map((bid, index) => {
+                      console.log(bid)
                       return (
                         <Tr key={`bid-active-${index}`}>
                           <Td>{bid.bidder}</Td>
@@ -148,11 +159,17 @@ const Bids: React.FC<RouteComponentProps<BidsProps>> = ({
                           <Td isNumeric>{bid.sellOnShare}</Td>
                           <Td>
                             {isMeTheOwner && (
-                              <BlackButton onClick={() => handleAcceptBid(bid.bid)}>
+                              <BlackButton disabled={isProcessing} onClick={() => handleAcceptBid(bid.bid)}>
+                                {isProcessing && <Spinner size="sm" color={theme.color.white} marginRight={4} />}
                                 Accept Bid and Transfer
                               </BlackButton>
                             )}
-                            {bid.bidder === account && <BlackButton onClick={handleRemoveBid}>Remove Bid</BlackButton>}
+                            {bid.bid.bidder === account && (
+                              <BlackButton disabled={isProcessing} onClick={handleRemoveBid}>
+                                {isProcessing && <Spinner size="sm" color={theme.color.white} marginRight={4} />}
+                                Remove Bid
+                              </BlackButton>
+                            )}
                           </Td>
                         </Tr>
                       )

@@ -18,6 +18,21 @@ export const BlackInternalLink = styled(InternalLink)`
   align-self: center;
   color: ${(props) => props.theme.color.white};
   background-color: ${(props) => props.theme.color.grey[600]};
+  border: 2px solid ${(props) => props.theme.color.grey[600]};
   text-decoration: none;
   padding: 10px 16px;
+  &:hover {
+    background-color: ${(props) => props.theme.color.black};
+    border: 2px solid ${(props) => props.theme.color.black};
+  }
+  &:active {
+    background-color: ${(props) => props.theme.color.grey[600]};
+    border: 2px solid ${(props) => props.theme.color.grey[600]};
+  }
+  &:disabled {
+    background-color: ${(props) => props.theme.color.grey[500]};
+    border: 2px solid ${(props) => props.theme.color.grey[500]};
+    cursor: not-allowed;
+    pointer-events: none;
+  }
 `

@@ -103,7 +103,7 @@ export const BlackButton = styled.button`
   justify-content: space-between;
   font-size: 16px;
   font-weight: 500;
-  padding: 14px 20px;
+  padding: 10px 16px;
   text-align: center;
   cursor: pointer;
   white-space: nowrap;

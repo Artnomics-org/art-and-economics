@@ -108,14 +108,13 @@ const NFTView: React.FC<RouteComponentProps<NFTViewProps>> = ({
                         secondary: theme.color.grey[500],
                       }}
                     >
-                      {mediaLogs &&
-                        mediaLogs.map((log, index) => (
-                          <NFTProvenanceItem
-                            item={log}
-                            creator={backendData?.creator?.username}
-                            key={`nft-provenance-item-${index}`}
-                          />
-                        ))}
+                      {mediaLogs.map((log, index) => (
+                        <NFTProvenanceItem
+                          item={log}
+                          creator={backendData?.creator?.username}
+                          key={`nft-provenance-item-${index}`}
+                        />
+                      ))}
                     </Chrono>
                   </NFTContentCard>
                 )}
