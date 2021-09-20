@@ -127,7 +127,7 @@ const Bids: React.FC<RouteComponentProps<BidsProps>> = ({
       <BidsWrapper>
         <AutoColumn gap="40px">
           <AutoColumn>
-            <BidTitle>Current bid history</BidTitle>
+            <BidTitle>Current bid</BidTitle>
             <TableWrapper>
               <Table variant="striped">
                 <Thead>
@@ -162,7 +162,7 @@ const Bids: React.FC<RouteComponentProps<BidsProps>> = ({
             </TableWrapper>
           </AutoColumn>
           <AutoColumn>
-            <BidTitle>Historical bid log</BidTitle>
+            <BidTitle>Historical bid</BidTitle>
             <TableWrapper>
               <Table variant="striped">
                 <Thead>

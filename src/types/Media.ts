@@ -1,5 +1,6 @@
 import { User } from './User'
 import { Tag } from './Tag'
+import { Gallery } from './Gallery'
 
 export interface Media {
   id: number

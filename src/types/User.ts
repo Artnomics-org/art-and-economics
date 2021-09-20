@@ -4,6 +4,7 @@ import { Gallery } from './Gallery'
 import { GalleryJoinRequest } from './GalleryJoinRequest'
 import { Media } from './Media'
 import { About } from './About'
+import { BigNumberish } from 'ethers'
 
 export enum UserRole {
   Collector = 'COLLECTOR',

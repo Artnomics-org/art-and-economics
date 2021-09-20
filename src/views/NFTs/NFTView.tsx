@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { ArrowUpRight } from 'react-feather'
 import { RouteComponentProps } from 'react-router'
+import { Chrono } from 'react-chrono'
 import { BlackInternalLink } from '../../components/Link'
 import { MediaOwnershipInfo } from '../../components/MediaOwnershipInfo'
 import Page from '../../components/Page'
@@ -25,6 +26,8 @@ import {
   NFTViewBuyWrapper,
   StyledLoadingWrapper,
 } from './components/styleds'
+import { ThemeContext } from 'styled-components/macro'
+import NFTProvenanceItem from './components/NFTProvenanceItem'
 
 type NFTViewProps = {
   id: string
@@ -34,6 +37,7 @@ const NFTView: React.FC<RouteComponentProps<NFTViewProps>> = ({
     params: { id },
   },
 }) => {
+  const theme = useContext(ThemeContext)
   const { backendData, metadata, isLoading, isError } = useMediaData({
     id: Number(id),
     backendData: null,
@@ -41,6 +45,7 @@ const NFTView: React.FC<RouteComponentProps<NFTViewProps>> = ({
   })
   const { profile, isMeTheOwner, isAskExist } = useMediaToken(Number(id))
   const { bidInfo, ownerInfo } = useMediaOwner(backendData)
+  const { mediaLogs } = useMediaLogs(id)
   const bidShare = getBalanceNumber(String(profile?.bidsShares?.creator?.value))
   const bidToken = useToken(bidInfo?.currency)
   const askToken = useToken(profile?.currentAsk?.currency)
@@ -48,15 +53,14 @@ const NFTView: React.FC<RouteComponentProps<NFTViewProps>> = ({
   let bidPrice = '0.00'
   if (ownerInfo) {
     bidTitle = 'Sold For'
-    bidPrice = getBalanceNumber(String(bidInfo?.amount || 0)).toFixed(2)
+    bidPrice = getBalanceNumber(String(bidInfo?.amount || 0), bidToken?.decimals || 18).toFixed(2)
   }
   if (isAskExist && !ownerInfo) {
     bidTitle = 'Current Bid'
-    bidPrice = getBalanceNumber(String(profile?.currentAsk?.amount)).toFixed(2)
+    bidPrice = getBalanceNumber(String(profile?.currentAsk?.amount), askToken?.decimals || 18).toFixed(2)
   }
   const scanLink = useNFTScanLink(backendData?.id)
   const ipfsLink = backendData?.tokenURI
-  const { mediaLogs } = useMediaLogs(backendData?.id)
 
   return (
     <Page>
@@ -93,7 +97,26 @@ const NFTView: React.FC<RouteComponentProps<NFTViewProps>> = ({
                 </NFTViewBuyWrapper>
                 {mediaLogs && (
                   <NFTContentCard title="Provenance">
-                    <></>
+                    <Chrono
+                      mode="VERTICAL"
+                      borderLessCards={true}
+                      hideControls={true}
+                      cardHeight={40}
+                      theme={{
+                        cardBgColor: theme.color.bg,
+                        primary: theme.color.grey[500],
+                        secondary: theme.color.grey[500],
+                      }}
+                    >
+                      {mediaLogs &&
+                        mediaLogs.map((log, index) => (
+                          <NFTProvenanceItem
+                            item={log}
+                            creator={backendData?.creator?.username}
+                            key={`nft-provenance-item-${index}`}
+                          />
+                        ))}
+                    </Chrono>
                   </NFTContentCard>
                 )}
               </NFTBodyLeft>

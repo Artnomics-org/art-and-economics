@@ -111,6 +111,20 @@ export const NFTBodyWrapper = styled.div`
 export const NFTBodyLeft = styled.div`
   flex: 1;
   margin-right: 40px;
+  #timeline-main-wrapper {
+    padding-left: 0;
+    padding-right: 0;
+    & > div {
+      padding: 0;
+    }
+    .timeline-card-content {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+    .timeline-vertical-circle > div {
+      transform: scale(1.1);
+    }
+  }
   @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
     margin-right: 0px;
   }

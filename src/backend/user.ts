@@ -1,7 +1,7 @@
 import { default as BACKEND_CLIENT } from './client'
 import { PaginationResult } from '../types/PaginationResult'
 import { User } from '../types/User'
-import { BidLog } from '../types/Bid.d'
+import { BidLog } from '../types/Bid'
 import { GeneralResponse } from '../types/Backend'
 import { setCookie } from '../utils/cookie'
 import { AxiosResponse } from 'axios'

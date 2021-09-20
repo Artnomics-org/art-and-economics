@@ -1,9 +1,10 @@
 import { Currency, CurrencyAmount, ETHER, JSBI, Token, TokenAmount } from '@haneko/uniswap-sdk'
-import { useMemo } from 'react'
+import { useMemo, useEffect, useState, useCallback } from 'react'
 import { BigNumber } from '@ethersproject/bignumber'
+import { Web3Provider } from '@ethersproject/providers'
 import { parseBytes32String } from '@ethersproject/strings'
 import { ERC20_INTERFACE } from '../../constants/ethers'
-import { isAddress } from '../../utils/ethers'
+import { getERC20Contract, isAddress } from '../../utils/ethers'
 import { useBytes32TokenContract, useMulticallContract, useTokenContract } from '../contract'
 import {
   NEVER_RELOAD,
@@ -218,4 +219,26 @@ export function useCurrency(currencyId: string | undefined): Currency | null | u
   const isETH = currencyId?.toUpperCase() === 'BNB'
   const token = useToken(isETH ? undefined : currencyId)
   return isETH ? ETHER : token
+}
+
+export function useDecimals(tokenAddress: string) {
+  const [decimals, setDecimals] = useState('18')
+  const { account, library: ethereum } = useActiveWeb3React()
+
+  const contract = useMemo(() => {
+    return getERC20Contract(tokenAddress, ethereum as Web3Provider)
+  }, [ethereum, tokenAddress])
+
+  const fetchTotalSupply = useCallback(async () => {
+    const totalSupply = await contract.methods.decimals().call()
+    setDecimals(totalSupply)
+  }, [contract])
+
+  useEffect(() => {
+    if (account && contract) {
+      fetchTotalSupply()
+    }
+  }, [account, fetchTotalSupply, contract, setDecimals])
+
+  return decimals
 }

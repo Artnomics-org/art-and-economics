@@ -1,6 +1,6 @@
 import { BigNumberish } from '@ethersproject/bignumber'
 
-type MintAndTransferParameters = {
+export type MintAndTransferParameters = {
   creator: string
   data: {
     tokenURI: string
