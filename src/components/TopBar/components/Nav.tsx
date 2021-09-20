@@ -11,11 +11,11 @@ const Nav: React.FC = () => {
       <StyledLink exact activeClassName="active" to="/pool">
         Pool
       </StyledLink>
-      {/* <StyledLink exact activeClassName="active" to="/farm">
-        Farm
-      </StyledLink> */}
       <StyledLink exact activeClassName="active" to="/market">
         NFT Market
+      </StyledLink>
+      <StyledLink exact activeClassName="active" to="/market/new">
+        Create NFT
       </StyledLink>
     </StyledNav>
   )
@@ -25,10 +25,9 @@ const StyledNav = styled.nav`
   align-self: flex-end;
   align-items: center;
   display: flex;
-  margin-bottom: 28px;
   @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
-    align-self: center;
-    margin-bottom: 0;
+    flex-direction: column;
+    align-items: flex-start;
   }
 `
 
@@ -47,6 +46,8 @@ const StyledLink = styled(NavLink)`
   @media (max-width: 400px) {
     padding-left: ${(props) => props.theme.spacing[2]}px;
     padding-right: ${(props) => props.theme.spacing[2]}px;
+    padding-top: ${(props) => props.theme.spacing[3]}px;
+    padding-bottom: ${(props) => props.theme.spacing[3]}px;
   }
 `
 

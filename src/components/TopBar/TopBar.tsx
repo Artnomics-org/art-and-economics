@@ -1,5 +1,6 @@
-import React, { useMemo } from 'react'
-import styled from 'styled-components/macro'
+import React, { useMemo, useState, useContext } from 'react'
+import styled, { ThemeContext } from 'styled-components/macro'
+import { Drawer, DrawerBody, DrawerHeader, DrawerOverlay, DrawerContent } from '@chakra-ui/react'
 import Container from '../Container'
 import Logo from '../Logo'
 import Nav from './components/Nav'
@@ -11,6 +12,7 @@ import { useENSName } from '../../hooks/ethers'
 import { isTransactionRecent, useAllTransactions } from '../../hooks/transaction'
 import { TransactionDetails } from '../../state/transactions/reducer'
 import { useWalletModalToggle } from '../../hooks/application'
+import { Menu } from 'react-feather'
 
 // we want the latest one to come first, so return negative if a is after b
 function newTransactionsFirst(a: TransactionDetails, b: TransactionDetails) {
@@ -32,6 +34,10 @@ const TopBar: React.FC<TopBarProps> = ({ onPresentMobileMenu }) => {
   const pending = sortedRecentTransactions.filter((tx) => !tx.receipt).map((tx) => tx.hash)
   const confirmed = sortedRecentTransactions.filter((tx) => tx.receipt).map((tx) => tx.hash)
   const toggleWalletModal = useWalletModalToggle()
+  // mobile nav
+  const theme = useContext(ThemeContext)
+  const [isMobileNavOpen, setMobileNavOpen] = useState(false)
+  const toggleMobileNav = () => setMobileNavOpen(!isMobileNavOpen)
 
   return (
     <StyledTopBar>
@@ -40,7 +46,12 @@ const TopBar: React.FC<TopBarProps> = ({ onPresentMobileMenu }) => {
           <StyledLogoWrapper>
             <Logo />
           </StyledLogoWrapper>
-          <Nav />
+          <StyledNavWrapper>
+            <Nav />
+          </StyledNavWrapper>
+          <StyledMobileNavButton onClick={toggleMobileNav}>
+            <Menu size={16} color={theme.color.grey[400]} />
+          </StyledMobileNavButton>
           <StyledQuickActionWrapper>
             <CoinBalance />
             <SwapButton onClick={toggleWalletModal} />
@@ -48,6 +59,19 @@ const TopBar: React.FC<TopBarProps> = ({ onPresentMobileMenu }) => {
         </StyledTopBarInner>
       </Container>
       <WalletModal ENSName={ENSName ?? undefined} pendingTransactions={pending} confirmedTransactions={confirmed} />
+      <Drawer placement="left" isOpen={isMobileNavOpen} onClose={toggleMobileNav}>
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerHeader>
+            <StyledDrawerButton onClick={toggleMobileNav}>
+              <Menu size={16} color={theme.color.grey[400]} />
+            </StyledDrawerButton>
+          </DrawerHeader>
+          <DrawerBody>
+            <Nav />
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
     </StyledTopBar>
   )
 }
@@ -64,15 +88,43 @@ const StyledTopBarInner = styled.div`
   padding: 0px 40px;
   height: ${(props) => props.theme.topBarSize}px;
   max-width: ${(props) => props.theme.siteWidth}px;
+  position: relative;
   @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
-    flex-direction: column;
     padding: 20px;
+    height: auto;
   }
 `
 
 const StyledLogoWrapper = styled.div`
   @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
     display: none;
+  }
+`
+
+const StyledNavWrapper = styled.div`
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    display: none;
+  }
+`
+
+const StyledMobileNavButton = styled.button`
+  border: 2px solid ${(props) => props.theme.color.grey[400]};
+  padding: 4px;
+  outline: none;
+  display: none;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    display: flex;
+  }
+`
+
+const StyledDrawerButton = styled.button`
+  border: 2px solid ${(props) => props.theme.color.grey[400]};
+  padding: 4px;
+  margin: 4px -4px;
+  outline: none;
+  display: none;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    display: flex;
   }
 `
 
