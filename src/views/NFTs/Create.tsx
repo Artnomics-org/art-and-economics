@@ -35,6 +35,7 @@ import { mintMediaToken } from '../../utils/nft'
 import { Signer } from 'ethers'
 import { ChainId } from '@haneko/uniswap-sdk'
 import { ThemeContext } from 'styled-components/macro'
+import { UserRole } from '../../types/User'
 
 type FileWithPreview = {
   preview: string
@@ -62,6 +63,7 @@ const Create: React.FC = () => {
   const signer = library?.getSigner(account)
   const { isRegistered, registeredLoading, userDataByWallet } = useLogin()
   const needReg = !isRegistered && !registeredLoading
+  const isArtist = userDataByWallet.role === UserRole.Artist || userDataByWallet.role === UserRole.SuperAdmin
   const [nftPreview, setNftPreview] = useState<NFTCardProps>(InitCardProps)
   const router = useHistory()
   const toast = useToast()
@@ -327,6 +329,22 @@ const Create: React.FC = () => {
     [imageFiles],
   )
 
+  if (!isArtist) {
+    return (
+      <Page>
+        <CreateWrapper>
+          <CreateBody>
+            <StyledLoadingWrapper>
+              <LoadingTitle error>Sorry</LoadingTitle>
+              <LoadingText>Only artist can create NFT</LoadingText>
+              <BlackInternalLink to="/market">Go To Market</BlackInternalLink>
+            </StyledLoadingWrapper>
+          </CreateBody>
+        </CreateWrapper>
+      </Page>
+    )
+  }
+
   return (
     <Page>
       <CreateWrapper>
@@ -334,7 +352,7 @@ const Create: React.FC = () => {
           {needReg && (
             <StyledLoadingWrapper>
               <LoadingTitle error>Sorry</LoadingTitle>
-              <LoadingText>You need to register to create NFTs</LoadingText>
+              <LoadingText>You need to register to create NFT</LoadingText>
               <BlackInternalLink to="/register">Go To Register</BlackInternalLink>
             </StyledLoadingWrapper>
           )}
