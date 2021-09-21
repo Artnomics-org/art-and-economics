@@ -329,22 +329,6 @@ const Create: React.FC = () => {
     [imageFiles],
   )
 
-  if (!isArtist) {
-    return (
-      <Page>
-        <CreateWrapper>
-          <CreateBody>
-            <StyledLoadingWrapper>
-              <LoadingTitle error>Sorry</LoadingTitle>
-              <LoadingText>Only artist can create NFT</LoadingText>
-              <BlackInternalLink to="/market">Go To Market</BlackInternalLink>
-            </StyledLoadingWrapper>
-          </CreateBody>
-        </CreateWrapper>
-      </Page>
-    )
-  }
-
   return (
     <Page>
       <CreateWrapper>
@@ -354,6 +338,13 @@ const Create: React.FC = () => {
               <LoadingTitle error>Sorry</LoadingTitle>
               <LoadingText>You need to register to create NFT</LoadingText>
               <BlackInternalLink to="/register">Go To Register</BlackInternalLink>
+            </StyledLoadingWrapper>
+          )}
+          {!needReg && !isArtist && (
+            <StyledLoadingWrapper>
+              <LoadingTitle error>Sorry</LoadingTitle>
+              <LoadingText>Only artist can create NFT</LoadingText>
+              <BlackInternalLink to="/market">Go To Market</BlackInternalLink>
             </StyledLoadingWrapper>
           )}
           {!needReg && (
