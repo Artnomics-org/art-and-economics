@@ -8,7 +8,7 @@ import { BlackInternalLink } from '../../components/Link'
 import Page from '../../components/Page'
 import { ZERO_ADDRESS } from '../../constants/address'
 import { useAllTokens } from '../../hooks/lists'
-import { useMedia, useMarket, useMediaToken, useMyBid, useMediaData } from '../../hooks/nfts'
+import { useMedia, useMarket, useMediaToken, useMyBid, useMediaData, useLogin } from '../../hooks/nfts'
 import { useToken, useTokenBalance } from '../../hooks/token'
 import { getBalanceNumber } from '../../utils'
 import NFTContentCard from './components/NFTContentCard'
@@ -48,6 +48,8 @@ const Bid: React.FC<RouteComponentProps<BidProps>> = ({
   const theme = useContext(ThemeContext)
   const toast = useToast()
   const { account } = useActiveWeb3React()
+  const { isRegistered, registeredLoading } = useLogin()
+  const needReg = !isRegistered && !registeredLoading
   const mediaContract = useMedia()
   const marketContract = useMarket()
   const { profile, isMeTheOwner, isAskExist } = useMediaToken(id)
@@ -199,6 +201,21 @@ const Bid: React.FC<RouteComponentProps<BidProps>> = ({
 
   if (isError) {
     router.replace(`/market/${id}`)
+  }
+
+  if (needReg) {
+    return (
+      <Page>
+        <BidMeWarningWrapper>
+          <LoadingTitle error>Sorry, but...</LoadingTitle>
+          <LoadingText>You need to register to make bid.</LoadingText>
+          <BidMeWarningButtons>
+            <BlackButton onClick={handleGoBack}>Go Back</BlackButton>
+            <BlackInternalLink to="/register">Go To Register</BlackInternalLink>
+          </BidMeWarningButtons>
+        </BidMeWarningWrapper>
+      </Page>
+    )
   }
 
   return (

@@ -7,7 +7,7 @@ import { BlackButton } from '../../components/Button'
 import { BlackInternalLink } from '../../components/Link'
 import Page from '../../components/Page'
 import { useAllTokens } from '../../hooks/lists'
-import { useMedia, useMediaToken, useMediaData } from '../../hooks/nfts'
+import { useMedia, useMediaToken, useMediaData, useLogin } from '../../hooks/nfts'
 import { useToken, useTokenBalance } from '../../hooks/token'
 import { getBalanceNumber } from '../../utils'
 import NFTContentCard from './components/NFTContentCard'
@@ -44,6 +44,8 @@ const Ask: React.FC<RouteComponentProps<AskProps>> = ({
   const theme = useContext(ThemeContext)
   const toast = useToast()
   const { account } = useActiveWeb3React()
+  const { isRegistered, registeredLoading } = useLogin()
+  const needReg = !isRegistered && !registeredLoading
   const { profile, isMeTheOwner, isAskExist, removeAsk } = useMediaToken(id)
   const { backendData, metadata, isError } = useMediaData({ id: Number(id) })
   const mediaContract = useMedia()
@@ -174,6 +176,21 @@ const Ask: React.FC<RouteComponentProps<AskProps>> = ({
 
   if (isError) {
     router.replace(`/market/${id}`)
+  }
+
+  if (needReg) {
+    return (
+      <Page>
+        <BidMeWarningWrapper>
+          <LoadingTitle error>Sorry, but...</LoadingTitle>
+          <LoadingText>You need to register to make ask.</LoadingText>
+          <BidMeWarningButtons>
+            <BlackButton onClick={handleGoBack}>Go Back</BlackButton>
+            <BlackInternalLink to="/register">Go To Register</BlackInternalLink>
+          </BidMeWarningButtons>
+        </BidMeWarningWrapper>
+      </Page>
+    )
   }
 
   return (
