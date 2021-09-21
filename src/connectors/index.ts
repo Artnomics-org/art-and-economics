@@ -33,9 +33,8 @@ export const network = new NetworkConnector({
 
 // mainnet only
 export const fortmatic = new FortmaticConnector({
-  apiKey: 'pk_live_F937DF033A1666BF', // was for chain ID 1
-  // chainId: 1,
-  chainId: 56,
+  apiKey: 'pk_live_F937DF033A1666BF',
+  chainId: 1,
 })
 
 let networkLibrary: Web3Provider | undefined
