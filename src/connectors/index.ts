@@ -11,11 +11,11 @@ export const injected = new InjectedConnector({
     .filter((x) => !isNaN(x)),
 })
 
-// mainnet only
 export const walletconnect = new WalletConnectConnector({
   rpc: {
     1: 'https://mainnet.infura.io/v3/4bf032f2d38a4ed6bb975b80d6340847',
     56: 'https://bsc-dataseed.binance.org/',
+    97: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
   },
   bridge: 'https://bridge.walletconnect.org',
   qrcode: true,
@@ -26,14 +26,16 @@ export const network = new NetworkConnector({
   urls: {
     1: 'https://mainnet.infura.io/v3/4bf032f2d38a4ed6bb975b80d6340847',
     56: 'https://bsc-dataseed.binance.org/',
+    97: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
   },
-  defaultChainId: 1,
+  defaultChainId: 56,
 })
 
 // mainnet only
 export const fortmatic = new FortmaticConnector({
-  apiKey: 'pk_live_F937DF033A1666BF',
-  chainId: 1,
+  apiKey: 'pk_live_F937DF033A1666BF', // was for chain ID 1
+  // chainId: 1,
+  chainId: 56,
 })
 
 let networkLibrary: Web3Provider | undefined
