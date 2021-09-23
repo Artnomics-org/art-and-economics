@@ -1,4 +1,4 @@
-import { ChainId } from '@haneko/uniswap-sdk'
+import { ChainId } from '@art-economics/swap-sdk'
 import MULTICALL_ABI from './abi/Multicall.json'
 
 const MULTICALL_NETWORKS: { [chainId in ChainId]: string } = {

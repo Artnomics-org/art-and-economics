@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import { Price } from '@haneko/uniswap-sdk'
+import { Price } from '@art-economics/swap-sdk'
 import { Repeat } from 'react-feather'
 import styled from 'styled-components/macro'
 import { TradePriceText } from './styleds'

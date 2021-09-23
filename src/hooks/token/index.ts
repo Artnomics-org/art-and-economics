@@ -1,4 +1,4 @@
-import { Currency, CurrencyAmount, ETHER, JSBI, Token, TokenAmount } from '@haneko/uniswap-sdk'
+import { Currency, CurrencyAmount, ETHER, JSBI, Token, TokenAmount } from '@art-economics/swap-sdk'
 import { useMemo, useEffect, useState, useCallback } from 'react'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Web3Provider } from '@ethersproject/providers'

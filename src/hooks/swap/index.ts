@@ -12,7 +12,7 @@ import {
   Router,
   SwapParameters,
   TradeType,
-} from '@haneko/uniswap-sdk'
+} from '@art-economics/swap-sdk'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
 import { ParsedQs } from 'qs'

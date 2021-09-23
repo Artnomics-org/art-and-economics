@@ -1,4 +1,4 @@
-import { Percent } from '@haneko/uniswap-sdk'
+import { Percent } from '@art-economics/swap-sdk'
 import React from 'react'
 import { ONE_BIPS } from '../../../constants'
 import { warningSeverity } from '../../../utils/prices'

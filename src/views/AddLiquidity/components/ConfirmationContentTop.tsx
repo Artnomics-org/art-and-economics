@@ -1,4 +1,4 @@
-import { Currency, TokenAmount } from '@haneko/uniswap-sdk'
+import { Currency, TokenAmount } from '@art-economics/swap-sdk'
 import React from 'react'
 import styled from 'styled-components/macro'
 import { LightCard } from '../../../components/Card'

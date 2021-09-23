@@ -4,7 +4,7 @@ import { BigNumberish, providers, Signer, utils } from 'ethers'
 import type { MintAndTransferParameters } from '../types/MintAndTransfer'
 import { Media } from '../constants/nfts/Media'
 import { MEDIA_ADDRESS } from '../constants/address'
-import { ChainId } from '@haneko/uniswap-sdk'
+import { ChainId } from '@art-economics/swap-sdk'
 
 /**
  * 铸 Media 币

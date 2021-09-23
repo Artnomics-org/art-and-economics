@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Currency, CurrencyAmount, ETHER, JSBI, Pair, Percent, Price, TokenAmount } from '@haneko/uniswap-sdk'
+import { Currency, CurrencyAmount, ETHER, JSBI, Pair, Percent, Price, TokenAmount } from '@art-economics/swap-sdk'
 import { AppDispatch, AppState } from '../../state'
 import { Field, typeInput } from '../../state/mint/actions'
 import { useActiveWeb3React } from '../wallet'

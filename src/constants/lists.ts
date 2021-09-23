@@ -1,4 +1,4 @@
-import { ChainId, Token, WETH } from '@haneko/uniswap-sdk'
+import { ChainId, Token, WETH } from '@art-economics/swap-sdk'
 
 // the Uniswap Default token list lives here
 export const DEFAULT_TOKEN_LIST_URL = 'https://unpkg.com/best-default-token-list@1.9.23/build/tokens.json'

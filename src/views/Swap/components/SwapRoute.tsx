@@ -1,4 +1,4 @@
-import { Trade } from '@haneko/uniswap-sdk'
+import { Trade } from '@art-economics/swap-sdk'
 import React, { Fragment, memo, useContext } from 'react'
 import { ChevronRight } from 'react-feather'
 import styled, { ThemeContext } from 'styled-components/macro'

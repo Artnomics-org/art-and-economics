@@ -1,4 +1,4 @@
-import { Currency, currencyEquals, ETHER, Percent, WETH } from '@haneko/uniswap-sdk'
+import { Currency, currencyEquals, ETHER, Percent, WETH } from '@art-economics/swap-sdk'
 import { BigNumber } from '@ethersproject/bignumber'
 import { TransactionResponse } from '@ethersproject/providers'
 import { splitSignature } from '@ethersproject/bytes'

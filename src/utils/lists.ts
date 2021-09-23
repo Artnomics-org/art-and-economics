@@ -1,4 +1,4 @@
-import { Currency, ETHER, Token } from '@haneko/uniswap-sdk'
+import { Currency, ETHER, Token } from '@art-economics/swap-sdk'
 import { TokenList } from '@uniswap/token-lists'
 import schema from '@uniswap/token-lists/src/tokenlist.schema.json'
 import Ajv from 'ajv'

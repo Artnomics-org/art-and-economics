@@ -1,4 +1,4 @@
-import { Currency, ETHER, JSBI, TokenAmount } from '@haneko/uniswap-sdk'
+import { Currency, ETHER, JSBI, TokenAmount } from '@art-economics/swap-sdk'
 import React, { useEffect, useState } from 'react'
 import { useCallback } from 'react'
 import { useContext } from 'react'

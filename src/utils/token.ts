@@ -1,4 +1,4 @@
-import { Token } from '@haneko/uniswap-sdk'
+import { Token } from '@art-economics/swap-sdk'
 import { SerializedToken } from '../state/user/actions'
 
 export function serializeToken(token: Token): SerializedToken {

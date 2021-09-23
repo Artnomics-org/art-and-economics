@@ -1,4 +1,4 @@
-import { Trade } from '@haneko/uniswap-sdk'
+import { Trade } from '@art-economics/swap-sdk'
 import React from 'react'
 import { AutoColumn } from '../../../components/Column'
 import QuestionHelper from '../../../components/QuestionHelper'

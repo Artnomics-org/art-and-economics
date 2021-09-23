@@ -1,4 +1,4 @@
-import { ChainId } from '@haneko/uniswap-sdk'
+import { ChainId } from '@art-economics/swap-sdk'
 
 // export const WBNB = {
 //   56: '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c',

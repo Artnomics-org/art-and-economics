@@ -1,4 +1,4 @@
-import { Currency, Percent, Price } from '@haneko/uniswap-sdk'
+import { Currency, Percent, Price } from '@art-economics/swap-sdk'
 import React from 'react'
 import styled from 'styled-components/macro'
 import { AutoColumn } from '../../../components/Column'

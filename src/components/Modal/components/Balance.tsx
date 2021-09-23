@@ -1,4 +1,4 @@
-import { CurrencyAmount } from '@haneko/uniswap-sdk'
+import { CurrencyAmount } from '@art-economics/swap-sdk'
 import React from 'react'
 import { ListBalanceText } from './styleds'
 

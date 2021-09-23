@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Pair, Token, TokenAmount, Currency } from '@haneko/uniswap-sdk'
+import { Pair, Token, TokenAmount, Currency } from '@art-economics/swap-sdk'
 import { Interface } from '@ethersproject/abi'
 import { abi as IUniswapV2PairABI } from '@uniswap/v2-core/build/IUniswapV2Pair.json'
 import flatMap from 'lodash.flatmap'

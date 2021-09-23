@@ -1,4 +1,4 @@
-import { Currency, currencyEquals } from '@haneko/uniswap-sdk'
+import { Currency, currencyEquals } from '@art-economics/swap-sdk'
 import React, { MutableRefObject, useCallback, useMemo } from 'react'
 import { FixedSizeList } from 'react-window'
 import CurrencyRow, { currencyKey } from './CurrencyRow'

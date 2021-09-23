@@ -1,4 +1,4 @@
-import { Currency } from '@haneko/uniswap-sdk'
+import { Currency } from '@art-economics/swap-sdk'
 import React from 'react'
 import styled from 'styled-components/macro'
 import CurrencyLogo from './CurrencyLogo'

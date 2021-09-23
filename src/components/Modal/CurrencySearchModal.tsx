@@ -1,4 +1,4 @@
-import { Currency } from '@haneko/uniswap-sdk'
+import { Currency } from '@art-economics/swap-sdk'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useLast } from '../../hooks'
 import CurrencySearch from './components/CurrencySearch'

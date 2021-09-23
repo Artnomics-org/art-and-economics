@@ -1,4 +1,4 @@
-import { Currency } from '@haneko/uniswap-sdk'
+import { Currency } from '@art-economics/swap-sdk'
 import React from 'react'
 import { WrappedTokenInfo } from '../../../hooks/lists'
 import { MouseoverTooltip } from '../../Tooltip'

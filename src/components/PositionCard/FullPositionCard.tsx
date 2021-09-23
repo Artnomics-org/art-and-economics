@@ -1,4 +1,4 @@
-import { JSBI, Percent } from '@haneko/uniswap-sdk'
+import { JSBI, Percent } from '@art-economics/swap-sdk'
 import React, { useState, useCallback } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { ChevronDown, ChevronUp } from 'react-feather'

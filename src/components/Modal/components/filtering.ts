@@ -1,4 +1,4 @@
-import { Token } from '@haneko/uniswap-sdk'
+import { Token } from '@art-economics/swap-sdk'
 import { isAddress } from '../../../utils/ethers'
 
 export function filterTokens(tokens: Token[], search: string): Token[] {

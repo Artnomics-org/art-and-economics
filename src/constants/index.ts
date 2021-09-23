@@ -1,4 +1,4 @@
-import { JSBI, Percent } from '@haneko/uniswap-sdk'
+import { JSBI, Percent } from '@art-economics/swap-sdk'
 import { AbstractConnector } from '@web3-react/abstract-connector'
 import { injected, walletconnect } from '../connectors'
 

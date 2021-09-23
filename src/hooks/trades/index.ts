@@ -1,4 +1,4 @@
-import { Currency, Pair, Token, CurrencyAmount, Trade } from '@haneko/uniswap-sdk'
+import { Currency, Pair, Token, CurrencyAmount, Trade } from '@art-economics/swap-sdk'
 import flatMap from 'lodash.flatmap'
 import { useMemo } from 'react'
 import { BASES_TO_CHECK_TRADES_AGAINST, CUSTOM_BASES } from '../../constants/lists'

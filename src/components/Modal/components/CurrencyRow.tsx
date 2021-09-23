@@ -1,4 +1,4 @@
-import { Currency, Token, ETHER } from '@haneko/uniswap-sdk'
+import { Currency, Token, ETHER } from '@art-economics/swap-sdk'
 import React from 'react'
 import { useSelectedTokenList } from '../../../hooks/lists'
 import { useCurrencyBalance } from '../../../hooks/token'

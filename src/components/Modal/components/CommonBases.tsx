@@ -1,4 +1,4 @@
-import { ChainId, Currency, currencyEquals, ETHER, Token } from '@haneko/uniswap-sdk'
+import { ChainId, Currency, currencyEquals, ETHER, Token } from '@art-economics/swap-sdk'
 import React from 'react'
 import { useCallback } from 'react'
 import { SUGGESTED_BASES } from '../../../constants/lists'

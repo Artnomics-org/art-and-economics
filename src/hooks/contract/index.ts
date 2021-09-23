@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { Contract, ContractInterface } from '@ethersproject/contracts'
-import { ChainId, WETH } from '@haneko/uniswap-sdk'
+import { ChainId, WETH } from '@art-economics/swap-sdk'
 import { useActiveWeb3React } from '../wallet'
 import { getContractWithAbi } from '../../utils/ethers'
 import { MULTICALL_ABI, MULTICALL_NETWORKS } from '../../constants/multicall'

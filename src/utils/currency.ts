@@ -9,7 +9,7 @@ import {
   TokenAmount,
   Trade,
   WETH,
-} from '@haneko/uniswap-sdk'
+} from '@art-economics/swap-sdk'
 import { parseUnits } from '@ethersproject/units'
 import { MIN_ETH } from '../constants'
 import { Field } from '../state/swap/actions'

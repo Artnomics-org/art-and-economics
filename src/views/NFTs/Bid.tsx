@@ -1,4 +1,4 @@
-import { Token } from '@haneko/uniswap-sdk'
+import { Token } from '@art-economics/swap-sdk'
 import { utils } from 'ethers'
 import { Input, Select, Spinner, NumberInput, NumberInputField, useNumberInput, useToast } from '@chakra-ui/react'
 import React, { useState, useCallback, useMemo, useContext } from 'react'

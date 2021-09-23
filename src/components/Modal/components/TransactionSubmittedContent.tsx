@@ -1,4 +1,4 @@
-import { ChainId } from '@haneko/uniswap-sdk'
+import { ChainId } from '@art-economics/swap-sdk'
 import React, { useContext } from 'react'
 import { ArrowUpCircle } from 'react-feather'
 import { Button } from 'rebass'

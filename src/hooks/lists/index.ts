@@ -1,4 +1,4 @@
-import { ChainId, Token } from '@haneko/uniswap-sdk'
+import { ChainId, Token } from '@art-economics/swap-sdk'
 import { Tags, TokenInfo, TokenList } from '@uniswap/token-lists'
 import { useCallback, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'

@@ -1,4 +1,4 @@
-import { Trade, Percent, CurrencyAmount, Fraction, TokenAmount, JSBI } from '@haneko/uniswap-sdk'
+import { Trade, Percent, CurrencyAmount, Fraction, TokenAmount, JSBI } from '@art-economics/swap-sdk'
 import { BigNumber } from '@ethersproject/bignumber'
 import {
   ONE_HUNDRED_PERCENT,

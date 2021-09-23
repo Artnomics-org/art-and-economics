@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
-import { Pair } from '@haneko/uniswap-sdk'
+import { Pair } from '@art-economics/swap-sdk'
 import Page from '../../components/Page'
 import {
   Button,

@@ -24,7 +24,7 @@ import useWrapCallback, {
 } from '../../hooks/swap'
 import { useActiveWeb3React } from '../../hooks/wallet'
 import { Field } from '../../state/swap/actions'
-import { CurrencyAmount, JSBI, Trade } from '@haneko/uniswap-sdk'
+import { CurrencyAmount, JSBI, Trade } from '@art-economics/swap-sdk'
 import { maxAmountSpend } from '../../utils/currency'
 import AdvancedInfoCard from './components/AdvancedInfoCard'
 import AdvancedSwapDetailsDropdown from './components/AdvancedSwapDetailsDropdown'

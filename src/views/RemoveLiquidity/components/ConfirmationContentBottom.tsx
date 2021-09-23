@@ -1,4 +1,4 @@
-import { Currency, CurrencyAmount, ETHER, Pair, Percent, Token, TokenAmount } from '@haneko/uniswap-sdk'
+import { Currency, CurrencyAmount, ETHER, Pair, Percent, Token, TokenAmount } from '@art-economics/swap-sdk'
 import React from 'react'
 import styled from 'styled-components/macro'
 import { RowBetween, RowFixed } from '../../../components/Row'

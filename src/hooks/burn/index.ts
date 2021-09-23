@@ -1,4 +1,4 @@
-import { Currency, CurrencyAmount, JSBI, Pair, Percent, TokenAmount } from '@haneko/uniswap-sdk'
+import { Currency, CurrencyAmount, JSBI, Pair, Percent, TokenAmount } from '@art-economics/swap-sdk'
 import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppState, AppDispatch } from '../../state'

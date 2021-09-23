@@ -33,7 +33,7 @@ import { MediaData } from '../../types/Media'
 import { useActiveWeb3React } from '../../hooks/wallet'
 import { mintMediaToken } from '../../utils/nft'
 import { Signer } from 'ethers'
-import { ChainId } from '@haneko/uniswap-sdk'
+import { ChainId } from '@art-economics/swap-sdk'
 import { ThemeContext } from 'styled-components/macro'
 import { UserRole } from '../../types/User'
 

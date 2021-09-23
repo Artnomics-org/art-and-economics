@@ -1,4 +1,4 @@
-import { Currency, ETHER, Token } from '@haneko/uniswap-sdk'
+import { Currency, ETHER, Token } from '@art-economics/swap-sdk'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { FixedSizeList } from 'react-window'
 import AutoSizer from 'react-virtualized-auto-sizer'

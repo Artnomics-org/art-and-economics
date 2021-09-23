@@ -1,4 +1,4 @@
-import { Token, TokenAmount } from '@haneko/uniswap-sdk'
+import { Token, TokenAmount } from '@art-economics/swap-sdk'
 import { useMemo } from 'react'
 import { useAllTokenBalances } from '../../../hooks/token'
 

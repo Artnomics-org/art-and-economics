@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Currency, currencyEquals, ETHER, TokenAmount, WETH } from '@haneko/uniswap-sdk'
+import { Currency, currencyEquals, ETHER, TokenAmount, WETH } from '@art-economics/swap-sdk'
 import React, { useCallback, useContext, useState } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import { Plus } from 'react-feather'

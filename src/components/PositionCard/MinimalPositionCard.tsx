@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components/macro'
-import { JSBI, Percent } from '@haneko/uniswap-sdk'
+import { JSBI, Percent } from '@art-economics/swap-sdk'
 import { useActiveWeb3React } from '../../hooks/wallet'
 import { useTokenBalance, useTotalSupply } from '../../hooks/token'
 import { unwrappedToken } from '../../utils/currency'

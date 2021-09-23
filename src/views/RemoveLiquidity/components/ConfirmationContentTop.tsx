@@ -1,4 +1,4 @@
-import { Currency, CurrencyAmount, ETHER, Percent, TokenAmount } from '@haneko/uniswap-sdk'
+import { Currency, CurrencyAmount, ETHER, Percent, TokenAmount } from '@art-economics/swap-sdk'
 import React, { useContext } from 'react'
 import { Plus } from 'react-feather'
 import styled, { ThemeContext } from 'styled-components/macro'

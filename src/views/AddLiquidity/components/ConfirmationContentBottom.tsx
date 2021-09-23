@@ -1,4 +1,4 @@
-import { Fraction, Currency, CurrencyAmount, Percent } from '@haneko/uniswap-sdk'
+import { Fraction, Currency, CurrencyAmount, Percent } from '@art-economics/swap-sdk'
 import React from 'react'
 import styled from 'styled-components/macro'
 import { ButtonPrimary } from '../../../components/Button'

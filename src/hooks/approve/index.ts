@@ -1,6 +1,6 @@
 import { MaxUint256 } from '@ethersproject/constants'
 import { TransactionResponse } from '@ethersproject/providers'
-import { CurrencyAmount, TokenAmount, ETHER, Trade, Token } from '@haneko/uniswap-sdk'
+import { CurrencyAmount, TokenAmount, ETHER, Trade, Token } from '@art-economics/swap-sdk'
 import { useMemo, useCallback } from 'react'
 import { ROUTER_ADDRESS } from '../../constants/address'
 import { Field } from '../../state/swap/actions'
