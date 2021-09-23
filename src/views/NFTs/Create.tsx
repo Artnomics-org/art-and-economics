@@ -63,7 +63,8 @@ const Create: React.FC = () => {
   const signer = library?.getSigner(account)
   const { isRegistered, registeredLoading, userDataByWallet } = useLogin()
   const needReg = !isRegistered && !registeredLoading
-  const isArtist = userDataByWallet.role === UserRole.Artist || userDataByWallet.role === UserRole.SuperAdmin
+  const isArtist =
+    userDataByWallet && (userDataByWallet?.role === UserRole.Artist || userDataByWallet?.role === UserRole.SuperAdmin)
   const [nftPreview, setNftPreview] = useState<NFTCardProps>(InitCardProps)
   const router = useHistory()
   const toast = useToast()
