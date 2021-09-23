@@ -1,5 +1,5 @@
 import { Currency, ETHER, Token } from '@art-economics/swap-sdk'
-import React, { useMemo } from 'react'
+import React, { useMemo, useCallback } from 'react'
 import styled from 'styled-components/macro'
 import { useHttpLocations } from '../../hooks'
 import { WrappedTokenInfo, useSelectedTokenList } from '../../hooks/lists'
@@ -17,13 +17,16 @@ interface CurrencyLogoProps {
 const CurrencyLogo: React.FC<CurrencyLogoProps> = ({ currency, size = 24, style, margin = false }) => {
   const tokenLists = useSelectedTokenList()
   const { chainId } = useActiveWeb3React()
-  const getTokenLogoURL = (address: string) => {
-    const findLogo = Object.keys(tokenLists[chainId]).find((token) => token === address)
-    if (findLogo) {
-      return tokenLists[chainId][findLogo].logoURI
-    }
-    return `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`
-  }
+  const getTokenLogoURL = useCallback(
+    (address: string) => {
+      const findLogo = Object.keys(tokenLists[chainId]).find((token) => token === address)
+      if (findLogo) {
+        return tokenLists[chainId][findLogo].logoURI
+      }
+      return `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`
+    },
+    [chainId, tokenLists],
+  )
 
   const uriLocations = useHttpLocations(currency instanceof WrappedTokenInfo ? currency.logoURI : undefined)
 
@@ -38,7 +41,7 @@ const CurrencyLogo: React.FC<CurrencyLogoProps> = ({ currency, size = 24, style,
       return [getTokenLogoURL(currency.address)]
     }
     return []
-  }, [currency, uriLocations])
+  }, [currency, getTokenLogoURL, uriLocations])
 
   if (currency === ETHER) {
     return <StyledEthereumLogo src={EthereumLogo} size={size} margin={margin} style={style} />
