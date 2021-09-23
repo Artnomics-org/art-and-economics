@@ -15,10 +15,10 @@
   resolved "https://registry.yarnpkg.com/@art-economics/default-token-list/-/default-token-list-1.1.10.tgz#76cecd3701a1f5ba3f26ab0c94348ff18395152e"
   integrity sha512-v+PTelXVj1PVAts5m6m7Z6+0+2u9XFPoOuz0KHOGkjP2uSejp7lFd9Hl1KPcs2TTo+0NZ+BRK9qy109vsqm9vw==
 
-"@art-economics/swap-sdk@^3.0.8":
-  version "3.0.8"
-  resolved "https://registry.yarnpkg.com/@art-economics/swap-sdk/-/swap-sdk-3.0.8.tgz#6d4c4ef5bebd79f1245f68cc788207bd94a9b7bf"
-  integrity sha512-gT++PHA7Yyp4WFoeXTqEjNDOBtUwnBx4Q6EmykxbT3k1i5KXddWuFpJCcqubpR5S7fiqbpZvXKCsAFVjrzpk1g==
+"@art-economics/swap-sdk@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@art-economics/swap-sdk/-/swap-sdk-3.1.0.tgz#ea4650c6038f4279014124b319f02c318eee536d"
+  integrity sha512-OQEJSw4UFrRKpjZ9E4I3tLEJ5Po4/COG3aqUppza7UquXdGPpk8fK3sTXeLhwCLtsta0ozSl9p/3GqD7Np5m7w==
   dependencies:
     "@uniswap/v2-core" "^1.0.0"
     big.js "^5.2.2"
