@@ -7,7 +7,11 @@ import { GeneralResponse } from '../types/Backend'
 import { MintAndTransferParameters } from '../types/MintAndTransfer'
 import { BidLog } from '../types/Bid'
 
-export const backendSWRFetcher = (url: string): Promise<any> => backendClient.get(url).then((res) => res.data)
+export const backendSWRFetcher = async (url: string): Promise<any> => {
+  if (url.includes('undefined')) return
+  const res = await backendClient.get(url)
+  return res.data
+}
 export const axiosFetcher = (url: string) => axios.get(url).then((res) => res.data)
 
 /**

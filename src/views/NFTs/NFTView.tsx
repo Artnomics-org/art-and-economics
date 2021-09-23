@@ -88,8 +88,10 @@ const NFTView: React.FC<RouteComponentProps<NFTViewProps>> = ({
                 <MediaOwnershipInfo info={backendData} />
                 <NFTViewBuyWrapper>
                   <BlackInternalLink to={`/market/${id}/bids`}>See Bids</BlackInternalLink>
-                  {!isMeTheOwner && <BlackInternalLink to={`/market/${id}/bid`}>Place a bid</BlackInternalLink>}
-                  {isMeTheOwner && (
+                  {profile && !isMeTheOwner && (
+                    <BlackInternalLink to={`/market/${id}/bid`}>Place a bid</BlackInternalLink>
+                  )}
+                  {profile && isMeTheOwner && (
                     <BlackInternalLink to={`/market/${id}/ask`}>
                       {isAskExist ? 'Edit Price' : 'Add Price'}
                     </BlackInternalLink>

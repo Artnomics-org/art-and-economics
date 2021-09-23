@@ -518,7 +518,6 @@ export function useMediaToken(id: BigNumberish) {
   ])
 
   useEffect(() => {
-    if (!id) return
     getDetailOf()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -548,12 +547,9 @@ export function useMediaToken(id: BigNumberish) {
 
 export function useMediaBids(id: number | string) {
   const { data: mediaBids, error } = useSWR<BidLog[], Error>(`/media/${id}/bids`, backendSWRFetcher)
-
   const reloadBids = useCallback(() => mutate(`/media/${id}/bids`), [id])
-
   console.log('useMediaBids:mediaBids:', mediaBids)
-  if (error) console.log('useMediaBids:error:', error)
-
+  if (error) console.error('useMediaBids:error:', error)
   return { mediaBids: mediaBids || [], isError: Boolean(error), error, reloadBids }
 }
 
