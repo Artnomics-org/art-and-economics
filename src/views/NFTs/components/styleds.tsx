@@ -684,14 +684,16 @@ export const MediaSelectWrapper = styled.div`
 `
 
 export const UserNftWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: space-evenly;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
   max-width: ${(props) => props.theme.siteWidth}px;
   @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    display: flex;
+    flex-wrap: wrap;
     flex-direction: column;
     justify-content: unset;
+    width: 100%;
     padding-left: 20px;
     padding-right: 20px;
   }
