@@ -348,7 +348,7 @@ const Create: React.FC = () => {
               <BlackInternalLink to="/market">Go To Market</BlackInternalLink>
             </StyledLoadingWrapper>
           )}
-          {!needReg && (
+          {!needReg && isArtist && (
             <>
               <CreateLeft>
                 <CreateTitle>NFT Information</CreateTitle>
