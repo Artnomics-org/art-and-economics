@@ -59,6 +59,7 @@ const InitCardProps: NFTCardProps = {
     high: '',
   },
   title: 'NFT Title',
+  description: 'NFT Description',
   creator: 'Your Name',
   price: '0.1',
 }
@@ -128,10 +129,14 @@ const Create: React.FC = () => {
     },
     [nftPreview],
   )
-  const handleDescChange = useCallback((ev: ChangeEvent<HTMLTextAreaElement>) => {
-    console.log('handleDescChange:value:', ev.target.value)
-    setInputDesc(ev.target.value)
-  }, [])
+  const handleDescChange = useCallback(
+    (ev: ChangeEvent<HTMLTextAreaElement>) => {
+      console.log('handleDescChange:value:', ev.target.value)
+      setInputDesc(ev.target.value)
+      setNftPreview({ ...nftPreview, description: ev.target.value })
+    },
+    [nftPreview],
+  )
 
   const handleFileHashCheck = useCallback(async (file: File) => {
     const promise = new Promise<boolean>((res, rej) => {

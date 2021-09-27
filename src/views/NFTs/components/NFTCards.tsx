@@ -26,6 +26,7 @@ const NFTCards: React.FC = () => {
         return {
           id: media.id,
           title: media?.metadata?.name,
+          description: media?.metadata?.description,
           creator: media?.creator?.username,
           price: media?.bidLogs[0]?.amount || 0,
           currency: media?.bidLogs[0]?.currency,
@@ -71,6 +72,7 @@ const NFTCards: React.FC = () => {
         <NFTCard
           img={item.img}
           title={item.title}
+          description={item.description}
           creator={item.creator}
           price={item.price}
           currency={item.currency}

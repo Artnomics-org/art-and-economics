@@ -36,6 +36,12 @@ export const NFTsHeader = styled.div`
   align-items: center;
   margin-top: 100px;
   margin-bottom: 68px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 60px;
+    margin-bottom: 40px;
+  }
 `
 
 export const NFTsBody = styled.div`
@@ -53,8 +59,7 @@ export const Title = styled.h1`
   text-transform: uppercase;
   @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
     font-size: 24px;
-    margin-top: calc(180px / 2 - 36px / 2);
-    margin-bottom: calc(180px / 2 - 36px / 2);
+    margin-bottom: 20px;
   }
 `
 
@@ -250,8 +255,8 @@ export const CreateWrapper = styled.div`
   margin-top: 90px;
   margin-bottom: 90px;
   @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
-    margin-top: 20px;
-    margin-bottom: 40px;
+    margin-top: 60px;
+    margin-bottom: 60px;
     padding-left: 20px;
     padding-right: 20px;
   }
@@ -264,6 +269,10 @@ export const CreateHeader = styled.div`
   text-transform: uppercase;
   color: ${(props) => props.theme.color.grey[600]};
   margin-bottom: 72px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    font-size: 32px;
+    margin-bottom: 40px;
+  }
 `
 
 export const CreateBody = styled.div`
@@ -272,7 +281,7 @@ export const CreateBody = styled.div`
   flex-direction: row;
   justify-content: space-between;
   @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
-    flex-direction: column;
+    flex-direction: column-reverse;
     justify-content: unset;
   }
 `
@@ -301,6 +310,7 @@ export const CreateRight = styled.div`
     width: 100%;
     min-width: 0;
     margin-left: 0px;
+    margin-bottom: 20px;
   }
 `
 
@@ -312,6 +322,12 @@ export const CreateRightContent = styled.div`
   padding: 34px;
   background-color: ${(props) => props.theme.color.white};
   box-shadow: 0 6px 30px 2px rgba(0, 0, 0, 0.1);
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    padding: 20px;
+    > div {
+      margin-top: 0;
+    }
+  }
 `
 
 export const CreateTitle = styled.h2`
@@ -769,22 +785,29 @@ export const UserSocialItem = styled.a`
 `
 
 export const UserEditButton = styled(Link)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
+  min-width: 270px;
+  font-family: 'Helvetica Neue LT W05_53 Ext';
+  font-size: 16px;
+  text-align: center;
+  text-transform: uppercase;
+  line-height: 1;
+  border-radius: 14px;
   color: ${(props) => props.theme.color.white};
-  border: 2px solid ${(props) => props.theme.color.white};
-  text-decoration: none;
-  cursor: pointer;
+  background-color: ${(props) => props.theme.color.grey[600]};
+  border: 2px solid ${(props) => props.theme.color.grey[600]};
+  padding: 4px 0;
+  outline: none;
   &:hover,
   &:active {
-    color: ${(props) => props.theme.color.text[500]};
+    color: ${(props) => props.theme.color.grey[600]};
     background-color: ${(props) => props.theme.color.white};
   }
   @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
-    padding: 10px;
-    font-size: 14px;
+    font-size: 12px;
+    min-width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
   }
 `
 

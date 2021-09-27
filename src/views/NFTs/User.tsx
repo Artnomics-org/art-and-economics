@@ -53,6 +53,7 @@ const UserView: React.FC<RouteComponentProps<UserViewProps>> = ({
     (media) => ({
       id: media.id,
       title: media?.title,
+      description: media?.description,
       creator: media?.creator?.username,
       price: media?.bids[0]?.amount || 0,
       currency: media?.bids[0]?.currency,
@@ -68,6 +69,7 @@ const UserView: React.FC<RouteComponentProps<UserViewProps>> = ({
     (media) => ({
       id: media.id,
       title: media?.title,
+      description: media?.description,
       creator: media?.creator?.username,
       price: media?.bids[0]?.amount || 0,
       currency: media?.bids[0]?.currency,
@@ -85,6 +87,13 @@ const UserView: React.FC<RouteComponentProps<UserViewProps>> = ({
     console.log('handleMediaSelectChange:value:', value)
     setMediaType(value)
   }, [])
+
+  const handleCardClick = useCallback(
+    (id: string | number) => {
+      router.push(`/market/${id}`)
+    },
+    [router],
+  )
 
   const fetchUserData = useCallback(async () => {
     try {
@@ -170,8 +179,8 @@ const UserView: React.FC<RouteComponentProps<UserViewProps>> = ({
                   <UserName>@{userInfo?.username}</UserName>
                 </UserInfoContainer>
                 <UserBio>{userInfo?.bio}</UserBio>
+                {isMe && <UserEditButton to="/user/edit">Edit Profile</UserEditButton>}
               </UserInfo>
-              {/* {isMe && <UserEditButton to="/user/edit">Edit Profile</UserEditButton>} */}
               <MediaSelectWrapper>
                 <MediaSelectButton active={mediaType === 'owned'} onClick={() => handleMediaSelectChange('owned')}>
                   Collection
@@ -191,10 +200,12 @@ const UserView: React.FC<RouteComponentProps<UserViewProps>> = ({
                   <NFTCard
                     img={item.img}
                     title={item.title}
+                    description={item.description}
                     creator={item.creator}
                     price={item.price}
                     currency={item.currency}
                     key={`${item.title}-${item.price}-${index}`}
+                    onClick={() => handleCardClick(item.id)}
                   />
                 ),
                 [],
@@ -205,10 +216,12 @@ const UserView: React.FC<RouteComponentProps<UserViewProps>> = ({
                   <NFTCard
                     img={item.img}
                     title={item.title}
+                    description={item.description}
                     creator={item.creator}
                     price={item.price}
                     currency={item.currency}
                     key={`${item.title}-${item.price}-${index}`}
+                    onClick={() => handleCardClick(item.id)}
                   />
                 ),
                 [],
