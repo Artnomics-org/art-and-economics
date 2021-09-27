@@ -518,8 +518,8 @@ export const UserBanner = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  background-color: ${(props) => props.theme.color.grey[500]};
-  padding-top: 60px;
+  background-color: ${(props) => props.theme.color.bg};
+  padding-top: 100px;
   padding-bottom: 60px;
   @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
     padding: 20px;
@@ -530,11 +530,9 @@ export const UserBody = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 40px;
-  padding-bottom: 40px;
+  padding-bottom: 80px;
   @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-bottom: 60px;
   }
 `
 
@@ -542,8 +540,7 @@ export const UserInfoWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
-  max-width: ${(props) => (props.theme.siteWidth / 3) * 2}px;
+  max-width: ${(props) => (props.theme.siteWidth / 3) * 2 + 100}px;
   width: 100%;
   @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
     flex-direction: column;
@@ -554,8 +551,11 @@ export const UserInfoWrapper = styled.div`
 export const UserInfoLeft = styled.div`
   display: flex;
   flex-direction: column;
+  margin-right: 80px;
   @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    flex-direction: row;
     width: 100%;
+    margin-right: 0;
     margin-bottom: 20px;
   }
 `
@@ -563,33 +563,22 @@ export const UserInfoLeft = styled.div`
 export const UserInfoRight = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  flex: 1;
   @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
     width: 100%;
   }
 `
 
-export const UserInfoContainer = styled.div<{ mb: number }>`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: ${(props) => props.mb}px;
-  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
-    margin-bottom: 20px;
-  }
-`
-
 export const UserAvatar = styled.img`
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
+  width: 300px;
+  height: 300px;
+  box-shadow: 0 6px 30px 2px rgba(0, 0, 0, 0.1);
+  background-color: ${(props) => props.theme.color.bg};
   object-fit: cover;
   pointer-events: none;
-  border: 2px solid ${(props) => props.theme.color.white};
-  margin-right: 20px;
   @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
-    width: 80px;
-    height: 80px;
+    width: 120px;
+    height: 120px;
   }
 `
 
@@ -597,6 +586,29 @@ export const UserInfo = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  flex: 1;
+  margin-bottom: 20px;
+`
+
+export const UserInfoMobile = styled.div`
+  display: none;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 1;
+    margin-left: 20px;
+  }
+`
+
+export const UserInfoContainer = styled.div<{ mb: number }>`
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  margin-bottom: ${(props) => props.mb}px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    display: none;
+  }
 `
 
 export const UserSocial = styled.div`
@@ -609,33 +621,38 @@ export const UserSocial = styled.div`
 `
 
 export const UserNick = styled.h4`
-  font-size: 24px;
-  font-weight: 500;
-  color: ${(props) => props.theme.color.white};
-  margin-bottom: 10px;
+  font-size: 40px;
+  font-weight: normal;
+  font-family: 'Helvetica Neue LT W05_93 Blk E';
+  color: ${(props) => props.theme.color.grey[600]};
+  margin-right: 40px;
   @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
-    font-size: 16px;
-    margin-bottom: 8px;
+    font-size: 20px;
+    margin-right: 0;
+    margin-bottom: 16px;
   }
 `
 
 export const UserName = styled.h3`
-  font-size: 16px;
-  font-weight: 500;
-  color: ${(props) => props.theme.color.white};
-  margin-bottom: 20px;
+  font-size: 14px;
+  font-weight: normal;
+  font-family: 'Helvetica Neue LT W05_93 Blk E';
+  color: ${(props) => props.theme.color.grey[600]};
+  margin-bottom: 14px;
   @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
-    font-size: 14px;
     margin-bottom: 8px;
   }
 `
 
 export const UserBio = styled.p`
   font-size: 16px;
-  font-weight: 400;
-  color: ${(props) => props.theme.color.white};
+  font-weight: normal;
+  font-family: 'Helvetica Neue LT W05_53 Ext';
+  line-height: 1.48;
+  color: ${(props) => props.theme.color.grey[600]};
+  flex: 1;
   @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
-    font-size: 10px;
+    font-size: 14px;
   }
 `
 
@@ -677,17 +694,34 @@ export const UserEditButton = styled(Link)`
 `
 
 export const MediaSelectWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, 270px);
+  grid-gap: 20px;
   align-items: center;
-  justify-content: center;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+`
+
+export const MediaSelectButton = styled.button<{ active: boolean }>`
+  font-size: 16px;
+  text-align: center;
+  text-transform: uppercase;
+  line-height: 1;
+  border-radius: 14px;
+  color: ${({ active, theme }) => (active ? theme.color.white : theme.color.grey[600])};
+  background-color: ${({ active, theme }) => (active ? theme.color.grey[600] : theme.color.bg)};
+  border: 2px solid ${(props) => props.theme.color.grey[600]};
+  padding: 4px 0;
+  outline: none;
 `
 
 export const UserNftWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 20px;
-  max-width: ${(props) => props.theme.siteWidth}px;
+  width: 100%;
+  max-width: ${(props) => (props.theme.siteWidth / 3) * 2 + 100}px;
   @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
     display: flex;
     flex-wrap: wrap;

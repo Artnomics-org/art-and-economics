@@ -1,10 +1,9 @@
-import React, { useState, useContext, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { RouteComponentProps, useHistory } from 'react-router-dom'
-import { Twitter, Telegram, Facebook, Medium } from '@icons-pack/react-simple-icons'
-import { Select } from '@chakra-ui/react'
 import Page from '../../components/Page'
 import { User } from '../../types/User'
 import {
+  MediaSelectButton,
   MediaSelectWrapper,
   UserAvatar,
   UserBanner,
@@ -14,19 +13,16 @@ import {
   UserInfo,
   UserInfoContainer,
   UserInfoLeft,
+  UserInfoMobile,
   UserInfoRight,
   UserInfoWrapper,
   UserName,
   UserNftWrapper,
   UserNick,
-  UserSocial,
-  UserSocialItem,
   UserWrapper,
 } from './components/styleds'
-import { ThemeContext } from 'styled-components/macro'
 import { useLogin } from '../../hooks/nfts'
 import { getUser } from '../../backend/user'
-import { getSocialLink } from '../../utils'
 import NFTCard, { NFTCardProps } from './components/NFTCard'
 import { Media, MediaMetadata } from '../../types/Media'
 import { getMediaBids, getMediaById, getMediaMetadata } from '../../backend/media'
@@ -46,7 +42,6 @@ const UserView: React.FC<RouteComponentProps<UserViewProps>> = ({
     params: { name },
   },
 }) => {
-  const theme = useContext(ThemeContext)
   const router = useHistory()
   const { userDataByWallet, caughtError } = useLogin()
   const [isMe, setIsMe] = useState(false)
@@ -54,7 +49,6 @@ const UserView: React.FC<RouteComponentProps<UserViewProps>> = ({
   const [createdMedia, setCreatedMedia] = useState<NFTProps[]>([])
   const [ownedMedia, setOwnedMedia] = useState<NFTProps[]>([])
 
-  const hasSocial = !!(userInfo?.twitter || userInfo?.telegram || userInfo?.facebook || userInfo?.medium)
   const createdNFTCards: NFTCardProps[] = createdMedia.map(
     (media) => ({
       id: media.id,
@@ -87,9 +81,9 @@ const UserView: React.FC<RouteComponentProps<UserViewProps>> = ({
   )
 
   const [mediaType, setMediaType] = useState<'owned' | 'created'>('owned')
-  const handleMediaSelectChange = useCallback((ev: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log('handleMediaSelectChange:value:', ev.target.value)
-    setMediaType(ev.target.value as 'owned' | 'created')
+  const handleMediaSelectChange = useCallback((value: 'owned' | 'created') => {
+    console.log('handleMediaSelectChange:value:', value)
+    setMediaType(value)
   }, [])
 
   const fetchUserData = useCallback(async () => {
@@ -163,69 +157,33 @@ const UserView: React.FC<RouteComponentProps<UserViewProps>> = ({
         <UserBanner>
           <UserInfoWrapper>
             <UserInfoLeft>
-              <UserInfoContainer mb={hasSocial ? 40 : 0}>
-                <UserAvatar src={userInfo?.avatar} alt="Avatar" />
-                <UserInfo>
+              <UserAvatar src={userInfo?.avatar} alt="Avatar" />
+              <UserInfoMobile>
+                <UserNick>{userInfo?.nickname}</UserNick>
+                <UserName>@{userInfo?.username}</UserName>
+              </UserInfoMobile>
+            </UserInfoLeft>
+            <UserInfoRight>
+              <UserInfo>
+                <UserInfoContainer mb={20}>
                   <UserNick>{userInfo?.nickname}</UserNick>
                   <UserName>@{userInfo?.username}</UserName>
-                  <UserBio>{userInfo?.bio}</UserBio>
-                </UserInfo>
-              </UserInfoContainer>
-              <UserSocial>
-                {userInfo?.twitter && (
-                  <UserSocialItem
-                    href={getSocialLink(userInfo?.twitter, 'twitter')}
-                    target="__blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Twitter size={24} color={theme.color.white} />
-                  </UserSocialItem>
-                )}
-                {userInfo?.telegram && (
-                  <UserSocialItem
-                    href={getSocialLink(userInfo?.telegram, 'tetegram')}
-                    target="__blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Telegram size={24} color={theme.color.white} />
-                  </UserSocialItem>
-                )}
-                {userInfo?.facebook && (
-                  <UserSocialItem
-                    href={getSocialLink(userInfo?.facebook, 'facebook')}
-                    target="__blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Facebook size={24} color={theme.color.white} />
-                  </UserSocialItem>
-                )}
-                {userInfo?.medium && (
-                  <UserSocialItem
-                    href={getSocialLink(userInfo?.medium, 'medium')}
-                    target="__blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Medium size={24} color={theme.color.white} />
-                  </UserSocialItem>
-                )}
-              </UserSocial>
-            </UserInfoLeft>
-            <UserInfoRight>{isMe && <UserEditButton to="/user/edit">Edit Profile</UserEditButton>}</UserInfoRight>
+                </UserInfoContainer>
+                <UserBio>{userInfo?.bio}</UserBio>
+              </UserInfo>
+              {/* {isMe && <UserEditButton to="/user/edit">Edit Profile</UserEditButton>} */}
+              <MediaSelectWrapper>
+                <MediaSelectButton active={mediaType === 'owned'} onClick={() => handleMediaSelectChange('owned')}>
+                  Collection
+                </MediaSelectButton>
+                <MediaSelectButton active={mediaType === 'created'} onClick={() => handleMediaSelectChange('created')}>
+                  Creations
+                </MediaSelectButton>
+              </MediaSelectWrapper>
+            </UserInfoRight>
           </UserInfoWrapper>
         </UserBanner>
         <UserBody>
-          <MediaSelectWrapper>
-            <Select
-              id="media-select"
-              size="lg"
-              variant="filled"
-              defaultValue="owned"
-              onChange={handleMediaSelectChange}
-            >
-              <option value="owned">Collection</option>
-              <option value="created">Creations</option>
-            </Select>
-          </MediaSelectWrapper>
           <UserNftWrapper>
             {mediaType === 'owned' &&
               ownedNFTCards.map(
