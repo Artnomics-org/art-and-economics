@@ -51,16 +51,22 @@ const NFTCards: React.FC = () => {
     [history],
   )
 
+  if (isLoading && !isError) {
+    return <StyledLoading>Loading...</StyledLoading>
+  }
+
+  if (isError) {
+    return (
+      <StyledError>
+        No Data...
+        <br />
+        {error.message}
+      </StyledError>
+    )
+  }
+
   return (
     <StyledCardWrapper>
-      {isLoading && !isError && <StyledLoading>Loading...</StyledLoading>}
-      {isError && (
-        <StyledError>
-          No Data...
-          <br />
-          {error.message}
-        </StyledError>
-      )}
       {nftList.map((item, index) => (
         <NFTCard
           img={item.img}
@@ -79,6 +85,7 @@ const NFTCards: React.FC = () => {
 const StyledCardWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  grid-gap: 0px 60px;
   justify-items: center;
   width: 100%;
   position: relative;

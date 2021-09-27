@@ -28,11 +28,20 @@ export const Banner = styled.div`
   }
 `
 
+export const NFTsHeader = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 100px;
+  margin-bottom: 68px;
+`
+
 export const NFTsBody = styled.div`
-  max-width: ${(props) => props.theme.siteWidth}px;
+  max-width: ${(props) => (props.theme.siteWidth / 3) * 2 + 100}px;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 50px;
+  margin-bottom: 80px;
 `
 
 export const Title = styled.h1`
@@ -41,12 +50,30 @@ export const Title = styled.h1`
   text-align: center;
   color: ${(props) => props.theme.color.grey[600]};
   text-transform: uppercase;
-  margin-top: 104px;
-  margin-bottom: 88px;
   @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
     font-size: 24px;
     margin-top: calc(180px / 2 - 36px / 2);
     margin-bottom: calc(180px / 2 - 36px / 2);
+  }
+`
+
+export const CreateNFTButton = styled.button`
+  font-family: 'Helvetica Neue LT W05_53 Ext';
+  font-size: 16px;
+  text-align: center;
+  text-transform: uppercase;
+  line-height: 1;
+  border-radius: 14px;
+  color: ${(props) => props.theme.color.grey[600]};
+  background-color: ${(props) => props.theme.color.bg};
+  border: 2px solid ${(props) => props.theme.color.grey[600]};
+  padding: 4px 0;
+  min-width: 270px;
+  outline: none;
+  &:active,
+  &:hover {
+    color: ${(props) => props.theme.color.white};
+    background-color: ${(props) => props.theme.color.grey[600]};
   }
 `
 
@@ -704,6 +731,7 @@ export const MediaSelectWrapper = styled.div`
 `
 
 export const MediaSelectButton = styled.button<{ active: boolean }>`
+  font-family: 'Helvetica Neue LT W05_53 Ext';
   font-size: 16px;
   text-align: center;
   text-transform: uppercase;

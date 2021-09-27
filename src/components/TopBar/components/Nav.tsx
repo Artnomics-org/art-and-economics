@@ -14,9 +14,6 @@ const Nav: React.FC = () => {
       <StyledLink exact activeClassName="active" to="/market">
         NFT Market
       </StyledLink>
-      <StyledLink exact activeClassName="active" to="/market/new">
-        Create NFT
-      </StyledLink>
     </StyledNav>
   )
 }
