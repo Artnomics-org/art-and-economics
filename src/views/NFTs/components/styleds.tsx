@@ -3,6 +3,7 @@ import styled from 'styled-components/macro'
 import ImageNFTBg from '../../../assets/img/image-nft-bg.png'
 import ImageNFTBg2x from '../../../assets/img/image-nft-bg@2x.png'
 import ImageNFTBg3x from '../../../assets/img/image-nft-bg@3x.png'
+import { BlackButton } from '../../../components/Button'
 
 export const NFTsWrapper = styled.div`
   flex: 1;
@@ -246,13 +247,23 @@ export const LinkButton = styled.a`
 `
 
 export const CreateWrapper = styled.div`
-  margin: 100px auto;
+  margin-top: 90px;
+  margin-bottom: 90px;
   @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
     margin-top: 20px;
     margin-bottom: 40px;
     padding-left: 20px;
     padding-right: 20px;
   }
+`
+
+export const CreateHeader = styled.div`
+  font-family: 'Helvetica Neue LT W05_93 Blk E';
+  font-size: 36px;
+  font-weight: normal;
+  text-transform: uppercase;
+  color: ${(props) => props.theme.color.grey[600]};
+  margin-bottom: 72px;
 `
 
 export const CreateBody = styled.div`
@@ -268,15 +279,23 @@ export const CreateBody = styled.div`
 
 export const CreateLeft = styled.div`
   flex: 1;
-  min-width: 600px;
+  min-width: 680px;
   @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
     width: 100%;
     min-width: 0;
   }
 `
 
+export const CreateLeftContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 22px;
+  background-color: ${(props) => props.theme.color.white};
+  box-shadow: 0 6px 30px 2px rgba(0, 0, 0, 0.1);
+`
+
 export const CreateRight = styled.div`
-  min-width: 498px;
+  min-width: 620px;
   margin-left: 80px;
   @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
     width: 100%;
@@ -285,24 +304,49 @@ export const CreateRight = styled.div`
   }
 `
 
+export const CreateRightContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 34px;
+  background-color: ${(props) => props.theme.color.white};
+  box-shadow: 0 6px 30px 2px rgba(0, 0, 0, 0.1);
+`
+
 export const CreateTitle = styled.h2`
-  color: ${(props) => props.theme.color.text[500]};
-  font-weight: 500;
-  font-size: 32px;
+  color: ${(props) => props.theme.color.grey[600]};
+  font-weight: normal;
+  font-size: 16px;
+  font-family: 'Helvetica Neue LT W05_93 Blk E';
   text-transform: uppercase;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
+`
+
+export const CreateContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+`
+
+export const CreateDragTitle = styled.h2`
+  color: ${(props) => props.theme.color.grey[600]};
+  font-weight: normal;
+  font-size: 16px;
+  font-family: 'Helvetica Neue LT W05_93 Blk E';
+  text-transform: uppercase;
+  margin-bottom: 20px;
 `
 
 export const CreateDrag = styled.div<{ error?: boolean }>`
-  padding: 40px 20px;
+  padding: 60px 20px;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: ${({ error, theme }) => (error ? theme.color.red[500] : theme.color.text[500])};
-  border: 2px solid ${({ theme, error }) => (error ? theme.color.red[500] : theme.color.grey[400])};
-  margin-bottom: 30px;
+  color: ${({ error, theme }) => (error ? theme.color.red[500] : theme.color.grey[600])};
+  background-color: ${(props) => props.theme.color.grey[200]};
   cursor: pointer;
   word-wrap: break-word;
   word-break: break-word;
@@ -311,22 +355,66 @@ export const CreateDrag = styled.div<{ error?: boolean }>`
   }
 `
 
+export const CreateDragContent = styled.div`
+  font-size: 16px;
+  font-family: 'Helvetica Neue LT W05_53 Ext';
+  line-height: 1.5;
+  text-align: center;
+  text-transform: uppercase;
+  color: ${(props) => props.theme.color.grey[600]};
+`
+
 export const CreateButtonWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 16px;
   justify-content: space-between;
-  margin-bottom: 30px;
+`
+
+export const CreateBaseButton = styled(BlackButton)`
+  font-family: 'Helvetica Neue LT W05_93 Blk E';
+  font-size: 12px;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1;
+  justify-content: center;
+  padding: 12px 16px;
+  border-radius: 0;
+`
+
+export const CreateWhiteButton = styled(CreateBaseButton)`
+  color: ${(props) => props.theme.color.grey[600]};
+  background-color: ${(props) => props.theme.color.white};
+  &:hover,
+  &:active {
+    color: ${(props) => props.theme.color.white};
+  }
+`
+
+export const CreateBlackButton = styled(CreateBaseButton)`
+  color: ${(props) => props.theme.color.white};
+  background-color: ${(props) => props.theme.color.grey[600]};
 `
 
 export const CreateInputWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 30px;
-  .chakra-input {
-    border-color: ${(props) => props.theme.color.grey[500]};
+  margin-bottom: 20px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+  .chakra-input,
+  .chakra-textarea {
+    color: ${(props) => props.theme.color.grey[600]};
+    background-color: ${(props) => props.theme.color.grey[200]};
+    border-color: ${(props) => props.theme.color.grey[200]};
     border-width: 2px;
+    &::placeholder {
+      color: ${(props) => props.theme.color.grey[500]};
+    }
     &:hover,
     &:focus {
+      background-color: ${(props) => props.theme.color.grey[200]};
       border-color: ${(props) => props.theme.color.text[500]};
     }
     &:focus {
@@ -336,10 +424,12 @@ export const CreateInputWrapper = styled.div`
 `
 
 export const CreateInputLabel = styled.label`
+  color: ${(props) => props.theme.color.grey[600]};
+  font-weight: normal;
   font-size: 16px;
-  color: ${(props) => props.theme.color.text[500]};
+  font-family: 'Helvetica Neue LT W05_93 Blk E';
   text-transform: uppercase;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 `
 
 export const CreateNumberInputWrapper = styled.div`
@@ -350,35 +440,13 @@ export const CreateNumberInputWrapper = styled.div`
   justify-content: space-around;
 `
 
-export const CreateNumberInputButton = styled.button`
-  display: flex;
+export const CreateNumberInputButton = styled(BlackButton)`
   flex-shrink: 0;
-  align-items: center;
   justify-content: center;
-  font-size: 16px;
-  font-weight: 500;
-  text-align: center;
-  cursor: pointer;
-  appearance: none;
-  color: ${(props) => props.theme.color.white};
-  background-color: ${(props) => props.theme.color.grey[600]};
-  border: 2px solid ${(props) => props.theme.color.grey[600]};
+  border-radius: 0;
   width: 40px;
   height: 40px;
-  &:hover {
-    background-color: ${(props) => props.theme.color.black};
-    border: 2px solid ${(props) => props.theme.color.black};
-  }
-  &:active {
-    background-color: ${(props) => props.theme.color.grey[600]};
-    border: 2px solid ${(props) => props.theme.color.grey[600]};
-  }
-  &:disabled {
-    background-color: ${(props) => props.theme.color.grey[500]};
-    border: 2px solid ${(props) => props.theme.color.grey[500]};
-    cursor: not-allowed;
-    pointer-events: none;
-  }
+  padding: 0;
 `
 
 export const RegisterWrapper = styled.div`
