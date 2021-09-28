@@ -4,6 +4,7 @@ import ImageNFTBg from '../../../assets/img/image-nft-bg.png'
 import ImageNFTBg2x from '../../../assets/img/image-nft-bg@2x.png'
 import ImageNFTBg3x from '../../../assets/img/image-nft-bg@3x.png'
 import { BlackButton } from '../../../components/Button'
+import { BlackInternalLink } from '../../../components/Link'
 
 export const NFTsWrapper = styled.div`
   flex: 1;
@@ -97,17 +98,50 @@ export const IconArrow = styled.img`
 export const NFTImageView = styled.div`
   min-width: 0px;
   background-color: ${(props) => props.theme.color.grey[400]};
+  box-shadow: 0 22px 34px 0 rgba(0, 0, 0, 0.31);
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 60vh;
+  height: auto;
   width: 100%;
-  padding: 40px 75px;
+  margin-bottom: 70px;
+  .fullscreen {
+    button {
+      display: none;
+    }
+  }
+  .fullscreen-enabled {
+    position: relative;
+    img {
+      margin: 0 auto;
+    }
+    button {
+      display: block !important;
+    }
+  }
   @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
     width: 100vw;
     height: 100vw;
-    padding: 20px;
+    margin-bottom: 30px;
+  }
+`
+
+export const NFTImageViewFullButton = styled.button`
+  position: absolute;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%);
+  background-color: ${(props) => props.theme.color.white};
+  border-radius: 50%;
+  padding: 10px;
+  opacity: 0.4;
+  border: none;
+  outline: none;
+  &:active,
+  &:hover,
+  &:focus {
+    opacity: 0.8;
   }
 `
 
@@ -117,27 +151,24 @@ export const NFTImage = styled.img`
   max-height: 100%;
   min-width: 0px;
   filter: drop-shadow(rgba(0, 0, 0, 0.33) 0px 10px 10px);
-  transition: transform 0.2s cubic-bezier(0.65, 0, 0.35, 1) 0s;
-  &:hover {
-    transform: scale(1.1);
-  }
 `
 
 export const NFTBodyWrapper = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  max-width: 1000px;
+  flex-direction: column;
+  align-items: center;
+  max-width: 860px;
   margin: 0 auto;
-  margin-top: 30px;
-  margin-bottom: 60px;
+  margin-top: 90px;
+  margin-bottom: 120px;
   @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
     width: 100%;
     flex-direction: column;
     justify-content: unset;
     padding-left: 20px;
     padding-right: 20px;
-    margin-bottom: 40px;
+    margin-top: 60px;
+    margin-bottom: 80px;
   }
 `
 
@@ -173,14 +204,15 @@ export const NFTBodyRight = styled.div`
 export const NFTTitle = styled.h2`
   font-family: 'Helvetica Neue LT W05_93 Blk E';
   font-size: 36px;
-  font-weight: 500;
+  font-weight: normal;
+  text-align: center;
   word-break: break-word;
-  color: ${(props) => props.theme.color.text[500]};
+  color: ${(props) => props.theme.color.grey[600]};
   margin: 0;
-  margin-bottom: 30px;
+  margin-bottom: 48px;
   @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
     font-size: 24px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
   }
 `
 
@@ -188,13 +220,111 @@ export const NFTDescription = styled.p`
   line-height: 1.5;
   font-weight: 400;
   font-size: 16px;
-  color: ${(props) => props.theme.color.text[500]};
+  font-family: 'Helvetica Neue LT W05_53 Ext';
+  text-align: center;
+  color: ${(props) => props.theme.color.grey[600]};
   width: 100%;
-  max-width: 100%;
   word-break: break-word;
   white-space: pre-wrap;
   margin: 0;
+  margin-bottom: 40px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    margin-bottom: 30px;
+  }
+`
+
+export const NFTCreatorWrapper = styled.div`
+  width: 100%;
+  margin-bottom: 56px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    margin-bottom: 30px;
+  }
+`
+
+export const NFTContentCardBase = styled.div`
+  background-color: ${(props) => props.theme.color.white};
+  box-shadow: 0 6px 30px 2px rgba(0, 0, 0, 0.1);
+  width: 100%;
   margin-bottom: 30px;
+`
+
+export const NFTHistoryCard = styled(NFTContentCardBase)`
+  padding-top: 20px;
+  padding-bottom: 40px;
+  padding-left: 124px;
+  padding-right: 124px;
+  .timeline-main-wrapper {
+    padding: 0;
+    > div[role='list'] {
+      padding: 0;
+      .vertical-item-row {
+        div[role='button'] {
+          display: none;
+        }
+        .card-content-wrapper {
+          .timeline-card-content {
+            margin: 0;
+            .card-description {
+              margin: 0;
+              padding: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    padding: 20px;
+  }
+`
+
+export const NFTLinksCard = styled(NFTContentCardBase)`
+  padding-top: 34px;
+  padding-bottom: 56px;
+  padding-left: 80px;
+  padding-right: 80px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    padding: 20px;
+  }
+`
+
+export const NFTInfoCardWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 40px;
+  width: 100%;
+  margin-bottom: 20px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    grid-template-columns: 1fr;
+    grid-column-gap: 0px;
+  }
+`
+
+export const NFTInfoCard = styled(NFTContentCardBase)`
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 40px;
+  padding-right: 40px;
+`
+
+export const NFTCardTitle = styled.h3<{ center?: boolean; bottom?: number }>`
+  font-family: 'Helvetica Neue LT W05_93 Blk E';
+  font-size: 16px;
+  font-weight: normal;
+  line-height: 1.5;
+  text-align: ${(props) => (props.center ? 'center' : 'left')};
+  text-transform: uppercase;
+  color: ${(props) => props.theme.color.grey[600]};
+  margin-bottom: ${(props) => props.bottom || 30}px;
+`
+
+export const NFTShareText = styled.p`
+  font-family: 'Helvetica Neue LT W05_73 Bd Ex';
+  font-size: 16px;
+  font-weight: normal;
+  line-height: 1.5;
+  text-transform: uppercase;
+  color: ${(props) => props.theme.color.grey[600]};
 `
 
 export const StyledLoadingWrapper = styled.div`
@@ -219,35 +349,39 @@ export const LoadingText = styled.p`
 
 export const LinkContainer = styled.div`
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  /* justify-content: flex-start; */
-  /* align-items: center; */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-column-gap: 50px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    grid-template-columns: 1fr;
+    grid-row-gap: 20px;
+    grid-column-gap: 0px;
+  }
 `
 
 export const LinkButton = styled.a`
-  box-sizing: border-box;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  font-size: 16px;
-  font-weight: 500;
-  padding: 14px 20px;
-  /* margin: 0px 20px; */
-  text-align: center;
-  cursor: pointer;
+  justify-content: center;
+  font-family: 'Helvetica Neue LT W05_93 Blk E';
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1;
+  color: ${(props) => props.theme.color.grey[600]};
+  background-color: ${(props) => props.theme.color.white};
+  border: 1px solid ${(props) => props.theme.color.grey[600]};
+  border-radius: 22px;
+  padding: 12px 20px;
   text-decoration: none;
   white-space: nowrap;
   appearance: none;
-  color: ${(props) => props.theme.color.text[600]};
-  background-color: ${(props) => props.theme.color.bg};
-  border: 2px solid ${(props) => props.theme.color.grey[500]};
-  flex: 1 0 auto;
-  &:first-child {
-    margin-bottom: 10px;
-  }
-  &:hover {
-    border-color: ${(props) => props.theme.color.text[600]};
+  cursor: pointer;
+  &::hover,
+  &:focus,
+  &:active {
+    color: ${(props) => props.theme.color.white};
+    background-color: ${(props) => props.theme.color.grey[600]};
+    border: 1px solid ${(props) => props.theme.color.grey[600]};
   }
 `
 
@@ -883,13 +1017,25 @@ export const BidTitle = styled.h3`
 `
 
 export const NFTViewBuyWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-right: 180px;
-  margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  grid-column-gap: 40px;
+  width: 100%;
   @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
-    margin-right: 0px;
+    grid-template-columns: 1fr;
+    grid-row-gap: 10px;
+    grid-column-gap: 0px;
+  }
+`
+
+export const NFTViewBuyButton = styled(BlackInternalLink)`
+  font-family: 'Helvetica Neue LT W05_93 Blk E';
+  font-size: 36px;
+  line-height: 1;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}px) {
+    font-size: 24px;
   }
 `
 

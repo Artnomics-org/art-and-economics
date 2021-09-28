@@ -1,33 +1,37 @@
 import React, { useContext } from 'react'
-import { ArrowUpRight } from 'react-feather'
 import { RouteComponentProps } from 'react-router'
 import { Chrono } from 'react-chrono'
-import { BlackInternalLink } from '../../components/Link'
-import { MediaOwnershipInfo } from '../../components/MediaOwnershipInfo'
+import { FullScreen, useFullScreenHandle } from 'react-full-screen'
 import Page from '../../components/Page'
-import { UserLink } from '../../components/UserLink'
 import { useMediaData, useMediaLogs, useMediaOwner, useMediaToken, useNFTScanLink } from '../../hooks/nfts'
 import { useToken } from '../../hooks/token'
 import { getBalanceNumber } from '../../utils'
-import NFTContentCard from './components/NFTContentCard'
-import NFTLabelInfo from './components/NFTLabelInfo'
 import {
   LinkButton,
   LinkContainer,
   LoadingTitle,
-  NFTBodyLeft,
-  NFTBodyRight,
   NFTBodyWrapper,
+  NFTCardTitle,
+  NFTCreatorWrapper,
   NFTDescription,
+  NFTHistoryCard,
   NFTImage,
   NFTImageView,
+  NFTImageViewFullButton,
+  NFTInfoCard,
+  NFTInfoCardWrapper,
+  NFTLinksCard,
+  NFTShareText,
   NFTsWrapper,
   NFTTitle,
+  NFTViewBuyButton,
   NFTViewBuyWrapper,
   StyledLoadingWrapper,
 } from './components/styleds'
 import { ThemeContext } from 'styled-components/macro'
 import NFTProvenanceItem from './components/NFTProvenanceItem'
+import NFTUserLink from './components/NFTUserLink'
+import { Maximize, Minimize } from 'react-feather'
 
 type NFTViewProps = {
   id: string
@@ -38,7 +42,7 @@ const NFTView: React.FC<RouteComponentProps<NFTViewProps>> = ({
   },
 }) => {
   const theme = useContext(ThemeContext)
-  const { backendData, metadata, isLoading, isError } = useMediaData({
+  const { backendData, isLoading, isError } = useMediaData({
     id: Number(id),
     backendData: null,
     metadata: null,
@@ -49,126 +53,119 @@ const NFTView: React.FC<RouteComponentProps<NFTViewProps>> = ({
   const bidShare = getBalanceNumber(String(profile?.bidsShares?.creator?.value))
   const bidToken = useToken(bidInfo?.currency)
   const askToken = useToken(profile?.currentAsk?.currency)
-  let bidTitle = 'Reserve Price'
   let bidPrice = '0.00'
   if (!isAskExist && ownerInfo) {
-    bidTitle = 'Sold For'
     bidPrice = getBalanceNumber(String(bidInfo?.amount || 0), bidToken?.decimals || 18).toFixed(2)
   }
   if (isAskExist) {
-    bidTitle = 'Current Ask'
     bidPrice = getBalanceNumber(String(profile?.currentAsk?.amount), askToken?.decimals || 18).toFixed(2)
   }
   const scanLink = useNFTScanLink(backendData?.id)
   const ipfsLink = backendData?.tokenURI
 
+  const fullScreenHandle = useFullScreenHandle()
+
   return (
     <Page>
-      <NFTsWrapper>
-        {!backendData && !isError && isLoading && (
+      {!backendData && !isError && isLoading && (
+        <NFTsWrapper>
           <StyledLoadingWrapper>
             <LoadingTitle>Loading...</LoadingTitle>
           </StyledLoadingWrapper>
-        )}
-        {!backendData && !isLoading && isError && (
+        </NFTsWrapper>
+      )}
+      {!backendData && !isLoading && isError && (
+        <NFTsWrapper>
           <StyledLoadingWrapper>
             <LoadingTitle error>Sorry</LoadingTitle>
             <div>But the Token is not exist yet, please check with the URL</div>
           </StyledLoadingWrapper>
-        )}
-        {backendData && (
-          <>
+        </NFTsWrapper>
+      )}
+      {backendData && (
+        <NFTsWrapper>
+          <NFTBodyWrapper>
+            <NFTTitle>{backendData?.title}</NFTTitle>
             <NFTImageView>
-              <NFTImage src={backendData.tokenURI} alt="NFT Image" />
+              <FullScreen handle={fullScreenHandle}>
+                <NFTImage src={backendData.tokenURI} alt="NFT Image" />
+                <NFTImageViewFullButton onClick={fullScreenHandle.exit}>
+                  <Minimize />
+                </NFTImageViewFullButton>
+              </FullScreen>
+              <NFTImageViewFullButton onClick={fullScreenHandle.enter}>
+                <Maximize />
+              </NFTImageViewFullButton>
             </NFTImageView>
-            <NFTBodyWrapper>
-              <NFTBodyLeft>
-                <NFTTitle>{backendData?.title}</NFTTitle>
-                <NFTDescription>{backendData?.description}</NFTDescription>
-                <MediaOwnershipInfo info={backendData} />
-                <NFTViewBuyWrapper>
-                  <BlackInternalLink to={`/market/${id}/bids`}>See Bids</BlackInternalLink>
-                  {profile && !isMeTheOwner && (
-                    <BlackInternalLink to={`/market/${id}/bid`}>Place a bid</BlackInternalLink>
-                  )}
-                  {profile && isMeTheOwner && (
-                    <BlackInternalLink to={`/market/${id}/ask`}>
-                      {isAskExist ? 'Edit Price' : 'Add Price'}
-                    </BlackInternalLink>
-                  )}
-                </NFTViewBuyWrapper>
-                {mediaLogs && (
-                  <NFTContentCard title="Provenance">
-                    <Chrono
-                      mode="VERTICAL"
-                      borderLessCards={true}
-                      hideControls={true}
-                      cardHeight={40}
-                      theme={{
-                        cardBgColor: theme.color.bg,
-                        primary: theme.color.grey[500],
-                        secondary: theme.color.grey[500],
-                      }}
-                    >
-                      {mediaLogs.map((log, index) => (
-                        <NFTProvenanceItem
-                          item={log}
-                          creator={backendData?.creator?.username}
-                          key={`nft-provenance-item-${index}`}
-                        />
-                      ))}
-                    </Chrono>
-                  </NFTContentCard>
+            <NFTDescription>{backendData?.description}</NFTDescription>
+            <NFTCreatorWrapper>
+              <NFTUserLink user={backendData?.creator} />
+            </NFTCreatorWrapper>
+            <NFTHistoryCard>
+              <NFTCardTitle center>History</NFTCardTitle>
+              {mediaLogs?.length > 0 && (
+                <Chrono
+                  mode="VERTICAL"
+                  borderLessCards={true}
+                  hideControls={true}
+                  cardHeight={54}
+                  theme={{
+                    primary: theme.color.grey[500],
+                    secondary: theme.color.grey[500],
+                  }}
+                >
+                  {mediaLogs.map((log, index) => (
+                    <NFTProvenanceItem
+                      item={log}
+                      creator={backendData?.creator?.username}
+                      key={`nft-provenance-item-${index}`}
+                    />
+                  ))}
+                </Chrono>
+              )}
+            </NFTHistoryCard>
+            <NFTLinksCard>
+              <NFTCardTitle center>Proof of Authenticity</NFTCardTitle>
+              <LinkContainer>
+                <LinkButton href={scanLink} role="button" target="_blank" rel="noreferer noopener">
+                  Etherscan Transaction
+                </LinkButton>
+                <LinkButton href={ipfsLink} role="button" target="_blank" rel="noreferer noopener">
+                  View on IPFS
+                </LinkButton>
+              </LinkContainer>
+            </NFTLinksCard>
+            <NFTInfoCardWrapper>
+              <NFTInfoCard>
+                <NFTCardTitle bottom={10}>Reserve Price</NFTCardTitle>
+                {isAskExist && (
+                  <NFTShareText>
+                    {bidPrice}
+                    {askToken && ` ${askToken.symbol}`}
+                  </NFTShareText>
                 )}
-              </NFTBodyLeft>
-              <NFTBodyRight>
-                <NFTContentCard title={bidTitle}>
-                  {isAskExist && (
-                    <NFTLabelInfo title="Price">
-                      {bidPrice}
-                      {askToken && ` ${askToken.symbol}`}
-                    </NFTLabelInfo>
-                  )}
-                  {!isAskExist && ownerInfo && (
-                    <>
-                      <NFTLabelInfo title="Price">
-                        {bidPrice}
-                        {bidToken && ` ${bidToken.symbol}`}
-                      </NFTLabelInfo>
-                      <NFTLabelInfo title="Bidder">
-                        <UserLink label="" {...ownerInfo} />
-                      </NFTLabelInfo>
-                    </>
-                  )}
-                </NFTContentCard>
-                <NFTContentCard title="RESALE ROYALTY">
-                  <NFTLabelInfo title="Creator">{bidShare}%</NFTLabelInfo>
-                </NFTContentCard>
-                {metadata && (
-                  <NFTContentCard title="Metadata">
-                    <NFTLabelInfo title="FileName">{metadata?.name}</NFTLabelInfo>
-                    <NFTLabelInfo title="Description">{metadata?.description}</NFTLabelInfo>
-                    <NFTLabelInfo title="MimeType">{metadata?.mimeType}</NFTLabelInfo>
-                    <NFTLabelInfo title="Version">{metadata?.version}</NFTLabelInfo>
-                  </NFTContentCard>
+                {!isAskExist && ownerInfo && (
+                  <NFTShareText>
+                    {bidPrice}
+                    {bidToken && ` ${bidToken.symbol}`}
+                  </NFTShareText>
                 )}
-                <NFTContentCard title="Proof of Authenticity">
-                  <LinkContainer>
-                    <LinkButton href={scanLink} role="button" target="_blank" rel="noreferer noopener">
-                      View Transaction
-                      <ArrowUpRight />
-                    </LinkButton>
-                    <LinkButton href={ipfsLink} role="button" target="_blank" rel="noreferer noopener">
-                      View on IPFS
-                      <ArrowUpRight />
-                    </LinkButton>
-                  </LinkContainer>
-                </NFTContentCard>
-              </NFTBodyRight>
-            </NFTBodyWrapper>
-          </>
-        )}
-      </NFTsWrapper>
+              </NFTInfoCard>
+              <NFTInfoCard>
+                <NFTCardTitle bottom={10}>Resale royalty</NFTCardTitle>
+                <NFTShareText>{bidShare}%</NFTShareText>
+              </NFTInfoCard>
+            </NFTInfoCardWrapper>
+            <NFTViewBuyWrapper>
+              {profile && !isMeTheOwner && <NFTViewBuyButton to={`/market/${id}/bid`}>Place a bid</NFTViewBuyButton>}
+              {profile && isMeTheOwner && (
+                <NFTViewBuyButton to={`/market/${id}/ask`}>{isAskExist ? 'Edit Price' : 'Add Price'}</NFTViewBuyButton>
+              )}
+              <NFTViewBuyButton to={`/market/${id}/bids`}>See Bids</NFTViewBuyButton>
+            </NFTViewBuyWrapper>
+          </NFTBodyWrapper>
+        </NFTsWrapper>
+      )}
     </Page>
   )
 }
