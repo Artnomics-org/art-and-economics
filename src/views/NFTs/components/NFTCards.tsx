@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
+import InfiniteScroll from 'react-infinite-scroll-component'
 import { useHistory } from 'react-router'
 import styled from 'styled-components/macro'
 import { getMediaBids, getMediaMetadata } from '../../../backend/media'
@@ -7,12 +8,12 @@ import NFTCard, { NFTCardProps } from './NFTCard'
 
 const NFTCards: React.FC = () => {
   const [nftList, setNftList] = useState<NFTCardProps[]>([])
-  const { mediaList, isLoading, isError, error } = useMediaList()
+  const { mediaList, hasMore, loadMore, isLoading, isError, error } = useMediaList()
   const history = useHistory()
 
   const fetchData = useCallback(async () => {
     if (mediaList) {
-      const getData = mediaList.items.map(async (item) => {
+      const getData = mediaList.map(async (item) => {
         const metadata = await getMediaMetadata(item.metadataURI)
         const bidLogs = await getMediaBids(item.id)
         return {
@@ -41,6 +42,12 @@ const NFTCards: React.FC = () => {
     }
   }, [mediaList])
 
+  const handleLoadMore = useCallback(() => {
+    if (mediaList.length > 0) {
+      loadMore()
+    }
+  }, [loadMore, mediaList])
+
   useEffect(() => {
     fetchData()
   }, [fetchData])
@@ -67,20 +74,27 @@ const NFTCards: React.FC = () => {
   }
 
   return (
-    <StyledCardWrapper>
-      {nftList.map((item, index) => (
-        <NFTCard
-          img={item.img}
-          title={item.title}
-          description={item.description}
-          creator={item.creator}
-          price={item.price}
-          currency={item.currency}
-          key={`${item.title}-${item.price}-${index}`}
-          onClick={() => handleCardClick(item.id)}
-        />
-      ))}
-    </StyledCardWrapper>
+    <InfiniteScroll
+      dataLength={nftList.length}
+      hasMore={hasMore}
+      next={handleLoadMore}
+      loader={<StyledLoading>Loading...</StyledLoading>}
+    >
+      <StyledCardWrapper>
+        {nftList.map((item, index) => (
+          <NFTCard
+            img={item.img}
+            title={item.title}
+            description={item.description}
+            creator={item.creator}
+            price={item.price}
+            currency={item.currency}
+            key={`${item.title}-${item.price}-${index}`}
+            onClick={() => handleCardClick(item.id)}
+          />
+        ))}
+      </StyledCardWrapper>
+    </InfiniteScroll>
   )
 }
 

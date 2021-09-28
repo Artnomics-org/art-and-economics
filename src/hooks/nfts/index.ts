@@ -18,7 +18,7 @@ import { FunctionFragment } from '@ethersproject/abi'
 import { MULTICALL_NETWORKS } from '../../constants/multicall'
 import { Multicall__factory } from '../../constants/nfts/MulticallFactory'
 import { MediaFactory } from '../../constants/nfts/MediaFactory'
-import { axiosFetcher, backendSWRFetcher, getMediaMetadata } from '../../backend/media'
+import { axiosFetcher, backendSWRFetcher, getMediaList, getMediaMetadata } from '../../backend/media'
 import { Decimal } from '../../utils/decimal'
 import { Bid, DecimalValue } from '../../types/ContractTypes'
 import { BidLog } from '../../types/Bid'
@@ -364,13 +364,33 @@ type MediaList = {
   meta: PageMeta
 }
 export function useMediaList(page = 1, limit = 6, sort = SortBy.DESC) {
-  const { data: mediaList, error } = useSWR<MediaList, Error>(
+  const [medias, setMedias] = useState<MediaData[]>([])
+  const [pageData, setPageData] = useState<PageMeta>(null)
+  const [hasMore, setHasMore] = useState(true)
+  const { data: list, error } = useSWR<MediaList, Error>(
     `/media?page=${page}&limit=${limit}&order=${sort}`,
     backendSWRFetcher,
   )
-  console.log('useMediaList:mediaList:', mediaList)
+
+  console.log('useMediaList:mediaList:', list)
   if (error) console.log('useMediaList:error:', error)
-  return { mediaList, isError: Boolean(error), isLoading: !Boolean(mediaList), error }
+
+  useEffect(() => {
+    setMedias(list?.items ?? [])
+    setPageData(list?.meta ?? null)
+    setHasMore(list?.meta?.totalPages > list?.meta?.currentPage)
+  }, [list])
+
+  const loadMore = useCallback(async () => {
+    if (pageData?.totalPages > pageData?.currentPage) {
+      const list = await getMediaList(pageData?.currentPage + 1, limit, sort)
+      setMedias((prev) => [...prev, ...(list?.items as MediaData[])])
+      setPageData((prev) => ({ ...prev, ...list?.meta }))
+      setHasMore(list?.meta?.totalPages > list?.meta?.currentPage)
+    }
+  }, [limit, pageData?.currentPage, pageData?.totalPages, sort])
+
+  return { mediaList: medias, hasMore, loadMore, isError: Boolean(error), isLoading: !Boolean(medias.length), error }
 }
 
 export function useMediaData(post?: { id: number; backendData?: Media; metadata?: MediaMetadata }) {
@@ -398,7 +418,7 @@ export type MediaWithMetadata = Media & { metadata: MediaMetadata }
 export function useMediaListWithMeta(page = 1, limit = 6, sort = SortBy.DESC) {
   const { mediaList, isError, isLoading } = useMediaList(page, limit, sort)
   const mediaData = useMemo(async () => {
-    const getData = mediaList?.items.map(async (item) => {
+    const getData = mediaList.map(async (item) => {
       const metadata = await getMediaMetadata(item.metadataURI)
       return {
         ...item,
