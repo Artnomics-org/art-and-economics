@@ -13,6 +13,7 @@ import {
   SwapParameters,
   TradeType,
 } from '@art-economics/swap-sdk'
+import { useToast } from '@chakra-ui/toast'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
 import { ParsedQs } from 'qs'
@@ -177,6 +178,7 @@ export default function useWrapCallback(
   // we can always parse the amount typed as the input currency, since wrapping is 1:1
   const inputAmount = useMemo(() => tryParseAmount(typedValue, inputCurrency), [inputCurrency, typedValue])
   const addTransaction = useTransactionAdder()
+  const toast = useToast()
 
   return useMemo(() => {
     if (!wethContract || !chainId || !inputCurrency || !outputCurrency) return NOT_APPLICABLE
@@ -192,8 +194,24 @@ export default function useWrapCallback(
                 try {
                   const txReceipt = await wethContract.deposit({ value: `0x${inputAmount.raw.toString(16)}` })
                   addTransaction(txReceipt, { summary: `Wrap ${inputAmount.toSignificant(6)} BNB to WBNB` })
+                  toast({
+                    title: 'Transaction submitted',
+                    description: 'Your transaction has been submitted to the network.',
+                    status: 'success',
+                    position: 'top-right',
+                    duration: 5000,
+                    isClosable: true,
+                  })
                 } catch (error) {
                   console.error('Could not deposit', error)
+                  toast({
+                    title: 'Transaction error',
+                    description: `${error}`,
+                    status: 'error',
+                    position: 'top-right',
+                    duration: 5000,
+                    isClosable: true,
+                  })
                 }
               }
             : undefined,
@@ -208,8 +226,24 @@ export default function useWrapCallback(
                 try {
                   const txReceipt = await wethContract.withdraw(`0x${inputAmount.raw.toString(16)}`)
                   addTransaction(txReceipt, { summary: `Unwrap ${inputAmount.toSignificant(6)} WBNB to BNB` })
+                  toast({
+                    title: 'Transaction submitted',
+                    description: 'Your transaction has been submitted to the network.',
+                    status: 'success',
+                    position: 'top-right',
+                    duration: 5000,
+                    isClosable: true,
+                  })
                 } catch (error) {
                   console.error('Could not withdraw', error)
+                  toast({
+                    title: 'Transaction error',
+                    description: `${error}`,
+                    status: 'error',
+                    position: 'top-right',
+                    duration: 5000,
+                    isClosable: true,
+                  })
                 }
               }
             : undefined,
@@ -218,7 +252,7 @@ export default function useWrapCallback(
     } else {
       return NOT_APPLICABLE
     }
-  }, [wethContract, chainId, inputCurrency, outputCurrency, inputAmount, balance, addTransaction])
+  }, [wethContract, chainId, inputCurrency, outputCurrency, inputAmount, balance, addTransaction, toast])
 }
 
 export function useSwapActionHandlers(): {

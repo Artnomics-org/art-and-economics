@@ -168,7 +168,7 @@ const Swap: React.FC = () => {
           title: 'Transaction submitted',
           description: 'Your transaction has been submitted to the network.',
           status: 'success',
-          position: 'top',
+          position: 'top-right',
           duration: 5000,
           isClosable: true,
         })
@@ -181,6 +181,14 @@ const Swap: React.FC = () => {
           showConfirm,
           swapErrorMessage: error.message,
           txHash: undefined,
+        })
+        toast({
+          title: 'Transaction error',
+          description: `${error.message}`,
+          status: 'error',
+          position: 'top-right',
+          duration: 5000,
+          isClosable: true,
         })
       })
   }, [priceImpactWithoutFee, swapCallback, tradeToConfirm, showConfirm, handleTypeInput, toast])
