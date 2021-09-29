@@ -1,3 +1,4 @@
+import { ChainId } from '@art-economics/swap-sdk'
 import BigNumber from 'bignumber.js'
 import CID from 'cids'
 import CryptoJS from 'crypto-js'
@@ -164,4 +165,25 @@ export function arrayBufferToWordArray(ab: ArrayBuffer) {
     a.push((i8a[i] << 24) | (i8a[i + 1] << 16) | (i8a[i + 2] << 8) | i8a[i + 3])
   }
   return CryptoJS.lib.WordArray.create(a, i8a.length)
+}
+
+export function getDisplayChainName(chainId: ChainId): string {
+  switch (chainId) {
+    case ChainId.MAINNET:
+      return 'Mainnet'
+    case ChainId.ROPSTEN:
+      return 'Ropsten'
+    case ChainId.RINKEBY:
+      return 'Rinkeby'
+    case ChainId.GÖRLI:
+      return 'Görli'
+    case ChainId.KOVAN:
+      return 'Kovan'
+    case ChainId.BSC_MAINNET:
+      return 'BSC Mainnet'
+    case ChainId.BSC_TESTNET:
+      return 'BSC Testnet'
+    default:
+      return 'Unknown'
+  }
 }
