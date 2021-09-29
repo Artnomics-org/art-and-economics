@@ -33,6 +33,7 @@ import ConfirmationModalContent from '../../components/Modal/components/Confirma
 import TransactionConfirmationModal from '../../components/Modal/TransactionConfirmationModal'
 import ConfirmationContentTop from './components/ConfirmationContentTop'
 import ConfirmationContentBottom from './components/ConfirmationContentBottom'
+import { useToast } from '@chakra-ui/react'
 
 interface AddLiquidityProps {
   currencyIdA?: string
@@ -47,6 +48,7 @@ const AddLiquidity: React.FC<RouteComponentProps<AddLiquidityProps>> = ({
 }) => {
   const isCreate = history.location.pathname.includes('/create')
   const theme = useContext(ThemeContext)
+  const toast = useToast()
   const toggleWalletModal = useWalletModalToggle() // toggle wallet when disconnected
   const { account, chainId, library } = useActiveWeb3React()
   // modal and loading
@@ -179,6 +181,15 @@ const AddLiquidity: React.FC<RouteComponentProps<AddLiquidityProps>> = ({
           })
 
           setTxHash(response.hash)
+
+          toast({
+            title: 'Transaction submitted',
+            description: 'Your transaction has been submitted to the network.',
+            status: 'success',
+            position: 'top-right',
+            duration: 5000,
+            isClosable: true,
+          })
         }),
       )
       .catch((error) => {
@@ -186,6 +197,14 @@ const AddLiquidity: React.FC<RouteComponentProps<AddLiquidityProps>> = ({
         // we only care if the error is something _other_ than the user rejected the tx
         if (error?.code !== 4001) {
           console.error(error)
+          toast({
+            title: 'Transaction error',
+            description: `${error}`,
+            status: 'error',
+            position: 'top-right',
+            duration: 5000,
+            isClosable: true,
+          })
         }
       })
   }, [
@@ -204,6 +223,7 @@ const AddLiquidity: React.FC<RouteComponentProps<AddLiquidityProps>> = ({
     router.addLiquidityETH,
     router.estimateGas.addLiquidity,
     router.estimateGas.addLiquidityETH,
+    toast,
   ])
 
   const isValid = !error

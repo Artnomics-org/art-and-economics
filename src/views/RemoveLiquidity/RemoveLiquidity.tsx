@@ -2,7 +2,7 @@ import { Currency, currencyEquals, ETHER, Percent, WETH } from '@art-economics/s
 import { BigNumber } from '@ethersproject/bignumber'
 import { TransactionResponse } from '@ethersproject/providers'
 import { splitSignature } from '@ethersproject/bytes'
-import { Slider, SliderTrack, SliderFilledTrack, SliderThumb, Box } from '@chakra-ui/react'
+import { Slider, SliderTrack, SliderFilledTrack, SliderThumb, Box, useToast } from '@chakra-ui/react'
 import React, { useCallback, useContext, useMemo, useState } from 'react'
 import { ArrowDown, Percent as PercentIcon, Plus } from 'react-feather'
 import { RouteComponentProps } from 'react-router'
@@ -50,6 +50,7 @@ const RemoveLiquidity: React.FC<RouteComponentProps<RemoveLiquidityProps>> = ({
   },
 }) => {
   const theme = useContext(ThemeContext)
+  const toast = useToast()
   const [currencyA, currencyB] = [useCurrency(currencyIdA) ?? undefined, useCurrency(currencyIdB) ?? undefined]
   const { account, chainId, library } = useActiveWeb3React()
   const [tokenA, tokenB] = useMemo(
@@ -262,11 +263,28 @@ const RemoveLiquidity: React.FC<RouteComponentProps<RemoveLiquidityProps>> = ({
           })
 
           setTxHash(response.hash)
+
+          toast({
+            title: 'Transaction submitted',
+            description: 'Your transaction has been submitted to the network.',
+            status: 'success',
+            position: 'top-right',
+            duration: 5000,
+            isClosable: true,
+          })
         })
         .catch((error: Error) => {
           setAttemptingTxn(false)
           // we only care if the error is something _other_ than the user rejected the tx
           console.error(error)
+          toast({
+            title: 'Transaction error',
+            description: `${error}`,
+            status: 'error',
+            position: 'top-right',
+            duration: 5000,
+            isClosable: true,
+          })
         })
     }
   }, [
@@ -282,6 +300,7 @@ const RemoveLiquidity: React.FC<RouteComponentProps<RemoveLiquidityProps>> = ({
     parsedAmounts,
     router,
     signatureData,
+    toast,
     tokenA,
     tokenB,
   ])
