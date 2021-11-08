@@ -18,8 +18,6 @@ import { ListsUpdater } from './updaters/lists'
 import { MulticallUpdater } from './updaters/multicall'
 import { UserUpdater } from './updaters/user'
 
-// import Farms from './views/Farms'
-import Home from './views/Home'
 import NFTs from './views/NFTs'
 import Swap from './views/Swap'
 import Pool from './views/Pool'
@@ -56,12 +54,10 @@ const Routers: React.FC = () => {
     <Web3ReactManager>
       <Router>
         <Switch>
-          <Route exact strict path="/" component={Home} />
-          <Route exact strict path="/home" component={Home} />
+          <Route exact strict path="/" component={Swap} />
           <Route exact strict path="/swap" component={Swap} />
           <Route exact strict path="/pool" component={Pool} />
           <Route exact strict path="/find" component={FindPool} />
-          {/* <Route exact strict path="/farm" component={Farms} /> */}
           <Route exact strict path="/market" component={NFTs} />
           <Route exact strict path="/market/new" component={Create} />
           <Route exact strict path="/register" component={Register} />

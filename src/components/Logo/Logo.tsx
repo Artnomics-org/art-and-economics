@@ -20,6 +20,7 @@ const StyledLogo = styled(Link)`
   min-width: 42px;
   padding: 0;
   text-decoration: none;
+  user-select: none;
   img {
     height: 42px;
     object-fit: contain;
